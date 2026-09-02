@@ -15,10 +15,10 @@ typedef struct Job {
 
 typedef struct Machine{
     int id;
-    int totalDuration; // PENSAR MELHOR SE É DURAÇÃO TOTAL MESMO 
+    int makespan;
 } Machine;
 
-Job* iniciarInstancias(const char *filePath, int *numJobs, int *numMachines) {
+void iniciarInstancias(const char *filePath, int *numJobs, int *numMachines, Job **jobs, Machine **machines){
 
     FILE *file = fopen(filePath, "r");
 
@@ -26,36 +26,47 @@ Job* iniciarInstancias(const char *filePath, int *numJobs, int *numMachines) {
 
         perror("Erro ao abrir as instancias de teste\n");
         
-        return NULL;
+        *jobs = NULL;
+        *machines = NULL;
+        return;
     }
 
     if (fscanf(file, "%d %d", numJobs, numMachines) != 2){
         fprintf(stderr, "Erro ao ler o numero de jobs e maquinas do arquivo.\n");
         fclose(file);
-        return NULL;
+        *jobs = NULL;
+        *machines = NULL;
+        return;
     }
 
-    Job *jobs = (Job*)malloc(*numJobs * sizeof(Job));
+    *jobs = (Job*)malloc(*numJobs * sizeof(Job));
+    *machines = (Machine*)malloc(*numMachines * sizeof(Machine));
+
+    for (int i = 0; i < *numMachines; i++){
+        (*machines)[i].id = i;
+        (*machines)[i].makespan = 0;
+    }
 
     for (int i = 0; i < *numJobs; i++){
-        jobs[i].id = i;
-        jobs[i].tasks = (Task*)malloc(*numMachines * sizeof(Task));
+        (*jobs)[i].id = i;
+        (*jobs)[i].tasks = (Task*)malloc(*numMachines * sizeof(Task));
 
         for(int j = 0; j < *numMachines; j++){
-            jobs[i].tasks[j].operation = j;
+            (*jobs)[i].tasks[j].operation = j;
 
-            if (fscanf(file, "%d %d", &jobs[i].tasks[j].machine, &jobs[i].tasks[j].duration) != 2) {
+            if (fscanf(file, "%d %d", &(*jobs)[i].tasks[j].machine, &(*jobs)[i].tasks[j].duration) != 2) {
                 fprintf(stderr, "Erro na leitura das tarefas do Job %d\n", i);
-                jobs[i].tasks[j].machine = -1;
-                jobs[i].tasks[j].duration = -1;
+                (*jobs)[i].tasks[j].machine = -1;
+                (*jobs)[i].tasks[j].duration = -1;
 
-                return NULL;
+                *jobs = NULL;
+                *machines = NULL;
+                return;
             }
         }
     }
 
     fclose(file);
-    return jobs;
 }
 
 void printJobs(Job *jobs, int numJobs, int numMachines) {
@@ -84,10 +95,11 @@ int main (int argc, char *argv[]){
     int numJobs = 0;
     int numMachines = 0;
     Job *jobs = NULL;
+    Machine *machines = NULL;
 
     char *caminho_arquivo = argv[1];
 
-    jobs = iniciarInstancias(caminho_arquivo, &numJobs, &numMachines);
+    iniciarInstancias(caminho_arquivo, &numJobs, &numMachines, &jobs, &machines);
 
     if (jobs == NULL) {
         return 1;
@@ -95,11 +107,15 @@ int main (int argc, char *argv[]){
 
     printJobs(jobs, numJobs, numMachines);
 
-    // Liberar memória alocada
-    for (int i = 0; i < numJobs; i++) {
-        free(jobs[i].tasks);
+    // Libera memória alocada
+    if (machines != NULL && jobs != NULL && numMachines > 0) {
+        free(machines);
+
+        for (int i = 0; i < numJobs; i++) {
+            free(jobs[i].tasks);
+        }
+        free(jobs);
     }
-    free(jobs);
 
     return 0;
 }
