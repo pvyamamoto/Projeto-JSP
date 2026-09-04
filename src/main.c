@@ -6,16 +6,19 @@ typedef struct Task {
     int operation;
     int machine;
     int duration;
+    int jobId;
 } Task;
 
 typedef struct Job {
     int id;
+    int numTasks;
     Task* tasks;
 } Job;
 
 typedef struct Machine{
     int id;
     int makespan;
+    Task* tasks;
 } Machine;
 
 void iniciarInstancias(const char *filePath, int *numJobs, int *numMachines, Job **jobs, Machine **machines){
@@ -45,15 +48,17 @@ void iniciarInstancias(const char *filePath, int *numJobs, int *numMachines, Job
     for (int i = 0; i < *numMachines; i++){
         (*machines)[i].id = i;
         (*machines)[i].makespan = 0;
+        (*machines)[i].tasks = (Task*)malloc(*numMachines * sizeof(Task));
     }
 
     for (int i = 0; i < *numJobs; i++){
         (*jobs)[i].id = i;
+        (*jobs)[i].numTasks = *numMachines;
         (*jobs)[i].tasks = (Task*)malloc(*numMachines * sizeof(Task));
 
         for(int j = 0; j < *numMachines; j++){
             (*jobs)[i].tasks[j].operation = j;
-
+            (*jobs)[i].tasks[j].jobId = i;
             if (fscanf(file, "%d %d", &(*jobs)[i].tasks[j].machine, &(*jobs)[i].tasks[j].duration) != 2) {
                 fprintf(stderr, "Erro na leitura das tarefas do Job %d\n", i);
                 (*jobs)[i].tasks[j].machine = -1;
@@ -75,11 +80,12 @@ void printJobs(Job *jobs, int numJobs, int numMachines) {
 
     for (int i = 0; i < numJobs; i++) {
         printf("Job %d:\n", jobs[i].id);
-        for (int j = 0; j < numMachines; j++) {
-            printf("  Task %d: Machine %d, Duration %d\n", 
+        for (int j = 0; j < jobs[i].numTasks; j++) {
+            printf("  Task %d: Machine %d, Duration %d, Job ID %d\n", 
                    jobs[i].tasks[j].operation, 
                    jobs[i].tasks[j].machine, 
-                   jobs[i].tasks[j].duration);
+                   jobs[i].tasks[j].duration, 
+                   jobs[i].tasks[j].jobId);
         }
     }
 }
