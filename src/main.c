@@ -12,12 +12,14 @@ typedef struct Task {
 typedef struct Job {
     int id;
     int numTasks;
+    int tempoRestante;
     Task* tasks;
 } Job;
 
 typedef struct Machine{
     int id;
     int makespan;
+    int tempoAtual;
     Task* tasks;
 } Machine;
 
@@ -48,12 +50,14 @@ void iniciarInstancias(const char *filePath, int *numJobs, int *numMachines, Job
     for (int i = 0; i < *numMachines; i++){
         (*machines)[i].id = i;
         (*machines)[i].makespan = 0;
+        (*machines)[i].tempoAtual = 0;
         (*machines)[i].tasks = (Task*)malloc(*numMachines * sizeof(Task));
     }
 
     for (int i = 0; i < *numJobs; i++){
         (*jobs)[i].id = i;
         (*jobs)[i].numTasks = *numMachines;
+        (*jobs)[i].tempoRestante = 0;
         (*jobs)[i].tasks = (Task*)malloc(*numMachines * sizeof(Task));
 
         for(int j = 0; j < *numMachines; j++){
@@ -68,6 +72,7 @@ void iniciarInstancias(const char *filePath, int *numJobs, int *numMachines, Job
                 *machines = NULL;
                 return;
             }
+            (*jobs)[i].tempoRestante += (*jobs)[i].tasks[j].duration;
         }
     }
 
@@ -87,8 +92,21 @@ void printJobs(Job *jobs, int numJobs, int numMachines) {
                    jobs[i].tasks[j].duration, 
                    jobs[i].tasks[j].jobId);
         }
+        printf("Tempo restante do Job %d: %d\n", jobs[i].id, jobs[i].tempoRestante);
     }
 }
+
+/*
+void spt(Job* jobs, int numJobs, Machine* machines, int numMachines){
+    
+    Job *auxJobs = jobs;
+    Machine *auxMachines = machines;
+
+    for()
+
+}
+*/
+
 
 int main (int argc, char *argv[]){
     
