@@ -15,7 +15,6 @@ typedef struct Task {
 typedef struct Job {
     int id;
     int numTasks;
-    int tempoAtual;
     int operationAtual;
     Task* tasks;
 
@@ -66,7 +65,6 @@ void iniciarInstancias(const char *filePath, int *numJobs, int *numMachines, Job
     for (int i = 0; i < *numJobs; i++){
         (*jobs)[i].id = i;
         (*jobs)[i].numTasks = *numMachines;
-        (*jobs)[i].tempoAtual = 0;
         (*jobs)[i].operationAtual = 0;
         (*jobs)[i].tasks = (Task*)malloc(*numMachines * sizeof(Task));
         (*jobs)[i].completo = 0;
@@ -151,13 +149,19 @@ void spt(Job** jobs, int numJobs, Machine* machines, int numMachines){
             }
         }
 
-        auxJobs[minJobId].tempoAtual = auxMachines[minMachineId].makespan;
-        auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual].startTime = auxMachines[minMachineId].makespan;
-        auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual].endTime = auxMachines[minMachineId].makespan + auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual].duration;
+        int machineFreeTime = auxMachines[minMachineId].makespan;
+        int jobFreeTime = (auxJobs[minJobId].operationAtual > 0) 
+                           ? auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual - 1].endTime 
+                           : 0;
+
+        int realStartTime = (machineFreeTime > jobFreeTime) ? machineFreeTime : jobFreeTime;
+
+        auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual].startTime = realStartTime;
+        auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual].endTime = realStartTime + auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual].duration;
         auxJobs[minJobId].numTasks--;
 
         auxMachines[minMachineId].tasks[auxMachines[minMachineId].numTasks] = auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual];
-        auxMachines[minMachineId].makespan += auxMachines[minMachineId].tasks[auxMachines[minMachineId].numTasks].duration;
+        auxMachines[minMachineId].makespan = realStartTime + auxMachines[minMachineId].tasks[auxMachines[minMachineId].numTasks].duration;
 
         auxMachines[minMachineId].numTasks++;
         auxJobs[minJobId].operationAtual++;
