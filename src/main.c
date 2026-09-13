@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-//VER QUAL tempoAtual PARA ESCOLHER A PROXIMA MAQUINA
+#include <limits.h>
 
 typedef struct Task { 
     int operation;
@@ -127,8 +126,7 @@ void spt(Job** jobs, int numJobs, Machine* machines, int numMachines){
 
     do{
         for(int i = 0; i < numJobs; i++){
-            
-            if(auxMachines[auxJobs[i].tasks[auxJobs[i].operationAtual].machine].disponivel == 0){
+            if(auxMachines[auxJobs[i].tasks[auxJobs[i].operationAtual].machine].disponivel == 0 && !auxJobs[i].completo){
                 auxMachines[auxJobs[i].tasks[auxJobs[i].operationAtual].machine].disponivel = 1;
             }
         }
@@ -145,20 +143,13 @@ void spt(Job** jobs, int numJobs, Machine* machines, int numMachines){
                 minMachineId = j;
             }
         }
-        minMachineTime = INT_MAX;
-
 
         for(int j = 0; j < numJobs; j++){
-            if(auxJobs[j].tasks[auxJobs[j].operationAtual].machine == minMachineId && auxJobs[j].tasks[auxJobs[j].operationAtual].duration < minJobDuration){
+            if(auxJobs[j].tasks[auxJobs[j].operationAtual].machine == minMachineId && auxJobs[j].tasks[auxJobs[j].operationAtual].duration < minJobDuration && !auxJobs[j].completo){
                 minJobDuration = auxJobs[j].tasks[auxJobs[j].operationAtual].duration;
                 minJobId = auxJobs[j].id;
             }
         }
-
-        if(flagJob == 0){
-
-        }
-        
 
         auxJobs[minJobId].tempoAtual = auxMachines[minMachineId].makespan;
         auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual].startTime = auxMachines[minMachineId].makespan;
@@ -171,12 +162,15 @@ void spt(Job** jobs, int numJobs, Machine* machines, int numMachines){
         auxMachines[minMachineId].numTasks++;
         auxJobs[minJobId].operationAtual++;
 
+        minMachineTime = INT_MAX;
+        minJobDuration = INT_MAX;
+
         if(auxJobs[minJobId].numTasks == 0){
             auxJobs[minJobId].completo = 1;
             jobsCompletos++;
         }
     
-    }while(jobsCompletos < numJobs)
+    }while(jobsCompletos < numJobs);
 
 }
 */
