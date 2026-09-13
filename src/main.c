@@ -2,25 +2,34 @@
 #include <stdlib.h>
 #include <string.h>
 
+//VER QUAL tempoAtual PARA ESCOLHER A PROXIMA MAQUINA
+
 typedef struct Task { 
     int operation;
     int machine;
     int duration;
     int jobId;
+    int startTime;
+    int endTime;
 } Task;
 
 typedef struct Job {
     int id;
     int numTasks;
-    int tempoRestante;
+    int tempoAtual;
+    int operationAtual;
     Task* tasks;
+
+    int completo;
 } Job;
 
 typedef struct Machine{
     int id;
     int makespan;
-    int tempoAtual;
+    int numTasks;
     Task* tasks;
+
+    int disponivel;
 } Machine;
 
 void iniciarInstancias(const char *filePath, int *numJobs, int *numMachines, Job **jobs, Machine **machines){
@@ -50,19 +59,24 @@ void iniciarInstancias(const char *filePath, int *numJobs, int *numMachines, Job
     for (int i = 0; i < *numMachines; i++){
         (*machines)[i].id = i;
         (*machines)[i].makespan = 0;
-        (*machines)[i].tempoAtual = 0;
+        (*machines)[i].numTasks = 0;
         (*machines)[i].tasks = (Task*)malloc(*numMachines * sizeof(Task));
+        (*machines)[i].disponivel = 0;
     }
 
     for (int i = 0; i < *numJobs; i++){
         (*jobs)[i].id = i;
         (*jobs)[i].numTasks = *numMachines;
-        (*jobs)[i].tempoRestante = 0;
+        (*jobs)[i].tempoAtual = 0;
+        (*jobs)[i].operationAtual = 0;
         (*jobs)[i].tasks = (Task*)malloc(*numMachines * sizeof(Task));
+        (*jobs)[i].completo = 0;
 
         for(int j = 0; j < *numMachines; j++){
             (*jobs)[i].tasks[j].operation = j;
             (*jobs)[i].tasks[j].jobId = i;
+            (*jobs)[i].tasks[j].startTime = 0;
+            (*jobs)[i].tasks[j].endTime = 0;
             if (fscanf(file, "%d %d", &(*jobs)[i].tasks[j].machine, &(*jobs)[i].tasks[j].duration) != 2) {
                 fprintf(stderr, "Erro na leitura das tarefas do Job %d\n", i);
                 (*jobs)[i].tasks[j].machine = -1;
@@ -72,9 +86,10 @@ void iniciarInstancias(const char *filePath, int *numJobs, int *numMachines, Job
                 *machines = NULL;
                 return;
             }
-            (*jobs)[i].tempoRestante += (*jobs)[i].tasks[j].duration;
+            
         }
     }
+
 
     fclose(file);
 }
@@ -97,12 +112,71 @@ void printJobs(Job *jobs, int numJobs, int numMachines) {
 }
 
 /*
-void spt(Job* jobs, int numJobs, Machine* machines, int numMachines){
+void spt(Job** jobs, int numJobs, Machine* machines, int numMachines){
     
-    Job *auxJobs = jobs;
+    Job *auxJobs = *jobs;
     Machine *auxMachines = machines;
 
-    for()
+    int jobsCompletos = 0;
+
+    int minMachineTime = INT_MAX; // Menor makespan entre as maquinas
+    int minMachineId = 0;
+    
+    int minJobDuration = INT_MAX;
+    int minJobId = 0;
+
+    do{
+        for(int i = 0; i < numJobs; i++){
+            
+            if(auxMachines[auxJobs[i].tasks[auxJobs[i].operationAtual].machine].disponivel == 0){
+                auxMachines[auxJobs[i].tasks[auxJobs[i].operationAtual].machine].disponivel = 1;
+            }
+        }
+        
+        for(int j = 0; j < numMachines; j++){
+
+            if(auxMachines[j].disponivel == 1 && auxMachines[j].makespan == 0){
+                minMachineTime = auxMachines[j].makespan;
+                minMachineId = j;
+                break;
+            }
+            if(auxMachines[j].disponivel == 1 && auxMachines[j].makespan < minMachineTime){
+                minMachineTime = auxMachines[j].makespan;
+                minMachineId = j;
+            }
+        }
+        minMachineTime = INT_MAX;
+
+
+        for(int j = 0; j < numJobs; j++){
+            if(auxJobs[j].tasks[auxJobs[j].operationAtual].machine == minMachineId && auxJobs[j].tasks[auxJobs[j].operationAtual].duration < minJobDuration){
+                minJobDuration = auxJobs[j].tasks[auxJobs[j].operationAtual].duration;
+                minJobId = auxJobs[j].id;
+            }
+        }
+
+        if(flagJob == 0){
+
+        }
+        
+
+        auxJobs[minJobId].tempoAtual = auxMachines[minMachineId].makespan;
+        auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual].startTime = auxMachines[minMachineId].makespan;
+        auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual].endTime = auxMachines[minMachineId].makespan + auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual].duration;
+        auxJobs[minJobId].numTasks--;
+
+        auxMachines[minMachineId].tasks[auxMachines[minMachineId].numTasks] = auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual];
+        auxMachines[minMachineId].makespan += auxMachines[minMachineId].tasks[auxMachines[minMachineId].numTasks].duration;
+
+        auxMachines[minMachineId].numTasks++;
+        auxJobs[minJobId].operationAtual++;
+
+        if(auxJobs[minJobId].numTasks == 0){
+            auxJobs[minJobId].completo = 1;
+            jobsCompletos++;
+        }
+    
+    }while(jobsCompletos < numJobs)
 
 }
 */
