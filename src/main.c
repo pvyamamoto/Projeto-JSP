@@ -104,19 +104,38 @@ void printJobs(Job *jobs, int numJobs, int numMachines) {
                    jobs[i].tasks[j].duration, 
                    jobs[i].tasks[j].jobId);
         }
-        printf("Tempo restante do Job %d: %d\n", jobs[i].id, jobs[i].tempoRestante);
     }
 }
 
-/*
-void spt(Job** jobs, int numJobs, Machine* machines, int numMachines){
+void printMachines(Machine *machines, int numMachines){
+    
+    printf("Numero de Maquinas: %d\n", numMachines);
+
+    for (int i = 0; i < numMachines; i++) {
+        printf("Machine %d:\n", machines[i].id);
+        printf("  Makespan: %d\n", machines[i].makespan);
+        printf("  Numero de Tarefas: %d\n", machines[i].numTasks);
+        for (int j = 0; j < machines[i].numTasks; j++) {
+            printf("    Task %d: Machine %d, Duration %d, Job ID %d, Start Time %d, End Time %d\n", 
+                   machines[i].tasks[j].operation, 
+                   machines[i].tasks[j].machine, 
+                   machines[i].tasks[j].duration, 
+                   machines[i].tasks[j].jobId,
+                   machines[i].tasks[j].startTime,
+                   machines[i].tasks[j].endTime);
+        }
+    }
+}
+
+
+Machine* spt(Job** jobs, int numJobs, Machine** machines, int numMachines){
     
     Job *auxJobs = *jobs;
-    Machine *auxMachines = machines;
+    Machine *auxMachines = *machines;
 
     int jobsCompletos = 0;
 
-    int minMachineTime = INT_MAX; // Menor makespan entre as maquinas
+    int minMachineTime = INT_MAX;
     int minMachineId = 0;
     
     int minJobDuration = INT_MAX;
@@ -176,8 +195,8 @@ void spt(Job** jobs, int numJobs, Machine* machines, int numMachines){
     
     }while(jobsCompletos < numJobs);
 
+    return auxMachines;
 }
-*/
 
 
 int main (int argc, char *argv[]){
@@ -203,8 +222,14 @@ int main (int argc, char *argv[]){
 
     printJobs(jobs, numJobs, numMachines);
 
+    printMachines(machines, numMachines);
+
+    Machine *result = spt(&jobs, numJobs, &machines, numMachines);
+
+    printMachines(result, numMachines);
+
     // Libera memória alocada
-    if (machines != NULL && jobs != NULL && numMachines > 0) {
+    if (machines != NULL && jobs != NULL){
         free(machines);
 
         for (int i = 0; i < numJobs; i++) {
