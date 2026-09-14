@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
+#include <time.h>
 
 typedef struct Task { 
     int operation;
@@ -58,7 +59,7 @@ void iniciarInstancias(const char *filePath, int *numJobs, int *numMachines, Job
         (*machines)[i].id = i;
         (*machines)[i].makespan = 0;
         (*machines)[i].numTasks = 0;
-        (*machines)[i].tasks = (Task*)malloc(*numMachines * sizeof(Task));
+        (*machines)[i].tasks = (Task*)malloc(*numJobs * sizeof(Task));
         (*machines)[i].disponivel = 0;
     }
 
@@ -116,7 +117,9 @@ void printMachines(Machine *machines, int numMachines){
         printf("  Makespan: %d\n", machines[i].makespan);
         printf("  Numero de Tarefas: %d\n", machines[i].numTasks);
         for (int j = 0; j < machines[i].numTasks; j++) {
-            printf("    Task %d: Machine %d, Duration %d, Job ID %d, Start Time %d, End Time %d\n", 
+            printf("    Seq %d: Job %d, Task %d: Machine %d, Duration %d, Job ID %d, Start Time %d, End Time %d\n", 
+                   j,
+                   machines[i].tasks[j].jobId,
                    machines[i].tasks[j].operation, 
                    machines[i].tasks[j].machine, 
                    machines[i].tasks[j].duration, 
@@ -142,8 +145,13 @@ Machine* spt(Job** jobs, int numJobs, Machine** machines, int numMachines){
     int minJobId = 0;
 
     do{
+        
+        for(int j = 0; j < numMachines; j++){
+            auxMachines[j].disponivel = 0;
+        }
+
         for(int i = 0; i < numJobs; i++){
-            if(auxMachines[auxJobs[i].tasks[auxJobs[i].operationAtual].machine].disponivel == 0 && !auxJobs[i].completo){
+            if( !auxJobs[i].completo && auxMachines[auxJobs[i].tasks[auxJobs[i].operationAtual].machine].disponivel == 0){
                 auxMachines[auxJobs[i].tasks[auxJobs[i].operationAtual].machine].disponivel = 1;
             }
         }
@@ -162,7 +170,7 @@ Machine* spt(Job** jobs, int numJobs, Machine** machines, int numMachines){
         }
 
         for(int j = 0; j < numJobs; j++){
-            if(auxJobs[j].tasks[auxJobs[j].operationAtual].machine == minMachineId && auxJobs[j].tasks[auxJobs[j].operationAtual].duration < minJobDuration && !auxJobs[j].completo){
+            if(!auxJobs[j].completo && auxJobs[j].tasks[auxJobs[j].operationAtual].machine == minMachineId && auxJobs[j].tasks[auxJobs[j].operationAtual].duration < minJobDuration){
                 minJobDuration = auxJobs[j].tasks[auxJobs[j].operationAtual].duration;
                 minJobId = auxJobs[j].id;
             }
@@ -185,13 +193,15 @@ Machine* spt(Job** jobs, int numJobs, Machine** machines, int numMachines){
         auxMachines[minMachineId].numTasks++;
         auxJobs[minJobId].operationAtual++;
 
-        minMachineTime = INT_MAX;
-        minJobDuration = INT_MAX;
-
         if(auxJobs[minJobId].numTasks == 0){
             auxJobs[minJobId].completo = 1;
             jobsCompletos++;
         }
+
+        minMachineTime = INT_MAX;
+        minJobDuration = INT_MAX;
+        minMachineId = INT_MIN;
+        minJobId = INT_MIN;
     
     }while(jobsCompletos < numJobs);
 
@@ -201,6 +211,8 @@ Machine* spt(Job** jobs, int numJobs, Machine** machines, int numMachines){
 
 int main (int argc, char *argv[]){
     
+    clock_t inicio = clock();
+
     if (argc < 2) {
         printf("Uso incorreto!\n");
         printf("Sintaxe esperada: %s <caminho_do_arquivo>\n", argv[0]);
@@ -222,11 +234,12 @@ int main (int argc, char *argv[]){
 
     printJobs(jobs, numJobs, numMachines);
 
-    printMachines(machines, numMachines);
-
     Machine *result = spt(&jobs, numJobs, &machines, numMachines);
-
     printMachines(result, numMachines);
+
+    clock_t fim = clock();
+    double tempo_execucao = ((double)(fim - inicio)) / CLOCKS_PER_SEC;
+    printf("Tempo de execucao: %f segundos\n", tempo_execucao);
 
     // Libera memória alocada
     if (machines != NULL && jobs != NULL){
