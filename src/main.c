@@ -130,6 +130,25 @@ void printMachines(Machine *machines, int numMachines){
     }
 }
 
+void printMachinesToFile(FILE *arquivo, Machine *machines, int numMachines){
+    
+    fprintf(arquivo, "Numero de Maquinas: %d\n", numMachines);
+    for (int i = 0; i < numMachines; i++) {
+        fprintf(arquivo, "Machine %d:\n", machines[i].id);
+        fprintf(arquivo, "  Makespan: %d\n", machines[i].makespan);
+        fprintf(arquivo, "  Numero de Tarefas: %d\n", machines[i].numTasks);
+        
+        for (int j = 0; j < machines[i].numTasks; j++) {
+            fprintf(arquivo, "    Task %d: Machine %d, Duration %d, Job ID %d, Start Time %d, End Time %d\n", 
+                   machines[i].tasks[j].operation, 
+                   machines[i].tasks[j].machine, 
+                   machines[i].tasks[j].duration, 
+                   machines[i].tasks[j].jobId,
+                   machines[i].tasks[j].startTime,
+                   machines[i].tasks[j].endTime);
+        }
+    }
+}
 
 Machine* spt(Job** jobs, int numJobs, Machine** machines, int numMachines){
     
@@ -235,7 +254,22 @@ int main (int argc, char *argv[]){
     printJobs(jobs, numJobs, numMachines);
 
     Machine *result = spt(&jobs, numJobs, &machines, numMachines);
-    printMachines(result, numMachines);
+    //printMachines(result, numMachines);
+
+    char *caminho_saida = argv[2];
+
+    FILE *arquivoSaida = fopen(caminho_saida, "w");
+
+    if (arquivoSaida != NULL) {
+        printMachinesToFile(arquivoSaida, result, numMachines);
+        
+        fclose(arquivoSaida);
+        
+        printf("Resultado salvo com sucesso no arquivo %s!\n", caminho_saida);
+    } else {
+        printf("Erro ao criar o arquivo de saída.\n");
+    }
+
 
     clock_t fim = clock();
     double tempo_execucao = ((double)(fim - inicio)) / CLOCKS_PER_SEC;
