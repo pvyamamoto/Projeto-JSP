@@ -150,8 +150,10 @@ void printMachinesToFile(FILE *arquivo, Machine *machines, int numMachines){
     }
 }
 
-Machine* spt(Job** jobs, int numJobs, Machine** machines, int numMachines){
-    
+Machine* spt_eav(Job** jobs, int numJobs, Machine** machines, int numMachines){
+/*
+    Shortest Processing Time com Earliest Available Machine (SPT-EAV)
+*/
     Job *auxJobs = *jobs;
     Machine *auxMachines = *machines;
 
@@ -227,6 +229,141 @@ Machine* spt(Job** jobs, int numJobs, Machine** machines, int numMachines){
     return auxMachines;
 }
 
+Machine* spt_2(Job** jobs, int numJobs, Machine** machines, int numMachines){
+/*
+    Shortest Processing Time com Earliest Available Machine (SPT-EAV) v2
+*/
+    Job *auxJobs = *jobs;
+    Machine *auxMachines = *machines;
+
+    int jobsCompletos = 0;
+
+    //int minMachineTime = INT_MAX;
+    int minMachineId = 0;
+    
+    int minJobDuration = INT_MAX;
+    int minJobId = 0;
+
+    int minRealTime = INT_MAX;
+    do{
+        
+        for(int i = 0; i < numMachines; i++){
+
+            int machineFreeTime = auxMachines[i].makespan;
+
+            for(int j = 0; j < numJobs; j++){
+
+                int jobFreeTime = (auxJobs[j].operationAtual > 0)                       //if(auxJobs[minJobId].operationAtual > 0) 
+                           ? auxJobs[j].tasks[auxJobs[j].operationAtual - 1].endTime    //jobFreeTime = auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual - 1].endTime
+                           : 0;                                                         //else jobFreeTime = 0
+                
+                int realStartTime = (machineFreeTime > jobFreeTime) ? machineFreeTime : jobFreeTime;
+                
+                if(!auxJobs[j].completo && auxJobs[j].tasks[auxJobs[j].operationAtual].machine == i
+                   && realStartTime <= minRealTime && auxJobs[j].tasks[auxJobs[j].operationAtual].duration <= minJobDuration){
+
+                    minRealTime = realStartTime;
+                    minMachineId = i;
+                    minJobDuration = auxJobs[j].tasks[auxJobs[j].operationAtual].duration;
+                    minJobId = auxJobs[j].id;
+                }
+            }
+        }
+
+
+        auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual].startTime = minRealTime;
+        auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual].endTime = minRealTime + auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual].duration;
+        auxJobs[minJobId].numTasks--;
+
+        auxMachines[minMachineId].tasks[auxMachines[minMachineId].numTasks] = auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual];
+        auxMachines[minMachineId].makespan = minRealTime + auxMachines[minMachineId].tasks[auxMachines[minMachineId].numTasks].duration;
+
+        auxMachines[minMachineId].numTasks++;
+        auxJobs[minJobId].operationAtual++;
+
+        if(auxJobs[minJobId].numTasks == 0){
+            auxJobs[minJobId].completo = 1;
+            jobsCompletos++;
+        }
+
+        //minMachineTime = INT_MAX;
+        minJobDuration = INT_MAX;
+        minMachineId = INT_MIN;
+        minJobId = INT_MIN;
+        minRealTime = INT_MAX;
+    
+    }while(jobsCompletos < numJobs);
+
+    return auxMachines;
+}
+
+Machine* lpt(Job** jobs, int numJobs, Machine** machines, int numMachines){
+/*
+    Longest Processing Time (LPT)
+*/
+    Job *auxJobs = *jobs;
+    Machine *auxMachines = *machines;
+
+    int jobsCompletos = 0;
+
+    //int minMachineTime = INT_MAX;
+    int maxMachineId = 0;
+    
+    int maxJobDuration = INT_MIN;
+    int maxJobId = 0;
+
+    int maxRealTime = INT_MAX;
+    do{
+        
+        for(int i = 0; i < numMachines; i++){
+
+            int machineFreeTime = auxMachines[i].makespan;
+
+            for(int j = 0; j < numJobs; j++){
+
+                int jobFreeTime = (auxJobs[j].operationAtual > 0)                       //if(auxJobs[minJobId].operationAtual > 0) 
+                           ? auxJobs[j].tasks[auxJobs[j].operationAtual - 1].endTime    //jobFreeTime = auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual - 1].endTime
+                           : 0;                                                         //else jobFreeTime = 0
+                
+                int realStartTime = (machineFreeTime > jobFreeTime) ? machineFreeTime : jobFreeTime;
+                
+                if(!auxJobs[j].completo && auxJobs[j].tasks[auxJobs[j].operationAtual].machine == i
+                   && realStartTime <= maxRealTime && auxJobs[j].tasks[auxJobs[j].operationAtual].duration >= maxJobDuration){
+
+                    maxRealTime = realStartTime;
+                    maxMachineId = i;
+                    maxJobDuration = auxJobs[j].tasks[auxJobs[j].operationAtual].duration;
+                    maxJobId = auxJobs[j].id;
+                }
+            }
+        }
+
+
+        auxJobs[maxJobId].tasks[auxJobs[maxJobId].operationAtual].startTime = maxRealTime;
+        auxJobs[maxJobId].tasks[auxJobs[maxJobId].operationAtual].endTime = maxRealTime + auxJobs[maxJobId].tasks[auxJobs[maxJobId].operationAtual].duration;
+        auxJobs[maxJobId].numTasks--;
+
+        auxMachines[maxMachineId].tasks[auxMachines[maxMachineId].numTasks] = auxJobs[maxJobId].tasks[auxJobs[maxJobId].operationAtual];
+        auxMachines[maxMachineId].makespan = maxRealTime + auxMachines[maxMachineId].tasks[auxMachines[maxMachineId].numTasks].duration;
+
+        auxMachines[maxMachineId].numTasks++;
+        auxJobs[maxJobId].operationAtual++;
+
+        if(auxJobs[maxJobId].numTasks == 0){
+            auxJobs[maxJobId].completo = 1;
+            jobsCompletos++;
+        }
+
+        //minMachineTime = INT_MAX;
+        maxJobDuration = INT_MIN;
+        maxMachineId = INT_MIN;
+        maxJobId = INT_MIN;
+        maxRealTime = INT_MAX;
+    
+    }while(jobsCompletos < numJobs);
+
+    return auxMachines;
+}
 
 int main (int argc, char *argv[]){
     
@@ -253,7 +390,7 @@ int main (int argc, char *argv[]){
 
     printJobs(jobs, numJobs, numMachines);
 
-    Machine *result = spt(&jobs, numJobs, &machines, numMachines);
+    Machine *result = lpt(&jobs, numJobs, &machines, numMachines);
     //printMachines(result, numMachines);
 
     char *caminho_saida = argv[2];
