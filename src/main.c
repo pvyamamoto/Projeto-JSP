@@ -390,7 +390,7 @@ int main (int argc, char *argv[]){
 
     printJobs(jobs, numJobs, numMachines);
 
-    Machine *result = lpt(&jobs, numJobs, &machines, numMachines);
+    Machine *result = spt_2(&jobs, numJobs, &machines, numMachines);
     //printMachines(result, numMachines);
 
     char *caminho_saida = argv[2];
