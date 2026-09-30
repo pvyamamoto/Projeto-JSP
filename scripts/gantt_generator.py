@@ -4,10 +4,20 @@ import argparse
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 
+def get_job_name(job_id):
+    """Converte J0 -> A, J1 -> B, ..., J25 -> Z, J26 -> AA, etc."""
+    name = ""
+    n = job_id
+    while True:
+        name = chr(65 + (n % 26)) + name
+        n = n // 26 - 1
+        if n < 0:
+            break
+    return name
+
 def parse_txt(filepath):
     """Lê o arquivo de saída e extrai as informações das tarefas."""
     # Expressão regular para capturar as informações da linha
-    # Exemplo da linha: Task 0: Machine 0, Duration 29, Job ID 0, Start Time 0, End Time 29
     task_pattern = re.compile(
         r"Task\s+(\d+):\s+Machine\s+(\d+),\s+Duration\s+(\d+),\s+Job ID\s+(\d+),\s+Start Time\s+(\d+),\s+End Time\s+(\d+)"
     )
@@ -61,10 +71,15 @@ def generate_gantt(filepath, output_dir):
         # Desenha a barra da tarefa
         ax.barh(y=m, width=duration, left=start, height=0.8, color=colors[job], edgecolor='black', alpha=0.8)
         
-        # Texto dentro da barra (J: Job, T: Task)
+        # Formatação do texto: Job (Letra) + Task (Número)
+        job_letter = get_job_name(job)
+        task_num = t_id + 1
+        label = f"{job_letter}{task_num}"
+        
+        # Texto dentro da barra
         center_x = start + (duration / 2)
         center_y = m
-        ax.text(center_x, center_y, f"J{job}\nT{t_id}", ha='center', va='center', color='black', fontsize=7, clip_on=True)
+        ax.text(center_x, center_y, label, ha='center', va='center', color='black', fontsize=7, clip_on=True)
         
         # Adiciona na legenda (apenas 1 vez por Job)
         if job not in added_to_legend:
@@ -77,12 +92,12 @@ def generate_gantt(filepath, output_dir):
     ax.set_ylabel("Máquinas")
     ax.set_title(f"Gráfico de Gantt - {name_without_ext}")
     
-    # Inverte o eixo Y para a Máquina 0 ficar no topo (padrão de cronogramas)
+    # Inverte o eixo Y para a Máquina 0 ficar no topo
     ax.invert_yaxis() 
     ax.grid(axis='x', linestyle='--', alpha=0.5)
     
-    # Criar e posicionar legenda fora do gráfico
-    handles = [patches.Patch(color=colors[j], label=f"Job {j}") for j in jobs]
+    # Criar e posicionar legenda fora do gráfico com a nova nomenclatura
+    handles = [patches.Patch(color=colors[j], label=f"Job {get_job_name(j)}") for j in jobs]
     ax.legend(handles=handles, title="Identificação dos Jobs", bbox_to_anchor=(1.01, 1), loc='upper left')
     
     # Ajusta o layout para a legenda não ficar cortada
@@ -101,13 +116,12 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Gera o Gráfico de Gantt a partir do .txt do escalonamento.")
     parser.add_argument("filepath", help="Caminho para o arquivo .txt gerado pelo código em C")
     
-    # Como o script estará em scripts/, configuramos o padrão para salvar em ../out/gantt
+    # O diretório padrão agora será out/gantt na raiz do projeto (um nível acima da pasta scripts)
     default_outdir = os.path.join(os.path.dirname(__file__), '..', 'out', 'gantt')
     parser.add_argument("--outdir", default=default_outdir, help="Diretório para salvar a imagem .png")
     
     args = parser.parse_args()
     
-    # Transforma em caminhos absolutos e normaliza
     filepath = os.path.abspath(args.filepath)
     outdir = os.path.abspath(args.outdir)
     
