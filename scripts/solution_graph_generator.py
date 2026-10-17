@@ -1,7 +1,9 @@
 """
 solution_graph_generator.py
 Gera o grafo direcionado da solução D_S = (N, A U S) com destaque do Caminho Crítico.
-Versão panorâmica com espaçamento ampliado e detalhes das operações claras.
+- Apenas as conexões do Caminho Crítico são desenhadas em formato de 'arco' curvo e vermelho.
+- O sequenciamento de operações não críticas nas máquinas é desenhado em linha tracejada.
+- Setas utilizam patchA/patchB para parar precisamente na borda externa dos nós sem invadi-los.
 """
 
 import os
@@ -47,7 +49,7 @@ def parse_solution(filepath):
 
 
 def compute_critical_path(tasks, makespan):
-    """Encontra os nós e arcos que pertencem ao Caminho Crítico (Makespan)."""
+    """Identifica nós e arestas pertencentes ao Caminho Crítico (Makespan)."""
     task_dict = {f"J{t['job_id']}_T{t['task_id']}": t for t in tasks}
 
     critical_nodes = set()
@@ -91,7 +93,7 @@ def compute_critical_path(tasks, makespan):
         curr_info = task_dict[curr]
         start_t = curr_info['start']
 
-        # Predecessor de Job
+        # Predecessor no Job
         if curr in job_preds:
             p_job = job_preds[curr]
             p_info = task_dict[p_job]
@@ -102,7 +104,7 @@ def compute_critical_path(tasks, makespan):
                     visited.add(p_job)
                     queue.append(p_job)
 
-        # Predecessor de Máquina
+        # Predecessor na Máquina
         if curr in machine_preds:
             p_mach = machine_preds[curr]
             p_info = task_dict[p_mach]
@@ -119,7 +121,7 @@ def compute_critical_path(tasks, makespan):
     return critical_nodes, critical_edges
 
 
-def generate_solution_graph(filepath, output_dir, x_spacing=3.8, y_spacing=2.5, fig_scale=1.0, show_plot=True):
+def generate_solution_graph(filepath, output_dir, x_spacing=4.6, y_spacing=2.6, fig_scale=1.0, show_plot=True):
     tasks, makespan = parse_solution(filepath)
     if not tasks:
         print(f"[ERRO] Nenhuma tarefa encontrada no arquivo {filepath}.")
@@ -132,9 +134,10 @@ def generate_solution_graph(filepath, output_dir, x_spacing=3.8, y_spacing=2.5, 
     num_machines = max(t['machine'] for t in tasks) + 1
     num_tasks_per_job = max(t['task_id'] for t in tasks) + 1
 
-    # Figura ampla e espaçada
-    fig_width = max(24.0, (num_tasks_per_job + 2) * x_spacing * 0.95) * fig_scale
-    fig_height = max(11.5, (num_jobs + 1) * y_spacing * 0.85) * fig_scale
+    # Ajuste dinâmico de largura para evitar imagens estreitas quando há muitos jobs
+    eff_x_spacing = max(x_spacing, (num_jobs * y_spacing * 0.9) / (num_tasks_per_job + 2))
+    fig_width = max(26.0, (num_tasks_per_job + 2) * eff_x_spacing * 0.9) * fig_scale
+    fig_height = max(12.0, (num_jobs + 1) * y_spacing * 0.85) * fig_scale
     fig, ax = plt.subplots(figsize=(fig_width, fig_height))
 
     cmap = plt.get_cmap('tab10' if num_machines <= 10 else 'tab20')
@@ -143,7 +146,7 @@ def generate_solution_graph(filepath, output_dir, x_spacing=3.8, y_spacing=2.5, 
     # Posições dos nós
     node_positions = {}
     start_x = 0.0
-    end_x = (num_tasks_per_job + 1) * x_spacing
+    end_x = (num_tasks_per_job + 1) * eff_x_spacing
     mid_y = ((num_jobs - 1) * y_spacing) / 2.0
 
     start_pos = (start_x, mid_y)
@@ -153,16 +156,52 @@ def generate_solution_graph(filepath, output_dir, x_spacing=3.8, y_spacing=2.5, 
 
     for t in tasks:
         node_id = f"J{t['job_id']}_T{t['task_id']}"
-        x = (t['task_id'] + 1) * x_spacing
+        x = (t['task_id'] + 1) * eff_x_spacing
         y = (num_jobs - 1 - t['job_id']) * y_spacing
         node_positions[node_id] = (x, y)
 
-    node_radius = 0.78
+    node_radius = 0.76
 
     # Identificar Caminho Crítico
     critical_nodes, critical_edges = compute_critical_path(tasks, makespan)
 
-    # 1. Desenhar Arcos de Sequenciamento das Máquinas S (Curvados)
+    # Criar patches dos nós primeiro (essenciais para calcular o recorte exato das setas)
+    node_patches = {}
+
+    # Nós Dummy S e F
+    for node_id, label in [('S', 'INÍCIO\n(S)'), ('F', f'FIM\n(F)\nMk={makespan}')]:
+        pos = node_positions[node_id]
+        circle = plt.Circle(pos, node_radius, facecolor='#ecf0f1', edgecolor='#e74c3c' if node_id == 'F' else '#2c3e50',
+                            linewidth=2.8, zorder=6)
+        ax.add_patch(circle)
+        node_patches[node_id] = circle
+        ax.text(pos[0], pos[1], label, ha='center', va='center', fontsize=9.5, fontweight='bold', color='#2c3e50', zorder=7)
+
+    # Nós das Tarefas
+    for t in tasks:
+        node_id = f"J{t['job_id']}_T{t['task_id']}"
+        pos = node_positions[node_id]
+        m = t['machine']
+        d = t['duration']
+        st = t['start']
+        et = t['end']
+        color = machine_colors[m]
+
+        is_crit = node_id in critical_nodes
+        edge_c = '#e74c3c' if is_crit else '#1a252f'
+        edge_w = 3.2 if is_crit else 1.8
+
+        circle = plt.Circle(pos, node_radius, facecolor=color, edgecolor=edge_c, linewidth=edge_w, zorder=6, alpha=0.96)
+        ax.add_patch(circle)
+        node_patches[node_id] = circle
+
+        text_label = f"Job {t['job_id']} Op {t['task_id']}\nM{m} (d={d})\n[{st} - {et}]"
+        ax.text(pos[0], pos[1], text_label, ha='center', va='center', fontsize=8.0, fontweight='bold', color='white', zorder=7)
+
+    # 1. Desenhar Sequenciamento das Máquinas
+    # Regra:
+    # - Se for do Caminho Crítico: Arco sólido curvado ('arco') e vermelho com destaque
+    # - Se for Não-Crítico: Linha tracejada suave
     mach_tasks = defaultdict(list)
     for t in tasks:
         mach_tasks[t['machine']].append(t)
@@ -177,30 +216,48 @@ def generate_solution_graph(filepath, output_dir, x_spacing=3.8, y_spacing=2.5, 
             pos_v = node_positions[v_id]
 
             is_crit = (u_id, v_id) in critical_edges
-            edge_color = '#e74c3c' if is_crit else color
-            line_w = 3.2 if is_crit else 1.4
-            
-            # Curvatura ampla para desviar de nós vizinhos
-            j_diff = abs(t_sorted[i]['job_id'] - t_sorted[i+1]['job_id'])
-            rad_base = 0.20 + 0.04 * j_diff
-            rad = rad_base if (t_sorted[i]['job_id'] + t_sorted[i+1]['job_id']) % 2 == 0 else -rad_base
 
-            arrow = patches.FancyArrowPatch(
-                pos_u, pos_v,
-                connectionstyle=f"arc3,rad={rad}",
-                linestyle="-",
-                linewidth=line_w,
-                color=edge_color,
-                arrowstyle="-|>",
-                mutation_scale=16 if is_crit else 12,
-                shrinkA=24,
-                shrinkB=24,
-                zorder=6 if is_crit else 2,
-                alpha=1.0 if is_crit else 0.65
-            )
+            if is_crit:
+                # Caminho Crítico: em forma de 'arco' curvo, vermelho e grosso
+                j_diff = abs(t_sorted[i]['job_id'] - t_sorted[i+1]['job_id'])
+                rad_base = 0.22 + 0.05 * j_diff
+                rad = rad_base if (t_sorted[i]['job_id'] + t_sorted[i+1]['job_id']) % 2 == 0 else -rad_base
+
+                arrow = patches.FancyArrowPatch(
+                    pos_u, pos_v,
+                    patchA=node_patches[u_id],
+                    patchB=node_patches[v_id],
+                    shrinkA=0,
+                    shrinkB=3,
+                    connectionstyle=f"arc3,rad={rad}",
+                    linestyle="-",
+                    linewidth=3.2,
+                    color='#e74c3c',
+                    arrowstyle="-|>",
+                    mutation_scale=16,
+                    zorder=5,
+                    alpha=1.0
+                )
+            else:
+                # Não Crítico: Conexão em linha tracejada discreta
+                arrow = patches.FancyArrowPatch(
+                    pos_u, pos_v,
+                    patchA=node_patches[u_id],
+                    patchB=node_patches[v_id],
+                    shrinkA=0,
+                    shrinkB=3,
+                    connectionstyle="arc3,rad=0",
+                    linestyle="--",
+                    linewidth=1.1,
+                    color=color,
+                    arrowstyle="->",
+                    mutation_scale=12,
+                    zorder=2,
+                    alpha=0.45
+                )
             ax.add_patch(arrow)
 
-    # 2. Desenhar Arcos Conjuntivos A (Precedência do Job)
+    # 2. Desenhar Arcos Conjuntivos A (Precedência dos Jobs)
     job_tasks = defaultdict(list)
     for t in tasks:
         job_tasks[t['job_id']].append(t)
@@ -211,123 +268,96 @@ def generate_solution_graph(filepath, output_dir, x_spacing=3.8, y_spacing=2.5, 
         # S -> Primeira tarefa
         first_id = f"J{j_id}_T0"
         is_crit = ('S', first_id) in critical_edges
-        edge_color = '#e74c3c' if is_crit else '#7f8c8d'
-        line_w = 3.2 if is_crit else 1.6
         arrow = patches.FancyArrowPatch(
             start_pos, node_positions[first_id],
+            patchA=node_patches['S'],
+            patchB=node_patches[first_id],
+            shrinkA=0,
+            shrinkB=3,
             connectionstyle="arc3,rad=0",
             linestyle="-",
-            linewidth=line_w,
-            color=edge_color,
+            linewidth=3.2 if is_crit else 1.5,
+            color='#e74c3c' if is_crit else '#7f8c8d',
             arrowstyle="-|>",
-            mutation_scale=16 if is_crit else 12,
-            shrinkA=24,
-            shrinkB=24,
-            zorder=6 if is_crit else 2
+            mutation_scale=15 if is_crit else 11,
+            zorder=5 if is_crit else 3
         )
         ax.add_patch(arrow)
 
-        # Entre tarefas do mesmo job
+        # Entre tarefas consecutivas do mesmo job
         for i in range(len(t_sorted) - 1):
             u_id = f"J{j_id}_T{t_sorted[i]['task_id']}"
             v_id = f"J{j_id}_T{t_sorted[i+1]['task_id']}"
             is_crit = (u_id, v_id) in critical_edges
-            edge_color = '#e74c3c' if is_crit else '#7f8c8d'
-            line_w = 3.2 if is_crit else 1.6
             arrow = patches.FancyArrowPatch(
                 node_positions[u_id], node_positions[v_id],
+                patchA=node_patches[u_id],
+                patchB=node_patches[v_id],
+                shrinkA=0,
+                shrinkB=3,
                 connectionstyle="arc3,rad=0",
                 linestyle="-",
-                linewidth=line_w,
-                color=edge_color,
+                linewidth=3.2 if is_crit else 1.5,
+                color='#e74c3c' if is_crit else '#7f8c8d',
                 arrowstyle="-|>",
-                mutation_scale=16 if is_crit else 12,
-                shrinkA=24,
-                shrinkB=24,
-                zorder=6 if is_crit else 2
+                mutation_scale=15 if is_crit else 11,
+                zorder=5 if is_crit else 3
             )
             ax.add_patch(arrow)
 
         # Última tarefa -> F
         last_id = f"J{j_id}_T{t_sorted[-1]['task_id']}"
         is_crit = (last_id, 'F') in critical_edges
-        edge_color = '#e74c3c' if is_crit else '#7f8c8d'
-        line_w = 3.2 if is_crit else 1.6
         arrow = patches.FancyArrowPatch(
             node_positions[last_id], end_pos,
+            patchA=node_patches[last_id],
+            patchB=node_patches['F'],
+            shrinkA=0,
+            shrinkB=3,
             connectionstyle="arc3,rad=0",
             linestyle="-",
-            linewidth=line_w,
-            color=edge_color,
+            linewidth=3.2 if is_crit else 1.5,
+            color='#e74c3c' if is_crit else '#7f8c8d',
             arrowstyle="-|>",
-            mutation_scale=16 if is_crit else 12,
-            shrinkA=24,
-            shrinkB=24,
-            zorder=6 if is_crit else 2
+            mutation_scale=15 if is_crit else 11,
+            zorder=5 if is_crit else 3
         )
         ax.add_patch(arrow)
-
-    # 3. Desenhar Nós
-    # Dummy S e F
-    for node_id, label in [('S', 'INÍCIO\n(S)'), ('F', f'FIM\n(F)\nMk={makespan}')]:
-        pos = node_positions[node_id]
-        circle = plt.Circle(pos, node_radius, facecolor='#ecf0f1', edgecolor='#e74c3c', linewidth=2.8, zorder=7)
-        ax.add_patch(circle)
-        ax.text(pos[0], pos[1], label, ha='center', va='center', fontsize=9.5, fontweight='bold', color='#2c3e50', zorder=8)
-
-    # Nós de Operações com Tempos
-    for t in tasks:
-        node_id = f"J{t['job_id']}_T{t['task_id']}"
-        pos = node_positions[node_id]
-        m = t['machine']
-        d = t['duration']
-        st = t['start']
-        et = t['end']
-        color = machine_colors[m]
-
-        is_crit = node_id in critical_nodes
-        edge_c = '#e74c3c' if is_crit else '#1a252f'
-        edge_w = 3.2 if is_crit else 1.8
-
-        circle = plt.Circle(pos, node_radius, facecolor=color, edgecolor=edge_c, linewidth=edge_w, zorder=7, alpha=0.96)
-        ax.add_patch(circle)
-
-        text_label = f"Job {t['job_id']} Op {t['task_id']}\nM{m} (d={d})\n[{st} - {et}]"
-        ax.text(pos[0], pos[1], text_label, ha='center', va='center', fontsize=8.0, fontweight='bold', color='white', zorder=8)
 
     # Identificadores de Jobs
     for j_id in range(num_jobs):
         y = (num_jobs - 1 - j_id) * y_spacing
-        ax.text(-x_spacing * 0.4, y, f"Job {j_id}", ha='right', va='center', fontsize=11, fontweight='bold', color='#34495e')
+        ax.text(-eff_x_spacing * 0.35, y, f"Job {j_id}", ha='right', va='center', fontsize=11, fontweight='bold', color='#34495e')
 
-    # Limites
-    ax.set_xlim(-x_spacing * 0.8, end_x + x_spacing * 0.8)
+    # Limites e Layout
+    ax.set_xlim(-eff_x_spacing * 0.75, end_x + eff_x_spacing * 0.75)
     ax.set_ylim(-y_spacing * 0.9, (num_jobs - 1) * y_spacing + y_spacing * 0.9)
     ax.set_aspect('equal')
     ax.axis('off')
 
     ax.set_title(f"Grafo Direcionado da Solução $D_S = (N, A \\cup S)$ — {name_without_ext}\n"
-                 f"Makespan: {makespan} | Jobs: {num_jobs} | Máquinas: {num_machines} | Caminho Crítico Destacado em Vermelho",
+                 f"Makespan: {makespan} | Jobs: {num_jobs} | Máquinas: {num_machines} | Caminho Crítico em Arco Vermelho",
                  fontsize=16, fontweight='bold', pad=25)
 
-    # Legenda
+    # Legenda Atualizada
     legend_elements = [
-        patches.Patch(facecolor='#7f8c8d', edgecolor='black', label='Arco Conjuntivo (Precedência)'),
-        patches.Patch(facecolor='none', edgecolor='#e74c3c', linewidth=3.0, label='Caminho Crítico (Makespan)'),
-        patches.Patch(facecolor='none', edgecolor='gray', label='Arco de Sequência da Máquina'),
+        patches.Patch(facecolor='#7f8c8d', edgecolor='black', label='Arco Conjuntivo (Precedência do Job)'),
+        patches.Patch(facecolor='none', edgecolor='#e74c3c', linewidth=3.0, label='Caminho Crítico (Arco Vermelho)'),
+        patches.Patch(facecolor='none', edgecolor='gray', linestyle='--', label='Sequência da Máquina Não-Crítica (Tracejado)'),
     ]
     for m in range(num_machines):
         legend_elements.append(patches.Patch(facecolor=machine_colors[m], edgecolor='black', label=f'Máquina {m}'))
 
     ax.legend(handles=legend_elements, loc='upper center', bbox_to_anchor=(0.5, -0.03),
-              ncol=min(8, num_machines + 3), frameon=True, fontsize=10)
+              ncol=min(6, num_machines + 3), frameon=True, fontsize=10)
 
     plt.tight_layout()
 
+    # Salvar Imagem
     os.makedirs(output_dir, exist_ok=True)
     out_path = os.path.join(output_dir, f"solution_{name_without_ext}.png")
     plt.savefig(out_path, dpi=300, bbox_inches='tight')
-    print(f"[OK] Grafo da Solução salvo em: {out_path}")
+    print(f"[OK] Grafo da Solução salvo com sucesso em: {out_path}")
 
     if show_plot:
         plt.show()
@@ -338,8 +368,8 @@ if __name__ == "__main__":
     parser.add_argument("filepath", help="Caminho para o arquivo .txt de saída das máquinas")
     default_out = os.path.join(os.path.dirname(__file__), '..', 'out', 'graphs')
     parser.add_argument("--outdir", default=default_out, help="Diretório de saída")
-    parser.add_argument("--x-spacing", type=float, default=3.8, help="Espaçamento horizontal entre tarefas (padrão: 3.8)")
-    parser.add_argument("--y-spacing", type=float, default=2.5, help="Espaçamento vertical entre jobs (padrão: 2.5)")
+    parser.add_argument("--x-spacing", type=float, default=4.6, help="Espaçamento horizontal entre tarefas (padrão: 4.6)")
+    parser.add_argument("--y-spacing", type=float, default=2.6, help="Espaçamento vertical entre jobs (padrão: 2.6)")
     parser.add_argument("--fig-scale", type=float, default=1.0, help="Fator de escala da figura (padrão: 1.0)")
     parser.add_argument("--no-show", action="store_true", help="Não exibe a janela gráfica interativa")
 
