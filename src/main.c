@@ -3,6 +3,7 @@
 #include <string.h>
 #include <limits.h>
 #include <time.h>
+#include <math.h>
 
 typedef struct Task { 
     int operation;
@@ -29,18 +30,21 @@ typedef struct Machine{
     int tempoAtual;
     int numTasks;
     Task* tasks;
-
     int disponivel;
 } Machine;
 
 typedef struct Solution{
     int numMachines;
     int numJobs;
-    int maxMakespan;  
+    int numTasks;
+    int maxMakespan;
     int totalIdletime;
     float mediaFlowtime;
     Machine* machines;
     Job* jobs;
+    int tamCaminhoCritico;
+    Task* caminhoCritico;
+    unsigned int seed;
 } Solution;
 
 void iniciarInstancias(const char *filePath, int *numJobs, int *numMachines, Job **jobs, Machine **machines){
@@ -109,6 +113,7 @@ void iniciarInstancias(const char *filePath, int *numJobs, int *numMachines, Job
 }
 
 void printJobs(Job *jobs, int numJobs, int numMachines) {
+    
     printf("Numero de Jobs: %d\n", numJobs);
     printf("Numero de Maquinas: %d\n", numMachines);
 
@@ -151,7 +156,7 @@ void printMachines(Solution* solution){
     }
 }
 
-void printMachinesToFile(FILE *arquivo, Solution *solution){
+void printSolutionToFile(FILE *arquivo, Solution *solution){
     
     fprintf(arquivo, "Numero de Maquinas: %d\n", solution->numMachines);
     fprintf(arquivo, "Maximo Makespan:  %d\n", solution->maxMakespan);
@@ -528,7 +533,7 @@ Solution* spt_twkr(Job *jobs, int numJobs, Machine *machines, int numMachines){
     solution->jobs = auxJobs;
     solution->numMachines = numMachines;
     solution->machines = auxMachines;
-
+    solution->numTasks = auxSeq + 1;
     return solution;
 }
 
@@ -606,6 +611,154 @@ Solution* lpt(Job *jobs, int numJobs, Machine *machines, int numMachines){
     return solution;
 }
 
+Task* obterPredecessorMaquina(Solution *solution, Task *t) {
+    
+    Machine *maq = &solution->machines[t->machine];
+    for (int k = 0; k < maq->numTasks; k++) {
+        if (maq->tasks[k].jobId == t->jobId && maq->tasks[k].operation == t->operation) {
+            if (k > 0) {
+                return &maq->tasks[k - 1];
+            }
+            return NULL;
+        }
+    }
+    return NULL;
+}
+
+Task* caminhoCritico(Solution *solution) {
+    
+    if (solution == NULL || solution->numJobs <= 0 || solution->numMachines <= 0) {
+        return NULL;
+    }
+
+    int numJobs = solution->numJobs;
+    int numMachines = solution->numMachines;
+    int maxTotalTasks = numJobs * numMachines;
+
+    // 1. Encontrar a tarefa terminal que define o Makespan
+    Task *tarefaMakespan = NULL;
+    int maxEnd = -1;
+
+    for (int j = 0; j < numJobs; j++) {
+        // A última operação de cada job está no índice (numMachines - 1)
+        Task *tFinal = &solution->jobs[j].tasks[numMachines - 1];
+        if (tFinal->endTime > maxEnd) {
+            maxEnd = tFinal->endTime;
+            tarefaMakespan = tFinal;
+        }
+    }
+
+    if (tarefaMakespan == NULL) {
+        return NULL;
+    }
+
+    // 2. Vetor temporário para reconstruir o caminho de trás para frente
+    Task **caminhoReverso = (Task**)malloc(maxTotalTasks * sizeof(Task*));
+    int tamCaminho = 0;
+
+    Task *atual = tarefaMakespan;
+    caminhoReverso[tamCaminho++] = atual;
+
+    // 3. Retroceder até a primeira tarefa do agendamento (tempo base 1 do spt_twkr)
+    while (atual != NULL && atual->startTime > 1) {
+        Task *predJob = NULL;
+        Task *predMaq = NULL;
+
+        // Candidato 1: Predecessor no mesmo Job
+        if (atual->operation > 0) {
+            predJob = &solution->jobs[atual->jobId].tasks[atual->operation - 1];
+        }
+
+        // Candidato 2: Predecessor na mesma Máquina
+        predMaq = obterPredecessorMaquina(solution, atual);
+
+        // Identifica quem causou o gargalo (quem terminou no instante em que a atual começou)
+        // Em caso de empate, ambos são críticos; priorizamos a precedência da máquina ou do job
+        if (predMaq != NULL && predMaq->endTime == atual->startTime) {
+            atual = predMaq;
+        } else if (predJob != NULL && predJob->endTime == atual->startTime) {
+            atual = predJob;
+        } else {
+            // Chegou ao início da cadeia crítica
+            break;
+        }
+
+        caminhoReverso[tamCaminho++] = atual;
+    }
+
+    // 4. Montar o vetor de retorno na ordem cronológica correta (do início ao fim)
+    Task *caminho = (Task*)malloc(tamCaminho * sizeof(Task));
+    for (int i = 0; i < tamCaminho; i++) {
+        caminho[i] = *caminhoReverso[tamCaminho - 1 - i];
+    }
+
+    solution->tamCaminhoCritico = tamCaminho;
+    solution->caminhoCritico = caminho;
+
+    free(caminhoReverso);
+    return caminho;
+}
+
+void printCaminhoCritico(Task *caminho, int tamCaminho, int makespan) {
+    
+    if (caminho == NULL || tamCaminho <= 0) {
+        printf("Caminho critico vazio ou nao encontrado.\n");
+        return;
+    }
+    printf("\n==================== CAMINHO CRITICO ====================\n");
+    printf("Total de tarefas no caminho critico: %d\n", tamCaminho);
+    
+    int duracaoTotal = 0;
+    for (int i = 0; i < tamCaminho; i++) {
+        printf("  [%02d] Job %2d | Op %2d | Maq %2d | Dur: %2d | Start: %3d | End: %3d\n",
+               i + 1,
+               caminho[i].jobId,
+               caminho[i].operation,
+               caminho[i].machine,
+               caminho[i].duration,
+               caminho[i].startTime,
+               caminho[i].endTime);
+        duracaoTotal += caminho[i].duration;
+    }
+    printf("Duracao acumulada das tarefas: %d | Makespan: %d\n", duracaoTotal, makespan);
+    if (duracaoTotal == makespan) {
+        printf("Status: Caminho critico sem folgas (Valido!)\n");
+    } else {
+        printf("Status: Folga detectada (Diferenca: %d)\n", makespan - duracaoTotal);
+    }
+    printf("=========================================================\n\n");
+}
+
+void printCaminhoCriticoToFile(FILE *arquivo, Task *caminho, int tamCaminho, int makespan) {
+    
+    if (caminho == NULL || tamCaminho <= 0) {
+        fprintf(arquivo, "Caminho critico vazio ou nao encontrado.\n");
+        return;
+    }
+    fprintf(arquivo, "\n==================== CAMINHO CRITICO ====================\n");
+    fprintf(arquivo, "Total de tarefas no caminho critico: %d\n", tamCaminho);
+    
+    int duracaoTotal = 1;
+    for (int i = 0; i < tamCaminho; i++) {
+        fprintf(arquivo, "  [%02d] Job %2d | Op %2d | Maq %2d | Dur: %2d | Start: %3d | End: %3d\n",
+                i + 1,
+               caminho[i].jobId,
+               caminho[i].operation,
+               caminho[i].machine,
+               caminho[i].duration,
+               caminho[i].startTime,
+               caminho[i].endTime);
+        duracaoTotal += caminho[i].duration;
+    }
+    fprintf(arquivo, "Duracao acumulada das tarefas: %d | Makespan: %d\n", duracaoTotal, makespan);
+    if (duracaoTotal == makespan) {
+        fprintf(arquivo, "Status: Caminho critico sem folgas (Valido!)\n");
+    } else {
+        fprintf(arquivo, "Status: Folga detectada (Diferenca: %d)\n", makespan - duracaoTotal);
+    }
+    fprintf(arquivo, "=========================================================\n\n");
+}
+
 void calcularScore(Solution *solution){
 
     int auxMakespan = 0;
@@ -637,6 +790,291 @@ void calcularScore(Solution *solution){
     }
 }
 
+void obterAdjacentesOpMaq(Task *caminhoCritico, int tamCaminho, int idxop, Task **opAnt, Task **opPos){
+
+    *opAnt = NULL;
+    *opPos = NULL;
+
+    if(caminhoCritico == NULL || tamCaminho <= 0){
+        return;
+    }
+
+    if(idxop > 0){
+        if(caminhoCritico[idxop - 1].machine == caminhoCritico[idxop].machine){
+
+            *opAnt = &caminhoCritico[idxop - 1];
+        }
+    }
+
+    if(idxop < tamCaminho - 1){
+        if(caminhoCritico[idxop + 1].machine == caminhoCritico[idxop].machine){
+
+            *opPos = &caminhoCritico[idxop + 1];
+        }
+    }
+}
+
+int obterPosicaoNaMaquina(Solution *solution, Task *t) {
+    
+    if (solution == NULL || t == NULL) return -1;
+    
+    Machine *maq = &solution->machines[t->machine];
+    for (int k = 0; k < maq->numTasks; k++) {
+        if (maq->tasks[k].jobId == t->jobId && maq->tasks[k].operation == t->operation) {
+            return k;
+        }
+    }
+    return -1;
+}
+
+/*
+ * Recalculo por Propagacao Seletiva
+ * maqId: maquina onde ocorreu a troca
+ * posA: indice da primeira tarefa trocada na maquina (posicao k)
+ * posB: indice da segunda tarefa trocada na maquina (posicao k+1)
+*/
+int recalcularSolucaoSeletiva(Solution *solution, int maqId, int posA, int posB) {
+    
+    if(solution == NULL){
+        return 0;
+    }
+    int numJobs = solution->numJobs;
+    int numMachines = solution->numMachines;
+    int totalTasks = numJobs * numMachines;
+
+    // Estrutura auxiliar de posicao na maquina
+    int posNaMaquina[numJobs][numMachines];
+
+    for(int m = 0; m < numMachines; m++){
+        for (int k = 0; k < solution->machines[m].numTasks; k++) {
+            Task *t = &solution->machines[m].tasks[k];
+            posNaMaquina[t->jobId][t->operation] = k;
+        }
+    }
+    
+    // Fila circular ou lista dinâmica para eventos de propagação
+    typedef struct{ 
+        int jobId; 
+        int op; 
+    } ParOp;
+
+    int capacidadeFila = totalTasks * 4; // margem segura
+    ParOp *fila = (ParOp*)malloc(capacidadeFila * sizeof(ParOp));
+
+    int inicioFila = 0, fimFila = 0;
+    
+    // Matriz de controle para evitar duplicar o mesmo no simultaneamente na fila
+    int naFila[numJobs][numMachines];
+
+    for(int j = 0; j < numJobs; j++){
+        for (int op = 0; op < numMachines; op++) {
+            naFila[j][op] = 0;
+        }
+    }
+    
+    // Enfileira as tarefas a partir da posição da troca
+    Task *t1 = &solution->machines[maqId].tasks[posA];
+    Task *t2 = &solution->machines[maqId].tasks[posB];
+    
+    fila[fimFila++] = (ParOp){ t1->jobId, t1->operation };
+    naFila[t1->jobId][t1->operation] = 1;
+    
+    fila[fimFila++] = (ParOp){ t2->jobId, t2->operation };
+    naFila[t2->jobId][t2->operation] = 1;
+    
+    int iteracoes = 0;
+    int limiteMaximo = totalTasks * numMachines; // Guarda contra ciclos
+    while(inicioFila < fimFila){
+
+        if(++iteracoes > limiteMaximo){
+            // Ciclo detectado durante a propagação
+            free(fila);
+            return 0;
+        }
+        
+        ParOp atual = fila[inicioFila++];
+        int j = atual.jobId;
+        int op = atual.op;
+        naFila[j][op] = 0;
+        
+        Task *tJob = &solution->jobs[j].tasks[op];
+        int m = tJob->machine;
+        int pos = posNaMaquina[j][op];
+        
+        // 1. Calcula o novo Start Time
+        int tempoPredJob = 1;
+        if(op > 0){
+            tempoPredJob = solution->jobs[j].tasks[op - 1].endTime;
+        }
+        int tempoPredMaq = 1;
+        if(pos > 0){
+            tempoPredMaq = solution->machines[m].tasks[pos - 1].endTime;
+        }
+        
+        int novoStart = (tempoPredJob > tempoPredMaq) ? tempoPredJob : tempoPredMaq;
+        if(novoStart < 1){
+            novoStart = 1;
+        }
+        
+        // Se o horário de início mudou, propaga para os sucessores
+        if(novoStart != tJob->startTime){
+            tJob->startTime = novoStart;
+            tJob->endTime = novoStart + tJob->duration;
+            
+            // Sincroniza cópia na máquina
+            solution->machines[m].tasks[pos].startTime = tJob->startTime;
+            solution->machines[m].tasks[pos].endTime = tJob->endTime;
+            
+            // Enfileira Sucessor no Job
+            if (op + 1 < numMachines) {
+                if (!naFila[j][op + 1]) {
+                    fila[fimFila++] = (ParOp){ j, op + 1 };
+                    naFila[j][op + 1] = 1;
+                }
+            }
+            
+            // Enfileira Sucessor na Máquina
+            if (pos + 1 < solution->machines[m].numTasks) {
+                Task *sucMaq = &solution->machines[m].tasks[pos + 1];
+                if (!naFila[sucMaq->jobId][sucMaq->operation]) {
+                    fila[fimFila++] = (ParOp){ sucMaq->jobId, sucMaq->operation };
+                    naFila[sucMaq->jobId][sucMaq->operation] = 1;
+                }
+            }
+        }
+    }
+
+    free(fila);
+    
+    // Atualiza tempoAtual das máquinas
+    for(int m = 0; m < numMachines; m++){
+        int ultimoIdx = solution->machines[m].numTasks - 1;
+        solution->machines[m].tempoAtual = solution->machines[m].tasks[ultimoIdx].endTime;
+    }
+    
+    // Recalcula score e novo caminho crítico
+    calcularScore(solution);
+    if(solution->caminhoCritico != NULL){
+        free(solution->caminhoCritico);
+        solution->caminhoCritico = NULL;
+    }
+
+    caminhoCritico(solution);
+    return 1;
+}
+
+Solution* trocaN1(Solution *solution, int idxopAtu, Task *t1, Task *t2){
+
+    if(solution == NULL || t1 == NULL || t2 == NULL){
+        printf("Erro: ponteiros nulos na funcao trocaN1\n");
+        return NULL;
+    }
+
+    if(t1->machine != t2->machine){
+        printf("Erro: maquinas diferentes na funcao trocaN1\n");
+        return NULL;
+    }
+
+    int m = t1->machine;
+    Solution *auxSolution = solution;
+
+    int pos1 = obterPosicaoNaMaquina(auxSolution, t1);
+    int pos2 = obterPosicaoNaMaquina(auxSolution, t2);
+
+    if(pos1 == -1 || pos2 == -1) {
+        return NULL;
+    }
+
+    int dif = pos1 - pos2;
+    if(dif != 1 && dif != -1){
+        printf("Erro: posicoes nao adjacentes na funcao trocaN1\n");
+        return NULL;
+    }
+
+    int posA = (pos1 < pos2) ? pos1 : pos2;
+    int posB = (pos1 > pos2) ? pos1 : pos2;
+
+    Task temp = auxSolution->machines[m].tasks[posA];
+    auxSolution->machines[m].tasks[posA] = auxSolution->machines[m].tasks[posB];
+    auxSolution->machines[m].tasks[posB] = temp;
+
+    int viavel = recalcularSolucaoSeletiva(auxSolution, m, posA, posB);
+
+    if(!viavel){
+        free(auxSolution);
+        return NULL;
+    }
+
+    return auxSolution;
+}
+
+Solution* buscaLocalN1(Solution *solution, unsigned int seed, int iter){
+
+    srand(seed);
+    int minRange = 0;
+    int maxRange = solution->tamCaminhoCritico - 1;
+
+    int idxopAtu = minRange + rand() % (maxRange - minRange + 1);
+        
+    Task *opAtu = &solution->caminhoCritico[idxopAtu];
+    Task *opAnt = NULL;
+    Task *opPos = NULL;
+
+    obterAdjacentesOpMaq(solution->caminhoCritico, solution->tamCaminhoCritico, idxopAtu, &opAnt, &opPos);
+
+    if(opAnt != NULL && opPos != NULL){
+        Solution *solutionAnt = trocaN1(solution, idxopAtu, opAtu, opAnt);
+        Solution *solutionPos = trocaN1(solution, idxopAtu, opAtu, opPos);
+
+        if(solutionAnt != NULL && solutionPos != NULL){
+            if(solutionAnt->maxMakespan < solutionPos->maxMakespan){
+                free(solutionPos);
+                if(solutionAnt->maxMakespan < solution->maxMakespan){
+                    printf("[Iter %d] Melhoria encontrada: Makespan %d -> %d\n", iter, solution->maxMakespan, solutionAnt->maxMakespan);
+                    free(solution);
+                    return solutionAnt;
+                }else{
+                    free(solutionAnt);
+                    return solution;
+                }
+            }else{
+                free(solutionAnt);
+                if(solutionPos->maxMakespan < solution->maxMakespan){
+                    printf("[Iter %d] Melhoria encontrada: Makespan %d -> %d\n", iter, solution->maxMakespan, solutionPos->maxMakespan);
+                    free(solution);
+                    return solutionPos;
+                }else{
+                    free(solutionPos);
+                    return solution;
+                }
+            }
+        }else if(solutionAnt != NULL){
+            free(solutionPos);
+            if(solutionAnt->maxMakespan < solution->maxMakespan){
+                printf("[Iter %d] Melhoria encontrada: Makespan %d -> %d\n", iter, solution->maxMakespan, solutionAnt->maxMakespan);
+                free(solution);
+                return solutionAnt;
+            }else{
+                free(solutionAnt);
+                return solution;
+            }
+        }else if(solutionPos != NULL){
+            free(solutionAnt);
+            if(solutionPos->maxMakespan < solution->maxMakespan){
+                printf("[Iter %d] Melhoria encontrada: Makespan %d -> %d\n", iter, solution->maxMakespan, solutionPos->maxMakespan);
+                free(solution);
+                return solutionPos;
+            }else{
+                free(solutionPos);
+                return solution;
+            }
+        }else{
+            free(solutionAnt);
+            free(solutionPos);
+            return solution;
+        }
+    }
+}
 int main (int argc, char *argv[]){
     
     clock_t inicio = clock();
@@ -667,14 +1105,16 @@ int main (int argc, char *argv[]){
     //printMachines(result, numMachines);
 
     calcularScore(solution);
+    caminhoCritico(solution);
 
     char *caminho_saida = argv[2];
 
     FILE *arquivoSaida = fopen(caminho_saida, "w");
 
     if (arquivoSaida != NULL) {
-        printMachinesToFile(arquivoSaida, solution);
-        
+        printSolutionToFile(arquivoSaida, solution);
+        printCaminhoCriticoToFile(arquivoSaida, solution->caminhoCritico, solution->tamCaminhoCritico, solution->maxMakespan);
+
         fclose(arquivoSaida);
         
         printf("Resultado salvo com sucesso no arquivo %s!\n", caminho_saida);
