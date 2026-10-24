@@ -92,3 +92,28 @@ Machine 4:
     Task 4: Machine 4, Duration 58, Job ID 0, Start Time 898, End Time 956, Sequencia: 66
     Task 4: Machine 4, Duration 73, Job ID 3, Start Time 956, End Time 1029, Sequencia: 72
     Task 4: Machine 4, Duration 71, Job ID 4, Start Time 1029, End Time 1100, Sequencia: 74
+
+==================== CAMINHO CRITICO ====================
+Total de tarefas no caminho critico: 18
+  [01] Job  8 | Op  0 | Maq  0 | Dur: 64 | Start:   1 | End:  65
+  [02] Job  4 | Op  1 | Maq  0 | Dur: 40 | Start:  65 | End: 105
+  [03] Job 10 | Op  0 | Maq  0 | Dur: 52 | Start: 105 | End: 157
+  [04] Job  2 | Op  0 | Maq  0 | Dur: 77 | Start: 157 | End: 234
+  [05] Job  2 | Op  1 | Maq  1 | Dur: 87 | Start: 234 | End: 321
+  [06] Job  3 | Op  1 | Maq  1 | Dur: 21 | Start: 321 | End: 342
+  [07] Job 13 | Op  0 | Maq  1 | Dur: 87 | Start: 342 | End: 429
+  [08] Job  6 | Op  0 | Maq  1 | Dur: 91 | Start: 429 | End: 520
+  [09] Job 12 | Op  2 | Maq  1 | Dur: 63 | Start: 520 | End: 583
+  [10] Job  8 | Op  3 | Maq  1 | Dur: 90 | Start: 583 | End: 673
+  [11] Job 11 | Op  2 | Maq  1 | Dur: 93 | Start: 673 | End: 766
+  [12] Job 11 | Op  3 | Maq  4 | Dur:  7 | Start: 766 | End: 773
+  [13] Job  6 | Op  1 | Maq  4 | Dur: 75 | Start: 773 | End: 848
+  [14] Job 14 | Op  3 | Maq  4 | Dur: 15 | Start: 848 | End: 863
+  [15] Job  7 | Op  3 | Maq  4 | Dur: 35 | Start: 863 | End: 898
+  [16] Job  0 | Op  4 | Maq  4 | Dur: 58 | Start: 898 | End: 956
+  [17] Job  3 | Op  4 | Maq  4 | Dur: 73 | Start: 956 | End: 1029
+  [18] Job  4 | Op  4 | Maq  4 | Dur: 71 | Start: 1029 | End: 1100
+Duracao acumulada das tarefas: 1100 | Makespan: 1100
+Status: Caminho critico sem folgas (Valido!)
+=========================================================
+

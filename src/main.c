@@ -21,8 +21,6 @@ typedef struct Job {
     int workRemaining;
     int operationAtual;
     Task* tasks;
-
-    int completo;
 } Job;
 
 typedef struct Machine{
@@ -84,7 +82,6 @@ void iniciarInstancias(const char *filePath, int *numJobs, int *numMachines, Job
         (*jobs)[i].numTasks = *numMachines;
         (*jobs)[i].operationAtual = 0;
         (*jobs)[i].tasks = (Task*)malloc(*numMachines * sizeof(Task));
-        (*jobs)[i].completo = 0;
         (*jobs)[i].workRemaining = 0;
 
         for(int j = 0; j < *numMachines; j++){
@@ -191,7 +188,7 @@ int maquinaCritica(Job *jobs, int numJobs, Machine *machines){
 
     for(int i = 0; i < numJobs; i++){
         
-        if(auxJobs[i].completo) continue;
+        if(auxJobs[i].operationAtual >= auxJobs[i].numTasks) continue;
         
         int machineFreeTime = auxMachines[auxJobs[i].tasks[auxJobs[i].operationAtual].machine].tempoAtual;
 
@@ -208,257 +205,6 @@ int maquinaCritica(Job *jobs, int numJobs, Machine *machines){
     }
 
     return minMachineId;
-}
-
-Solution* spt_eav(Job *jobs, int numJobs, Machine *machines, int numMachines){
-/*
-    Shortest Processing Time com Earliest Available Machine (SPT-EAV)
-*/
-    Solution *solution = (Solution*)malloc(sizeof(Solution));
-    Job *auxJobs = jobs;
-    Machine *auxMachines = machines;
-
-    int jobsCompletos = 0;
-
-    int minMachineTime = INT_MAX;
-    int minMachineId = 0;
-    
-    int minJobDuration = INT_MAX;
-    int minJobId = 0;
-
-    do{
-        
-        for(int j = 0; j < numMachines; j++){
-            auxMachines[j].disponivel = 0;
-        }
-
-        for(int i = 0; i < numJobs; i++){
-            if( !auxJobs[i].completo && auxMachines[auxJobs[i].tasks[auxJobs[i].operationAtual].machine].disponivel == 0){
-                auxMachines[auxJobs[i].tasks[auxJobs[i].operationAtual].machine].disponivel = 1;
-            }
-        }
-        
-        for(int j = 0; j < numMachines; j++){
-
-            if(auxMachines[j].disponivel == 1 && auxMachines[j].tempoAtual == 0){
-                minMachineTime = auxMachines[j].tempoAtual;
-                minMachineId = j;
-                break;
-            }
-            if(auxMachines[j].disponivel == 1 && auxMachines[j].tempoAtual < minMachineTime){
-                minMachineTime = auxMachines[j].tempoAtual;
-                minMachineId = j;
-            }
-        }
-
-        for(int j = 0; j < numJobs; j++){
-            if(!auxJobs[j].completo && auxJobs[j].tasks[auxJobs[j].operationAtual].machine == minMachineId && auxJobs[j].tasks[auxJobs[j].operationAtual].duration < minJobDuration){
-                minJobDuration = auxJobs[j].tasks[auxJobs[j].operationAtual].duration;
-                minJobId = auxJobs[j].id;
-            }
-        }
-
-        int machineFreeTime = auxMachines[minMachineId].tempoAtual;
-        int jobFreeTime = (auxJobs[minJobId].operationAtual > 0) 
-                           ? auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual - 1].endTime 
-                           : 0;
-
-        int realStartTime = (machineFreeTime > jobFreeTime) ? machineFreeTime : jobFreeTime;
-
-        auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual].startTime = realStartTime;
-        auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual].endTime = realStartTime + auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual].duration;
-        auxJobs[minJobId].numTasks--;
-
-        auxMachines[minMachineId].tasks[auxMachines[minMachineId].numTasks] = auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual];
-        auxMachines[minMachineId].tempoAtual = realStartTime + auxMachines[minMachineId].tasks[auxMachines[minMachineId].numTasks].duration;
-
-        auxMachines[minMachineId].numTasks++;
-        auxJobs[minJobId].operationAtual++;
-
-        if(auxJobs[minJobId].numTasks == 0){
-            auxJobs[minJobId].completo = 1;
-            jobsCompletos++;
-        }
-
-        minMachineTime = INT_MAX;
-        minJobDuration = INT_MAX;
-        minMachineId = INT_MIN;
-        minJobId = INT_MIN;
-    
-    }while(jobsCompletos < numJobs);
-
-    solution->numJobs = numJobs;
-    solution->jobs = auxJobs;
-    solution->numMachines = numMachines;
-    solution->machines = auxMachines;
-
-    return solution;
-}
-
-Solution* spt_2(Job *jobs, int numJobs, Machine *machines, int numMachines){
-/*
-    Shortest Processing Time com desempate por Earliest Start Time (SPT-EST) v2
-*/
-    Solution *solution = (Solution*)malloc(sizeof(Solution));
-    Job *auxJobs = jobs;
-    Machine *auxMachines = machines;
-
-    int jobsCompletos = 0;
-
-    //int minMachineTime = INT_MAX;
-    int minMachineId = 0;
-    
-    int minJobDuration = INT_MAX;
-    int minJobId = 0;
-
-    int minRealTime = INT_MAX;
-    
-    int auxSeq = 0;
-    do{
-
-        
-        
-        for(int i = 0; i < numMachines; i++){
-
-            int machineFreeTime = auxMachines[i].tempoAtual;
-
-            for(int j = 0; j < numJobs; j++){
-
-                int jobFreeTime = (auxJobs[j].operationAtual > 0)                       //if(auxJobs[minJobId].operationAtual > 0) 
-                           ? auxJobs[j].tasks[auxJobs[j].operationAtual - 1].endTime    //jobFreeTime = auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual - 1].endTime
-                           : 0;                                                         //else jobFreeTime = 0
-                
-                int realStartTime = (machineFreeTime > jobFreeTime) ? machineFreeTime : jobFreeTime;
-                
-                if(!auxJobs[j].completo && auxJobs[j].tasks[auxJobs[j].operationAtual].machine == i
-                   && auxJobs[j].tasks[auxJobs[j].operationAtual].duration < minJobDuration){
-
-                    minRealTime = realStartTime;
-                    minMachineId = i;
-                    minJobDuration = auxJobs[j].tasks[auxJobs[j].operationAtual].duration;
-                    minJobId = auxJobs[j].id;
-                }else if(!auxJobs[j].completo && auxJobs[j].tasks[auxJobs[j].operationAtual].machine == i
-                   && auxJobs[j].tasks[auxJobs[j].operationAtual].duration == minJobDuration){
-                    if(realStartTime < minRealTime){
-                        minRealTime = realStartTime;
-                        minMachineId = i;
-                        minJobDuration = auxJobs[j].tasks[auxJobs[j].operationAtual].duration;
-                        minJobId = auxJobs[j].id;
-                    }
-                }
-            }
-        }
-
-
-        auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual].startTime = minRealTime;
-        auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual].endTime = minRealTime + auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual].duration;
-        auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual].sequencia = auxSeq;
-        auxJobs[minJobId].numTasks--;
-        auxSeq++;
-
-        auxMachines[minMachineId].tasks[auxMachines[minMachineId].numTasks] = auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual];
-        auxMachines[minMachineId].tempoAtual = minRealTime + auxMachines[minMachineId].tasks[auxMachines[minMachineId].numTasks].duration;
-
-        auxMachines[minMachineId].numTasks++;
-        auxJobs[minJobId].operationAtual++;
-
-        if(auxJobs[minJobId].numTasks == 0){
-            auxJobs[minJobId].completo = 1;
-            jobsCompletos++;
-        }
-
-        //minMachineTime = INT_MAX;
-        minJobDuration = INT_MAX;
-        minMachineId = INT_MIN;
-        minJobId = INT_MIN;
-        minRealTime = INT_MAX;
-    
-    }while(jobsCompletos < numJobs);
-
-    solution->numJobs = numJobs;
-    solution->jobs = auxJobs;
-    solution->numMachines = numMachines;
-    solution->machines = auxMachines;
-
-    return solution;
-}
-
-Solution* spt_3(Job *jobs, int numJobs, Machine *machines, int numMachines){
-/*
-    Shortest Processing Time (SPT) v3
-*/
-    Solution *solution = (Solution*)malloc(sizeof(Solution));
-    Job *auxJobs = jobs;
-    Machine *auxMachines = machines;
-
-    int jobsCompletos = 0;
-
-    //int minMachineTime = INT_MAX;
-    int minMachineId = 0;
-    
-    int minJobDuration = INT_MAX;
-    int minJobId = 0;
-
-    int minRealTime = INT_MAX;
-    
-    int auxSeq = 0;
-    do{
-        
-        for(int i = 0; i < numMachines; i++){
-
-            int machineFreeTime = auxMachines[i].tempoAtual;
-
-            for(int j = 0; j < numJobs; j++){
-
-                int jobFreeTime = (auxJobs[j].operationAtual > 0)                       //if(auxJobs[minJobId].operationAtual > 0) 
-                           ? auxJobs[j].tasks[auxJobs[j].operationAtual - 1].endTime    //jobFreeTime = auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual - 1].endTime
-                           : 1;                                                         //else jobFreeTime = 0
-                
-                int realStartTime = (machineFreeTime > jobFreeTime) ? machineFreeTime : jobFreeTime;
-                
-                if(!auxJobs[j].completo && auxJobs[j].tasks[auxJobs[j].operationAtual].machine == i
-                   && auxJobs[j].tasks[auxJobs[j].operationAtual].duration < minJobDuration && realStartTime < minRealTime){
-
-                    minRealTime = realStartTime;
-                    minMachineId = i;
-                    minJobDuration = auxJobs[j].tasks[auxJobs[j].operationAtual].duration;
-                    minJobId = auxJobs[j].id;
-                }
-            }
-        }
-
-
-        auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual].startTime = minRealTime;
-        auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual].endTime = minRealTime + auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual].duration;
-        auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual].sequencia = auxSeq;
-        auxJobs[minJobId].numTasks--;
-        auxSeq++;
-
-        auxMachines[minMachineId].tasks[auxMachines[minMachineId].numTasks] = auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual];
-        auxMachines[minMachineId].tempoAtual = minRealTime + auxMachines[minMachineId].tasks[auxMachines[minMachineId].numTasks].duration;
-
-        auxMachines[minMachineId].numTasks++;
-        auxJobs[minJobId].operationAtual++;
-
-        if(auxJobs[minJobId].numTasks == 0){
-            auxJobs[minJobId].completo = 1;
-            jobsCompletos++;
-        }
-
-        //minMachineTime = INT_MAX;
-        minJobDuration = INT_MAX;
-        minMachineId = INT_MIN;
-        minJobId = INT_MIN;
-        minRealTime = INT_MAX;
-    
-    }while(jobsCompletos < numJobs);
-
-    solution->numJobs = numJobs;
-    solution->jobs = auxJobs;
-    solution->numMachines = numMachines;
-    solution->machines = auxMachines;
-
-    return solution;
 }
 
 Solution* spt_twkr(Job *jobs, int numJobs, Machine *machines, int numMachines){
@@ -485,13 +231,13 @@ Solution* spt_twkr(Job *jobs, int numJobs, Machine *machines, int numMachines){
 
         for(int j = 0; j < numJobs; j++){
                 
-            if(auxJobs[j].tasks[auxJobs[j].operationAtual].machine == minMachineId){
+            if(auxJobs[j].tasks[auxJobs[j].operationAtual].machine == minMachineId && auxJobs[j].operationAtual < auxJobs[j].numTasks){
 
                 float taskIndZ = (float)auxJobs[j].tasks[auxJobs[j].operationAtual].duration/auxJobs[j].workRemaining;
 
-                if(!auxJobs[j].completo && taskIndZ < minIndZ){
+                if(taskIndZ < minIndZ){
                     minIndZ = taskIndZ;
-                    minJobId = auxJobs[j].id;    
+                    minJobId = auxJobs[j].id;
                 }
             }
         }
@@ -508,7 +254,6 @@ Solution* spt_twkr(Job *jobs, int numJobs, Machine *machines, int numMachines){
         auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual].endTime = realStartTime + auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual].duration;
         auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual].sequencia = auxSeq;
         auxJobs[minJobId].workRemaining -= auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual].duration;
-        auxJobs[minJobId].numTasks--;
         auxSeq++;
 
         auxMachines[minMachineId].tasks[auxMachines[minMachineId].numTasks] = auxJobs[minJobId].tasks[auxJobs[minJobId].operationAtual];
@@ -517,11 +262,9 @@ Solution* spt_twkr(Job *jobs, int numJobs, Machine *machines, int numMachines){
         auxMachines[minMachineId].numTasks++;
         auxJobs[minJobId].operationAtual++;
 
-        if(auxJobs[minJobId].numTasks == 0){
-            auxJobs[minJobId].completo = 1;
+        if(auxJobs[minJobId].operationAtual == auxJobs[minJobId].numTasks){
             jobsCompletos++;
         }
-
 
         minMachineId = INT_MIN;
         minJobId = INT_MIN;
@@ -568,7 +311,7 @@ Solution* lpt(Job *jobs, int numJobs, Machine *machines, int numMachines){
                 
                 int realStartTime = (machineFreeTime > jobFreeTime) ? machineFreeTime : jobFreeTime;
                 
-                if(!auxJobs[j].completo && auxJobs[j].tasks[auxJobs[j].operationAtual].machine == i
+                if(auxJobs[j].operationAtual < auxJobs[j].numTasks && auxJobs[j].tasks[auxJobs[j].operationAtual].machine == i
                    && realStartTime <= maxRealTime && auxJobs[j].tasks[auxJobs[j].operationAtual].duration >= maxJobDuration){
 
                     maxRealTime = realStartTime;
@@ -582,7 +325,6 @@ Solution* lpt(Job *jobs, int numJobs, Machine *machines, int numMachines){
 
         auxJobs[maxJobId].tasks[auxJobs[maxJobId].operationAtual].startTime = maxRealTime;
         auxJobs[maxJobId].tasks[auxJobs[maxJobId].operationAtual].endTime = maxRealTime + auxJobs[maxJobId].tasks[auxJobs[maxJobId].operationAtual].duration;
-        auxJobs[maxJobId].numTasks--;
 
         auxMachines[maxMachineId].tasks[auxMachines[maxMachineId].numTasks] = auxJobs[maxJobId].tasks[auxJobs[maxJobId].operationAtual];
         auxMachines[maxMachineId].tempoAtual = maxRealTime + auxMachines[maxMachineId].tasks[auxMachines[maxMachineId].numTasks].duration;
@@ -590,8 +332,7 @@ Solution* lpt(Job *jobs, int numJobs, Machine *machines, int numMachines){
         auxMachines[maxMachineId].numTasks++;
         auxJobs[maxJobId].operationAtual++;
 
-        if(auxJobs[maxJobId].numTasks == 0){
-            auxJobs[maxJobId].completo = 1;
+        if(auxJobs[maxJobId].operationAtual == auxJobs[maxJobId].numTasks){
             jobsCompletos++;
         }
 
@@ -611,7 +352,7 @@ Solution* lpt(Job *jobs, int numJobs, Machine *machines, int numMachines){
     return solution;
 }
 
-Task* obterPredecessorMaquina(Solution *solution, Task *t) {
+Task* obterPredecessorMaquina(Solution *solution, Task *t){
     
     Machine *maq = &solution->machines[t->machine];
     for (int k = 0; k < maq->numTasks; k++) {
@@ -625,9 +366,9 @@ Task* obterPredecessorMaquina(Solution *solution, Task *t) {
     return NULL;
 }
 
-Task* caminhoCritico(Solution *solution) {
+Task* caminhoCritico(Solution *solution){
     
-    if (solution == NULL || solution->numJobs <= 0 || solution->numMachines <= 0) {
+    if(solution == NULL || solution->numJobs <= 0 || solution->numMachines <= 0){
         return NULL;
     }
 
@@ -639,16 +380,16 @@ Task* caminhoCritico(Solution *solution) {
     Task *tarefaMakespan = NULL;
     int maxEnd = -1;
 
-    for (int j = 0; j < numJobs; j++) {
+    for(int j = 0; j < numJobs; j++){
         // A última operação de cada job está no índice (numMachines - 1)
         Task *tFinal = &solution->jobs[j].tasks[numMachines - 1];
-        if (tFinal->endTime > maxEnd) {
+        if(tFinal->endTime > maxEnd){
             maxEnd = tFinal->endTime;
             tarefaMakespan = tFinal;
         }
     }
 
-    if (tarefaMakespan == NULL) {
+    if(tarefaMakespan == NULL){
         return NULL;
     }
 
@@ -660,12 +401,12 @@ Task* caminhoCritico(Solution *solution) {
     caminhoReverso[tamCaminho++] = atual;
 
     // 3. Retroceder até a primeira tarefa do agendamento (tempo base 1 do spt_twkr)
-    while (atual != NULL && atual->startTime > 1) {
+    while(atual != NULL && atual->startTime > 1){
         Task *predJob = NULL;
         Task *predMaq = NULL;
 
         // Candidato 1: Predecessor no mesmo Job
-        if (atual->operation > 0) {
+        if(atual->operation > 0){
             predJob = &solution->jobs[atual->jobId].tasks[atual->operation - 1];
         }
 
@@ -674,11 +415,11 @@ Task* caminhoCritico(Solution *solution) {
 
         // Identifica quem causou o gargalo (quem terminou no instante em que a atual começou)
         // Em caso de empate, ambos são críticos; priorizamos a precedência da máquina ou do job
-        if (predMaq != NULL && predMaq->endTime == atual->startTime) {
+        if(predMaq != NULL && predMaq->endTime == atual->startTime){
             atual = predMaq;
-        } else if (predJob != NULL && predJob->endTime == atual->startTime) {
+        }else if(predJob != NULL && predJob->endTime == atual->startTime){
             atual = predJob;
-        } else {
+        }else{
             // Chegou ao início da cadeia crítica
             break;
         }
@@ -688,7 +429,7 @@ Task* caminhoCritico(Solution *solution) {
 
     // 4. Montar o vetor de retorno na ordem cronológica correta (do início ao fim)
     Task *caminho = (Task*)malloc(tamCaminho * sizeof(Task));
-    for (int i = 0; i < tamCaminho; i++) {
+    for(int i = 0; i < tamCaminho; i++){
         caminho[i] = *caminhoReverso[tamCaminho - 1 - i];
     }
 
@@ -699,7 +440,7 @@ Task* caminhoCritico(Solution *solution) {
     return caminho;
 }
 
-void printCaminhoCritico(Task *caminho, int tamCaminho, int makespan) {
+void printCaminhoCritico(Task *caminho, int tamCaminho, int makespan){
     
     if (caminho == NULL || tamCaminho <= 0) {
         printf("Caminho critico vazio ou nao encontrado.\n");
@@ -720,16 +461,17 @@ void printCaminhoCritico(Task *caminho, int tamCaminho, int makespan) {
                caminho[i].endTime);
         duracaoTotal += caminho[i].duration;
     }
-    printf("Duracao acumulada das tarefas: %d | Makespan: %d\n", duracaoTotal, makespan);
-    if (duracaoTotal == makespan) {
+    int dif = makespan - (duracaoTotal + 1);
+    printf("Duracao acumulada das tarefas: %d | Makespan: %d\n", duracaoTotal+1, makespan);
+    if (dif == 0) {
         printf("Status: Caminho critico sem folgas (Valido!)\n");
     } else {
-        printf("Status: Folga detectada (Diferenca: %d)\n", makespan - duracaoTotal);
+        printf("Status: Folga detectada (Diferenca: %d)\n", dif);
     }
     printf("=========================================================\n\n");
 }
 
-void printCaminhoCriticoToFile(FILE *arquivo, Task *caminho, int tamCaminho, int makespan) {
+void printCaminhoCriticoToFile(FILE *arquivo, Task *caminho, int tamCaminho, int makespan){
     
     if (caminho == NULL || tamCaminho <= 0) {
         fprintf(arquivo, "Caminho critico vazio ou nao encontrado.\n");
@@ -738,7 +480,7 @@ void printCaminhoCriticoToFile(FILE *arquivo, Task *caminho, int tamCaminho, int
     fprintf(arquivo, "\n==================== CAMINHO CRITICO ====================\n");
     fprintf(arquivo, "Total de tarefas no caminho critico: %d\n", tamCaminho);
     
-    int duracaoTotal = 1;
+    int duracaoTotal = 0;
     for (int i = 0; i < tamCaminho; i++) {
         fprintf(arquivo, "  [%02d] Job %2d | Op %2d | Maq %2d | Dur: %2d | Start: %3d | End: %3d\n",
                 i + 1,
@@ -750,11 +492,12 @@ void printCaminhoCriticoToFile(FILE *arquivo, Task *caminho, int tamCaminho, int
                caminho[i].endTime);
         duracaoTotal += caminho[i].duration;
     }
-    fprintf(arquivo, "Duracao acumulada das tarefas: %d | Makespan: %d\n", duracaoTotal, makespan);
-    if (duracaoTotal == makespan) {
+    int dif = makespan - (duracaoTotal + 1);
+    fprintf(arquivo, "Duracao acumulada das tarefas: %d | Makespan: %d\n", duracaoTotal+1, makespan);
+    if (dif == 0) {
         fprintf(arquivo, "Status: Caminho critico sem folgas (Valido!)\n");
     } else {
-        fprintf(arquivo, "Status: Folga detectada (Diferenca: %d)\n", makespan - duracaoTotal);
+        fprintf(arquivo, "Status: Folga detectada (Diferenca: %d)\n", dif);
     }
     fprintf(arquivo, "=========================================================\n\n");
 }
@@ -788,6 +531,158 @@ void calcularScore(Solution *solution){
         }
         solution->totalIdletime += auxIdletime;
     }
+}
+
+Task clonarTask(const Task *origem){
+    
+    Task clone;
+
+    if(origem == NULL){
+        memset(&clone, 0, sizeof(Task));
+        clone.machine = -1;
+        clone.jobId = -1;
+        return clone;
+    }
+    clone.operation  = origem->operation;
+    clone.machine    = origem->machine;
+    clone.duration   = origem->duration;
+    clone.jobId      = origem->jobId;
+    clone.startTime  = origem->startTime;
+    clone.endTime    = origem->endTime;
+    clone.sequencia  = origem->sequencia;
+    
+    return clone;
+}
+
+Job* clonarJob(Job *job){
+
+    if(job == NULL){
+        return NULL;
+    }
+
+    Job *clone = (Job*)malloc(sizeof(Job));
+
+    if(clone == NULL){
+        return NULL;
+    }
+
+    clone->id             = job->id;
+    clone->numTasks       = job->numTasks;
+    clone->operationAtual = job->operationAtual;
+    clone->workRemaining  = job->workRemaining;
+
+    if(job->numTasks > 0 && job->tasks != NULL){
+        clone->tasks = (Task*)malloc(job->numTasks * sizeof(Task));
+        for(int i = 0; i < job->numTasks; i++){
+            clone->tasks[i] = clonarTask(&job->tasks[i]);
+        }
+    }else{
+        clone->tasks = NULL;
+    }
+
+    return clone;
+}
+
+Machine* clonarMachine(Machine *machine){
+
+    if(machine == NULL){
+        return NULL;
+    }
+
+    Machine *clone = (Machine*)malloc(sizeof(Machine));
+
+    if(clone == NULL){
+        return NULL;
+    }
+
+    clone->id         = machine->id;
+    clone->tempoAtual = machine->tempoAtual;
+    clone->numTasks   = machine->numTasks;
+
+    if(machine->numTasks > 0 && machine->tasks != NULL){
+        clone->tasks = (Task*)malloc(machine->numTasks * sizeof(Task));
+        for(int i = 0; i < machine->numTasks; i++){
+            clone->tasks[i] = clonarTask(&machine->tasks[i]);
+        }
+    }else{
+        clone->tasks = NULL;
+    }
+
+    return clone;
+}
+
+Solution* clonarSolution(Solution *solution){
+
+    if(solution == NULL){
+        return NULL;
+    }
+
+    Solution *clone = (Solution*)malloc(sizeof(Solution));
+    if(clone == NULL){
+        return NULL;
+    }
+
+    clone->numMachines       = solution->numMachines;
+    clone->numJobs           = solution->numJobs;
+    clone->numTasks          = solution->numTasks;
+    clone->maxMakespan       = solution->maxMakespan;
+    clone->mediaFlowtime     = solution->mediaFlowtime;
+    clone->totalIdletime     = solution->totalIdletime;
+    clone->tamCaminhoCritico = solution->tamCaminhoCritico;
+    clone->seed              = solution->seed;
+
+    clone->jobs = (Job*)malloc(clone->numJobs * sizeof(Job));
+    for(int i = 0; i < clone->numJobs; i++){
+        Job *cloneJob = clonarJob(&solution->jobs[i]);
+        clone->jobs[i] = *cloneJob;
+        free(cloneJob);
+    }
+
+    clone->machines = (Machine*)malloc(clone->numMachines * sizeof(Machine));
+    for(int i = 0; i < clone->numMachines; i++){
+        Machine *cloneMachine = clonarMachine(&solution->machines[i]);
+        clone->machines[i] = *cloneMachine;
+        free(cloneMachine);
+    }
+
+    if(solution->caminhoCritico != NULL && solution->tamCaminhoCritico > 0){
+        clone->caminhoCritico = (Task*)malloc(clone->tamCaminhoCritico * sizeof(Task));
+        for(int i = 0; i < clone->tamCaminhoCritico; i++){
+            clone->caminhoCritico[i] = clonarTask(&solution->caminhoCritico[i]);
+        }
+    }else{
+        clone->caminhoCritico = NULL;
+    }
+
+    return clone;
+}
+
+void liberarSolucao(Solution *sol){
+    if(sol == NULL) return;
+    
+    if(sol->jobs != NULL){
+        for(int i = 0; i < sol->numJobs; i++){
+            if(sol->jobs[i].tasks != NULL){
+                free(sol->jobs[i].tasks);
+            }
+        }
+        free(sol->jobs);
+    }
+    
+    if(sol->machines != NULL){
+        for(int i = 0; i < sol->numMachines; i++){
+            if(sol->machines[i].tasks != NULL){
+                free(sol->machines[i].tasks);
+            }
+        }
+        free(sol->machines);
+    }
+    
+    if(sol->caminhoCritico != NULL){
+        free(sol->caminhoCritico);
+    }
+    
+    free(sol);
 }
 
 void obterAdjacentesOpMaq(Task *caminhoCritico, int tamCaminho, int idxop, Task **opAnt, Task **opPos){
@@ -833,7 +728,7 @@ int obterPosicaoNaMaquina(Solution *solution, Task *t) {
  * posA: indice da primeira tarefa trocada na maquina (posicao k)
  * posB: indice da segunda tarefa trocada na maquina (posicao k+1)
 */
-int recalcularSolucaoSeletiva(Solution *solution, int maqId, int posA, int posB) {
+int recalcularSolucaoSeletiva(Solution *solution, int maqId, int posA, int posB){
     
     if(solution == NULL){
         return 0;
@@ -846,7 +741,7 @@ int recalcularSolucaoSeletiva(Solution *solution, int maqId, int posA, int posB)
     int posNaMaquina[numJobs][numMachines];
 
     for(int m = 0; m < numMachines; m++){
-        for (int k = 0; k < solution->machines[m].numTasks; k++) {
+        for(int k = 0; k < solution->machines[m].numTasks; k++){
             Task *t = &solution->machines[m].tasks[k];
             posNaMaquina[t->jobId][t->operation] = k;
         }
@@ -876,10 +771,10 @@ int recalcularSolucaoSeletiva(Solution *solution, int maqId, int posA, int posB)
     Task *t1 = &solution->machines[maqId].tasks[posA];
     Task *t2 = &solution->machines[maqId].tasks[posB];
     
-    fila[fimFila++] = (ParOp){ t1->jobId, t1->operation };
+    fila[fimFila++] = (ParOp){t1->jobId, t1->operation};
     naFila[t1->jobId][t1->operation] = 1;
     
-    fila[fimFila++] = (ParOp){ t2->jobId, t2->operation };
+    fila[fimFila++] = (ParOp){t2->jobId, t2->operation};
     naFila[t2->jobId][t2->operation] = 1;
     
     int iteracoes = 0;
@@ -926,18 +821,18 @@ int recalcularSolucaoSeletiva(Solution *solution, int maqId, int posA, int posB)
             solution->machines[m].tasks[pos].endTime = tJob->endTime;
             
             // Enfileira Sucessor no Job
-            if (op + 1 < numMachines) {
-                if (!naFila[j][op + 1]) {
+            if(op + 1 < numMachines){
+                if(!naFila[j][op + 1]){
                     fila[fimFila++] = (ParOp){ j, op + 1 };
                     naFila[j][op + 1] = 1;
                 }
             }
             
             // Enfileira Sucessor na Máquina
-            if (pos + 1 < solution->machines[m].numTasks) {
+            if(pos + 1 < solution->machines[m].numTasks){
                 Task *sucMaq = &solution->machines[m].tasks[pos + 1];
-                if (!naFila[sucMaq->jobId][sucMaq->operation]) {
-                    fila[fimFila++] = (ParOp){ sucMaq->jobId, sucMaq->operation };
+                if(!naFila[sucMaq->jobId][sucMaq->operation]){
+                    fila[fimFila++] = (ParOp){sucMaq->jobId, sucMaq->operation};
                     naFila[sucMaq->jobId][sucMaq->operation] = 1;
                 }
             }
@@ -963,7 +858,7 @@ int recalcularSolucaoSeletiva(Solution *solution, int maqId, int posA, int posB)
     return 1;
 }
 
-Solution* trocaN1(Solution *solution, int idxopAtu, Task *t1, Task *t2){
+Solution* trocaN1(Solution *solution, Task *t1, Task *t2){
 
     if(solution == NULL || t1 == NULL || t2 == NULL){
         printf("Erro: ponteiros nulos na funcao trocaN1\n");
@@ -976,7 +871,7 @@ Solution* trocaN1(Solution *solution, int idxopAtu, Task *t1, Task *t2){
     }
 
     int m = t1->machine;
-    Solution *auxSolution = solution;
+    Solution *auxSolution = clonarSolution(solution);
 
     int pos1 = obterPosicaoNaMaquina(auxSolution, t1);
     int pos2 = obterPosicaoNaMaquina(auxSolution, t2);
@@ -1010,6 +905,10 @@ Solution* trocaN1(Solution *solution, int idxopAtu, Task *t1, Task *t2){
 
 Solution* buscaLocalN1(Solution *solution, unsigned int seed, int iter){
 
+    if(solution == NULL || solution->caminhoCritico == NULL || solution->tamCaminhoCritico <= 0){
+        return solution;
+    }
+
     srand(seed);
     int minRange = 0;
     int maxRange = solution->tamCaminhoCritico - 1;
@@ -1022,66 +921,45 @@ Solution* buscaLocalN1(Solution *solution, unsigned int seed, int iter){
 
     obterAdjacentesOpMaq(solution->caminhoCritico, solution->tamCaminhoCritico, idxopAtu, &opAnt, &opPos);
 
-    if(opAnt != NULL && opPos != NULL){
-        Solution *solutionAnt = trocaN1(solution, idxopAtu, opAtu, opAnt);
-        Solution *solutionPos = trocaN1(solution, idxopAtu, opAtu, opPos);
+    Solution *solutionAnt = (opAnt != NULL) ? trocaN1(solution, opAtu, opAnt) : NULL;
+    Solution *solutionPos = (opPos != NULL) ? trocaN1(solution, opAtu, opPos) : NULL;
 
-        if(solutionAnt != NULL && solutionPos != NULL){
-            if(solutionAnt->maxMakespan < solutionPos->maxMakespan){
-                free(solutionPos);
-                if(solutionAnt->maxMakespan < solution->maxMakespan){
-                    printf("[Iter %d] Melhoria encontrada: Makespan %d -> %d\n", iter, solution->maxMakespan, solutionAnt->maxMakespan);
-                    free(solution);
-                    return solutionAnt;
-                }else{
-                    free(solutionAnt);
-                    return solution;
-                }
-            }else{
-                free(solutionAnt);
-                if(solutionPos->maxMakespan < solution->maxMakespan){
-                    printf("[Iter %d] Melhoria encontrada: Makespan %d -> %d\n", iter, solution->maxMakespan, solutionPos->maxMakespan);
-                    free(solution);
-                    return solutionPos;
-                }else{
-                    free(solutionPos);
-                    return solution;
-                }
-            }
-        }else if(solutionAnt != NULL){
-            free(solutionPos);
-            if(solutionAnt->maxMakespan < solution->maxMakespan){
-                printf("[Iter %d] Melhoria encontrada: Makespan %d -> %d\n", iter, solution->maxMakespan, solutionAnt->maxMakespan);
-                free(solution);
-                return solutionAnt;
-            }else{
-                free(solutionAnt);
-                return solution;
-            }
-        }else if(solutionPos != NULL){
-            free(solutionAnt);
-            if(solutionPos->maxMakespan < solution->maxMakespan){
-                printf("[Iter %d] Melhoria encontrada: Makespan %d -> %d\n", iter, solution->maxMakespan, solutionPos->maxMakespan);
-                free(solution);
-                return solutionPos;
-            }else{
-                free(solutionPos);
-                return solution;
-            }
-        }else{
-            free(solutionAnt);
-            free(solutionPos);
+    Solution *melhorCandidato = NULL;
+
+    if(solutionAnt != NULL && solutionPos != NULL){
+        if(solutionAnt->maxMakespan < solutionPos->maxMakespan){
+            melhorCandidato = solutionAnt;
+            liberarSolucao(solutionPos);
+        } else {
+            melhorCandidato = solutionPos;
+            liberarSolucao(solutionAnt);
+        }
+    } else if(solutionAnt != NULL){
+        melhorCandidato = solutionAnt;
+    } else if(solutionPos != NULL){
+        melhorCandidato = solutionPos;
+    }
+
+    if(melhorCandidato != NULL){
+        if(melhorCandidato->maxMakespan < solution->maxMakespan){
+            printf("[Iter %d] Melhoria encontrada: Makespan %d -> %d\n", iter, solution->maxMakespan, melhorCandidato->maxMakespan);
+            liberarSolucao(solution);
+            return melhorCandidato;
+        } else {
+            liberarSolucao(melhorCandidato);
             return solution;
         }
     }
+    return solution;
 }
+
 int main (int argc, char *argv[]){
     
     clock_t inicio = clock();
 
-    if (argc < 2) {
+    if (argc < 4) {
         printf("Uso incorreto!\n");
-        printf("Sintaxe esperada: %s <caminho_do_arquivo>\n", argv[0]);
+        printf("Sintaxe esperada: %s <caminho_do_arquivo> <caminho_saida> <num_iteracoes>\n", argv[0]);
         return 1;
     }
 
@@ -1099,13 +977,20 @@ int main (int argc, char *argv[]){
         return 1;
     }
 
-    printJobs(jobs, numJobs, numMachines);
+    //printJobs(jobs, numJobs, numMachines);
 
     solution = spt_twkr(jobs, numJobs, machines, numMachines);
     //printMachines(result, numMachines);
 
     calcularScore(solution);
     caminhoCritico(solution);
+
+    int numIter = atoi(argv[3]);
+    unsigned int seed = (unsigned int)time(NULL);
+
+    for(int iter = 0; iter < numIter; iter++){
+        solution = buscaLocalN1(solution, seed + iter, iter);
+    }
 
     char *caminho_saida = argv[2];
 
@@ -1128,14 +1013,8 @@ int main (int argc, char *argv[]){
     printf("Tempo de execucao: %.6f segundos\n", tempo_execucao);
 
     // Libera memória alocada
-    if (machines != NULL && jobs != NULL && solution != NULL){
-        for (int i = 0; i < numJobs; i++) {
-            free(machines[i].tasks);
-            free(jobs[i].tasks);
-        }
-        free(machines);
-        free(jobs);
-        free(solution);
+    if (solution != NULL){
+        liberarSolucao(solution);
     }
 
     return 0;
