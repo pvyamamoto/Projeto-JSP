@@ -5,7 +5,7 @@
 #include <time.h>
 #include <math.h>
 
-typedef struct Task { 
+typedef struct Task{ 
     int operation;
     int machine;
     int duration;
@@ -15,7 +15,7 @@ typedef struct Task {
     int sequencia;
 } Task;
 
-typedef struct Job {
+typedef struct Job{
     int id;
     int numTasks;
     int workRemaining;
@@ -45,7 +45,7 @@ typedef struct Solution{
     unsigned int seed;
 } Solution;
 
-typedef struct{
+typedef struct ParTask{
     Task op1;
     Task op2;
 } ParTask;
@@ -669,6 +669,20 @@ Solution* clonarSolution(Solution *solution){
     return clone;
 }
 
+BlocoCritico* clonarBlocoCritico(BlocoCritico *blocos, int numBlocos){
+
+    BlocoCritico *clone = (BlocoCritico*)malloc(numBlocos * sizeof(BlocoCritico));
+
+    for(int i = 0; i < numBlocos; i++){
+        clone[i].inicio  = blocos[i].inicio;
+        clone[i].fim     = blocos[i].fim;
+        clone[i].tam     = blocos[i].tam;
+        clone[i].machine = blocos[i].machine;
+    }
+
+    return clone;
+}
+
 void liberarSolucao(Solution *sol){
     if(sol == NULL) return;
     
@@ -945,30 +959,124 @@ BlocoCritico* obterBlocosCriticos(Task *caminhoCritico, int tamCaminho, int *num
     return blocos;
 }
 
-ParTask* obterParesTaskN5(Task *caminhoCritico, int tamCaminho){
+ParTask* obterParesTaskN5(Task *caminhoCritico, int tamCaminho, BlocoCritico *blocosC, int numBlocos, int *numParesC){
     
-    if(caminhoCritico == NULL || tamCaminho <= 1){
+    if(caminhoCritico == NULL || tamCaminho <= 1 || blocosC == NULL || numBlocos <= 0){
+        printf("Caminho critico invalido ou numero de blocos invalido");
         return NULL;
+    }
+
+    BlocoCritico *blocos = (BlocoCritico*)malloc(numBlocos * sizeof(BlocoCritico));
+
+    blocos = clonarBlocoCritico(blocosC, numBlocos);
+
+    int numPares = 0;
+
+    if(numBlocos < 2){
+        printf("Makespan da soluçao já atingiu o limite inferior da maquina!");
+        return NULL;
+    }else if(numBlocos == 2){
+        numPares = 2;
+    }else{
+        numPares = (pow(2, numBlocos - 2) + 2);
+    }
+
+    ParTask *pares = (ParTask*)malloc(numPares * sizeof(ParTask));
+
+    if(numBlocos > 2){
+        for(int i = 0, j = 0; i < numBlocos, j < numPares ; i++){
+            if(i == 0){
+                pares[j].op1 = clonarTask(&caminhoCritico[blocos[i].fim - 1]);
+                pares[j].op2 = clonarTask(&caminhoCritico[blocos[i].fim]);
+                j++;
+            }else if(i == numBlocos - 1){
+                pares[j].op1 = clonarTask(&caminhoCritico[blocos[i].inicio]);
+                pares[j].op2 = clonarTask(&caminhoCritico[blocos[i].inicio + 1]);
+                j++;
+            }else{
+                pares[j].op1 = clonarTask(&caminhoCritico[blocos[i].inicio]);
+                pares[j].op1 = clonarTask(&caminhoCritico[blocos[i].inicio + 1]);
+                j++;
+                
+                pares[j].op1 = clonarTask(&caminhoCritico[blocos[i].fim - 1]);
+                pares[j].op2 = clonarTask(&caminhoCritico[blocos[i].fim]);
+                j++;
+            }
+        }    
+    }else{
+        pares[0].op1 = clonarTask(&caminhoCritico[blocos[0].inicio]);
+        pares[0].op2 = clonarTask(&caminhoCritico[blocos[0].inicio + 1]);
+
+        pares[1].op1 = clonarTask(&caminhoCritico[blocos[1].fim - 1]);
+        pares[1].op2 = clonarTask(&caminhoCritico[blocos[1].fim]);
+    }
+
+    free(blocos);
+
+    numParesC = &numPares;
+
+    return pares;
+}
+
+Solution* trocaN5(Solution *solution, ParTask *pares){
+
+    if(solution == NULL || pares == NULL){
+        printf("Erro: ponteiros nulos na funcao trocaN5\n");
+        return NULL;
+    }
+    
+    if(pares->op1.machine != pares->op2.machine) return NULL;
+
+    int m = pares->op1.machine;
+    Solution *auxSolution = clonarSolution(solution);
+
+    int pos1 = obterPosicaoNaMaquina(auxSolution, &pares->op1);
+    int pos2 = obterPosicaoNaMaquina(auxSolution, &pares->op2);
+
+    if(pos1 == -1 || pos2 == -1) return NULL;
+
+    int dif = pos1 - pos2;
+    if(dif != 1 && dif != -1){
+        printf("Erro: posicoes nao adjacentes na funcao trocaN1\n");
+        return NULL;
+    }
+
+    int posA = (pos1 < pos2) ? pos1 : pos2;
+    int posB = (pos1 > pos2) ? pos1 : pos2;
+
+    swap(auxSolution, &pares->op1, &pares->op2, posA, posB, m);
+
+    int viavel = recalcularSolucaoSeletiva(auxSolution, m, posA, posB);
+
+    if(!viavel){
+        free(auxSolution);
+        return NULL;
+    }
+
+    return auxSolution;
+    
+}
+
+Solution* buscaLocalN5(Solution *solution, int iter){
+
+    if(solution == NULL || solution->caminhoCritico == NULL || solution->tamCaminhoCritico <= 0){
+        return solution;
     }
 
     int numBlocos = 0;
 
-    BlocoCritico *blocos = obterBlocosCriticos(caminhoCritico, tamCaminho, &numBlocos);
+    BlocoCritico *blocos = obterBlocosCriticos(solution->caminhoCritico, solution->tamCaminhoCritico, &numBlocos);
 
-    ParTask *pares = (ParTask*)malloc((numBlocos * 2) * sizeof(ParTask));
-
-    if(numBlocos > 1){
-        for(int i = 0; i < numBlocos; i++){
-        
-        }    
-    }else if(numBlocos == 1){
-        pares[0].op1 = clonarTask(&caminhoCritico[blocos[0].inicio]);
-        pares[0].op2 = clonarTask(&caminhoCritico[blocos[0].fim]);
+    if(blocos == NULL || numBlocos <= 0){
+        return NULL;
     }
-}
 
-Solution* trocaN5(Solution *solution){
+    int numPares = 0;
+    ParTask *pares = obterParesTaskN5(solution->caminhoCritico, solution->tamCaminhoCritico, blocos, numBlocos, &numPares);
 
+    for(int i = 0; i < numPares; i++){
+        Solution *auxSolution = trocaN5(solution, &pares[i]);
+    }
 }
 
 Solution* trocaN1(Solution *solution, Task *t1, Task *t2){
@@ -989,7 +1097,7 @@ Solution* trocaN1(Solution *solution, Task *t1, Task *t2){
     int pos1 = obterPosicaoNaMaquina(auxSolution, t1);
     int pos2 = obterPosicaoNaMaquina(auxSolution, t2);
 
-    if(pos1 == -1 || pos2 == -1) {
+    if(pos1 == -1 || pos2 == -1){
         return NULL;
     }
 
@@ -1026,71 +1134,6 @@ Solution* buscaLocalN1(Solution *solution, unsigned int seed, int iter){
 
     int idxopAtu = minRange + rand() % (maxRange - minRange + 1);
         
-    Task *opAtu = &solution->caminhoCritico[idxopAtu];
-    Task *opAnt = NULL;
-    Task *opPos = NULL;
-
-    obterAdjacentesOpMaq(solution->caminhoCritico, solution->tamCaminhoCritico, idxopAtu, &opAnt, &opPos);
-
-    typedef struct{
-        Task op1;
-        Task op2;
-    } ParTask;
-
-    Solution *solutionAnt = (opAnt != NULL) ? trocaN1(solution, opAtu, opAnt) : NULL;
-    Solution *solutionPos = (opPos != NULL) ? trocaN1(solution, opAtu, opPos) : NULL;
-
-    ParTask swapAnt = (opAnt != NULL) ? (ParTask){*opAtu, *opAnt} : (ParTask){0};
-    ParTask swapPos = (opPos != NULL) ? (ParTask){*opAtu, *opPos} : (ParTask){0};
-
-    Solution *melhorCandidato = NULL;
-    ParTask melhorSwap = {0};
-
-    if(solutionAnt != NULL && solutionPos != NULL){
-        if(solutionAnt->maxMakespan < solutionPos->maxMakespan){
-            melhorCandidato = solutionAnt;
-            melhorSwap = swapAnt;
-
-            liberarSolucao(solutionPos);
-        }else{
-            melhorCandidato = solutionPos;
-            melhorSwap = swapPos;
-            liberarSolucao(solutionAnt);
-        }
-    }else if(solutionAnt != NULL){
-        melhorCandidato = solutionAnt;
-        melhorSwap = swapAnt;
-    }else if(solutionPos != NULL){
-        melhorCandidato = solutionPos;
-        melhorSwap = swapPos;
-    }else{
-        liberarSolucao(solutionAnt);
-        liberarSolucao(solutionPos);
-        liberarSolucao(melhorCandidato);
-        return solution;
-    }
-    
-    if(melhorCandidato != NULL){
-        if(melhorCandidato->maxMakespan < solution->maxMakespan){
-            printf("[Iter %d] Melhoria encontrada (Swap T%dJ%d -> T%dJ%d): Makespan %d -> %d\n", iter, melhorSwap.op1.operation, melhorSwap.op1.jobId, melhorSwap.op2.operation, melhorSwap.op2.jobId, solution->maxMakespan, melhorCandidato->maxMakespan);
-            liberarSolucao(solution);
-            return melhorCandidato;
-        } else {
-            liberarSolucao(melhorCandidato);
-            return solution;
-        }
-    }
-    return solution;
-}
-
-Solution* buscaLocalN5(Solution *solution, int iter){
-
-    if(solution == NULL || solution->caminhoCritico == NULL || solution->tamCaminhoCritico <= 0){
-        return solution;
-    }
-    
-    
-
     Task *opAtu = &solution->caminhoCritico[idxopAtu];
     Task *opAnt = NULL;
     Task *opPos = NULL;
