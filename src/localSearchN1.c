@@ -683,6 +683,16 @@ BlocoCritico* clonarBlocoCritico(BlocoCritico *blocos, int numBlocos){
     return clone;
 }
 
+ParTask* clonarParTask(ParTask *par){
+    
+    ParTask *clone = (ParTask*)malloc(sizeof(ParTask));
+
+    clone->op1 = clonarTask(&par->op1);
+    clone->op2 = clonarTask(&par->op2);
+
+    return clone;
+}
+
 void liberarSolucao(Solution *sol){
     if(sol == NULL) return;
     
@@ -884,12 +894,14 @@ int recalcularSolucaoSeletiva(Solution *solution, int maqId, int posA, int posB)
     
     // Recalcula score e novo caminho crítico
     calcularScore(solution);
+
     if(solution->caminhoCritico != NULL){
         free(solution->caminhoCritico);
         solution->caminhoCritico = NULL;
     }
 
     caminhoCritico(solution);
+
     return 1;
 }
 
@@ -954,7 +966,7 @@ BlocoCritico* obterBlocosCriticos(Task *caminhoCritico, int tamCaminho, int *num
         }
     }
 
-    numBlocos = blocoIdx;
+    numBlocos = &blocoIdx;
 
     return blocos;
 }
@@ -1057,7 +1069,7 @@ Solution* trocaN5(Solution *solution, ParTask *pares){
     
 }
 
-Solution* buscaLocalN5(Solution *solution, int iter){
+Solution* buscaLocalN5exaustiva(Solution *solution, int iter){
 
     if(solution == NULL || solution->caminhoCritico == NULL || solution->tamCaminhoCritico <= 0){
         return solution;
@@ -1074,9 +1086,27 @@ Solution* buscaLocalN5(Solution *solution, int iter){
     int numPares = 0;
     ParTask *pares = obterParesTaskN5(solution->caminhoCritico, solution->tamCaminhoCritico, blocos, numBlocos, &numPares);
 
+    Solution *melhorSolution = clonarSolution(solution);
+    ParTask *melhorPar = NULL;
+
     for(int i = 0; i < numPares; i++){
         Solution *auxSolution = trocaN5(solution, &pares[i]);
+
+        if(melhorSolution->maxMakespan > auxSolution->maxMakespan){
+            melhorSolution = clonarSolution(auxSolution);
+            melhorPar = clonarParTask(&pares[i]);
+        }
     }
+
+    if(melhorSolution->maxMakespan < solution->maxMakespan){
+        printf("[Iter %d] Melhoria encontrada (Swap T%dJ%d -> T%dJ%d): Makespan %d -> %d\n",
+                    iter, melhorPar->op1.operation, melhorPar->op1.jobId, melhorPar->op2.operation, 
+                    melhorPar->op2.jobId, solution->maxMakespan, melhorSolution->maxMakespan);
+        
+        return melhorSolution;
+    }
+
+    return solution;
 }
 
 Solution* trocaN1(Solution *solution, Task *t1, Task *t2){
@@ -1175,7 +1205,9 @@ Solution* buscaLocalN1(Solution *solution, unsigned int seed, int iter){
     
     if(melhorCandidato != NULL){
         if(melhorCandidato->maxMakespan < solution->maxMakespan){
-            printf("[Iter %d] Melhoria encontrada (Swap T%dJ%d -> T%dJ%d): Makespan %d -> %d\n", iter, melhorSwap.op1.operation, melhorSwap.op1.jobId, melhorSwap.op2.operation, melhorSwap.op2.jobId, solution->maxMakespan, melhorCandidato->maxMakespan);
+            printf("[Iter %d] Melhoria encontrada (Swap T%dJ%d -> T%dJ%d): Makespan %d -> %d\n",
+                    iter, melhorSwap.op1.operation, melhorSwap.op1.jobId, melhorSwap.op2.operation, 
+                    melhorSwap.op2.jobId, solution->maxMakespan, melhorCandidato->maxMakespan);
             liberarSolucao(solution);
             return melhorCandidato;
         } else {
@@ -1221,8 +1253,23 @@ int main (int argc, char *argv[]){
     int numIter = atoi(argv[3]);
     unsigned int seed = (unsigned int)time(NULL);
 
+    /*
     for(int iter = 0; iter < numIter; iter++){
         solution = buscaLocalN1(solution, seed + iter, iter);
+    }
+    */
+
+    Solution *auxSolution = clonarSolution(solution);
+
+    for(int iter = 0; iter < numIter; iter++){
+        auxSolution = buscaLocalN5exaustiva(solution, iter);
+
+        if(solution->maxMakespan > auxSolution->maxMakespan){
+            solution = clonarSolution(auxSolution);
+        }else{
+            printf("[Iter %d] Melhor solucao encontrada!", iter);
+            break;
+        }
     }
 
     char *caminho_saida = argv[2];

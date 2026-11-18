@@ -1,0 +1,158 @@
+Numero de Maquinas: 10
+Maximo Makespan:  1421
+Tempo Ocioso Total das Maquinas:  4269
+Media Tempo de Fluxo dos Jobs:  1247.70
+Machine 0:
+  tempoAtual: 1222
+  Numero de Tarefas: 10
+    Task 0: Machine 0, Duration 94, Job ID 8, Start Time 1, End Time 95, Sequencia: 11
+    Task 1: Machine 0, Duration 59, Job ID 9, Start Time 95, End Time 154, Sequencia: 6
+    Task 2: Machine 0, Duration 83, Job ID 2, Start Time 218, End Time 301, Sequencia: 18
+    Task 4: Machine 0, Duration 99, Job ID 4, Start Time 452, End Time 551, Sequencia: 34
+    Task 4: Machine 0, Duration 95, Job ID 6, Start Time 723, End Time 818, Sequencia: 56
+    Task 6: Machine 0, Duration 92, Job ID 1, Start Time 818, End Time 910, Sequencia: 66
+    Task 7: Machine 0, Duration 62, Job ID 7, Start Time 910, End Time 972, Sequencia: 73
+    Task 7: Machine 0, Duration 76, Job ID 3, Start Time 972, End Time 1048, Sequencia: 78
+    Task 8: Machine 0, Duration 86, Job ID 0, Start Time 1048, End Time 1134, Sequencia: 83
+    Task 9: Machine 0, Duration 88, Job ID 5, Start Time 1134, End Time 1222, Sequencia: 93
+Machine 1:
+  tempoAtual: 1122
+  Numero de Tarefas: 10
+    Task 1: Machine 1, Duration 86, Job ID 6, Start Time 51, End Time 137, Sequencia: 5
+    Task 0: Machine 1, Duration 99, Job ID 5, Start Time 137, End Time 236, Sequencia: 14
+    Task 2: Machine 1, Duration 61, Job ID 3, Start Time 236, End Time 297, Sequencia: 19
+    Task 3: Machine 1, Duration 65, Job ID 2, Start Time 301, End Time 366, Sequencia: 24
+    Task 2: Machine 1, Duration 82, Job ID 9, Start Time 366, End Time 448, Sequencia: 39
+    Task 4: Machine 1, Duration 66, Job ID 8, Start Time 448, End Time 514, Sequencia: 31
+    Task 4: Machine 1, Duration 67, Job ID 0, Start Time 522, End Time 589, Sequencia: 44
+    Task 4: Machine 1, Duration 71, Job ID 7, Start Time 589, End Time 660, Sequencia: 54
+    Task 7: Machine 1, Duration 82, Job ID 1, Start Time 910, End Time 992, Sequencia: 72
+    Task 9: Machine 1, Duration 86, Job ID 4, Start Time 1036, End Time 1122, Sequencia: 92
+Machine 2:
+  tempoAtual: 1189
+  Numero de Tarefas: 10
+    Task 1: Machine 2, Duration 68, Job ID 3, Start Time 145, End Time 213, Sequencia: 15
+    Task 3: Machine 2, Duration 51, Job ID 7, Start Time 342, End Time 393, Sequencia: 33
+    Task 4: Machine 2, Duration 94, Job ID 1, Start Time 431, End Time 525, Sequencia: 46
+    Task 5: Machine 2, Duration 67, Job ID 4, Start Time 551, End Time 618, Sequencia: 37
+    Task 5: Machine 2, Duration 80, Job ID 5, Start Time 618, End Time 698, Sequencia: 60
+    Task 5: Machine 2, Duration 89, Job ID 0, Start Time 698, End Time 787, Sequencia: 52
+    Task 5: Machine 2, Duration 90, Job ID 8, Start Time 787, End Time 877, Sequencia: 65
+    Task 6: Machine 2, Duration 66, Job ID 6, Start Time 915, End Time 981, Sequencia: 74
+    Task 8: Machine 2, Duration 55, Job ID 2, Start Time 1038, End Time 1093, Sequencia: 81
+    Task 9: Machine 2, Duration 96, Job ID 9, Start Time 1093, End Time 1189, Sequencia: 89
+Machine 3:
+  tempoAtual: 1303
+  Numero de Tarefas: 10
+    Task 0: Machine 3, Duration 50, Job ID 9, Start Time 1, End Time 51, Sequencia: 4
+    Task 0: Machine 3, Duration 69, Job ID 4, Start Time 51, End Time 120, Sequencia: 13
+    Task 1: Machine 3, Duration 50, Job ID 1, Start Time 120, End Time 170, Sequencia: 8
+    Task 2: Machine 3, Duration 81, Job ID 8, Start Time 170, End Time 251, Sequencia: 21
+    Task 2: Machine 3, Duration 82, Job ID 7, Start Time 260, End Time 342, Sequencia: 26
+    Task 4: Machine 3, Duration 54, Job ID 3, Start Time 530, End Time 584, Sequencia: 43
+    Task 3: Machine 3, Duration 96, Job ID 6, Start Time 627, End Time 723, Sequencia: 53
+    Task 8: Machine 3, Duration 79, Job ID 5, Start Time 926, End Time 1005, Sequencia: 75
+    Task 9: Machine 3, Duration 92, Job ID 0, Start Time 1134, End Time 1226, Sequencia: 86
+    Task 9: Machine 3, Duration 77, Job ID 2, Start Time 1226, End Time 1303, Sequencia: 96
+Machine 4:
+  tempoAtual: 1038
+  Numero de Tarefas: 10
+    Task 0: Machine 4, Duration 88, Job ID 0, Start Time 1, End Time 89, Sequencia: 0
+    Task 0: Machine 4, Duration 98, Job ID 7, Start Time 89, End Time 187, Sequencia: 10
+    Task 1: Machine 4, Duration 88, Job ID 4, Start Time 187, End Time 275, Sequencia: 17
+    Task 1: Machine 4, Duration 81, Job ID 5, Start Time 275, End Time 356, Sequencia: 23
+    Task 3: Machine 4, Duration 75, Job ID 1, Start Time 356, End Time 431, Sequencia: 28
+    Task 3: Machine 4, Duration 99, Job ID 3, Start Time 431, End Time 530, Sequencia: 42
+    Task 2: Machine 4, Duration 97, Job ID 6, Start Time 530, End Time 627, Sequencia: 38
+    Task 7: Machine 4, Duration 81, Job ID 9, Start Time 729, End Time 810, Sequencia: 61
+    Task 6: Machine 4, Duration 76, Job ID 8, Start Time 877, End Time 953, Sequencia: 68
+    Task 7: Machine 4, Duration 85, Job ID 2, Start Time 953, End Time 1038, Sequencia: 77
+Machine 5:
+  tempoAtual: 1169
+  Numero de Tarefas: 10
+    Task 0: Machine 5, Duration 72, Job ID 1, Start Time 1, End Time 73, Sequencia: 1
+    Task 2: Machine 5, Duration 64, Job ID 5, Start Time 356, End Time 420, Sequencia: 29
+    Task 3: Machine 5, Duration 99, Job ID 0, Start Time 423, End Time 522, Sequencia: 40
+    Task 5: Machine 5, Duration 85, Job ID 2, Start Time 553, End Time 638, Sequencia: 49
+    Task 5: Machine 5, Duration 94, Job ID 7, Start Time 660, End Time 754, Sequencia: 57
+    Task 6: Machine 5, Duration 66, Job ID 3, Start Time 754, End Time 820, Sequencia: 63
+    Task 7: Machine 5, Duration 68, Job ID 4, Start Time 824, End Time 892, Sequencia: 80
+    Task 7: Machine 5, Duration 58, Job ID 8, Start Time 953, End Time 1011, Sequencia: 69
+    Task 8: Machine 5, Duration 59, Job ID 9, Start Time 1011, End Time 1070, Sequencia: 85
+    Task 7: Machine 5, Duration 99, Job ID 6, Start Time 1070, End Time 1169, Sequencia: 88
+Machine 6:
+  tempoAtual: 1221
+  Numero de Tarefas: 10
+    Task 1: Machine 6, Duration 71, Job ID 8, Start Time 95, End Time 166, Sequencia: 12
+    Task 1: Machine 6, Duration 73, Job ID 7, Start Time 187, End Time 260, Sequencia: 20
+    Task 2: Machine 6, Duration 69, Job ID 1, Start Time 260, End Time 329, Sequencia: 25
+    Task 2: Machine 6, Duration 94, Job ID 0, Start Time 329, End Time 423, Sequencia: 35
+    Task 3: Machine 6, Duration 66, Job ID 5, Start Time 423, End Time 489, Sequencia: 32
+    Task 4: Machine 6, Duration 64, Job ID 2, Start Time 489, End Time 553, Sequencia: 41
+    Task 5: Machine 6, Duration 75, Job ID 3, Start Time 584, End Time 659, Sequencia: 47
+    Task 6: Machine 6, Duration 58, Job ID 9, Start Time 671, End Time 729, Sequencia: 58
+    Task 6: Machine 6, Duration 95, Job ID 4, Start Time 729, End Time 824, Sequencia: 62
+    Task 8: Machine 6, Duration 52, Job ID 6, Start Time 1169, End Time 1221, Sequencia: 95
+Machine 7:
+  tempoAtual: 1130
+  Numero de Tarefas: 10
+    Task 0: Machine 7, Duration 50, Job ID 6, Start Time 1, End Time 51, Sequencia: 3
+    Task 0: Machine 7, Duration 94, Job ID 3, Start Time 51, End Time 145, Sequencia: 7
+    Task 3: Machine 7, Duration 85, Job ID 8, Start Time 251, End Time 336, Sequencia: 27
+    Task 4: Machine 7, Duration 56, Job ID 9, Start Time 519, End Time 575, Sequencia: 48
+    Task 6: Machine 7, Duration 78, Job ID 2, Start Time 638, End Time 716, Sequencia: 55
+    Task 6: Machine 7, Duration 69, Job ID 5, Start Time 716, End Time 785, Sequencia: 64
+    Task 6: Machine 7, Duration 85, Job ID 7, Start Time 785, End Time 870, Sequencia: 70
+    Task 7: Machine 7, Duration 99, Job ID 0, Start Time 870, End Time 969, Sequencia: 76
+    Task 8: Machine 7, Duration 67, Job ID 4, Start Time 969, End Time 1036, Sequencia: 82
+    Task 8: Machine 7, Duration 94, Job ID 1, Start Time 1036, End Time 1130, Sequencia: 91
+Machine 8:
+  tempoAtual: 1227
+  Numero de Tarefas: 10
+    Task 1: Machine 8, Duration 68, Job ID 0, Start Time 89, End Time 157, Sequencia: 9
+    Task 1: Machine 8, Duration 61, Job ID 2, Start Time 157, End Time 218, Sequencia: 16
+    Task 3: Machine 8, Duration 95, Job ID 4, Start Time 357, End Time 452, Sequencia: 30
+    Task 3: Machine 8, Duration 67, Job ID 9, Start Time 452, End Time 519, Sequencia: 45
+    Task 4: Machine 8, Duration 80, Job ID 5, Start Time 519, End Time 599, Sequencia: 36
+    Task 5: Machine 8, Duration 66, Job ID 1, Start Time 599, End Time 665, Sequencia: 51
+    Task 5: Machine 8, Duration 97, Job ID 6, Start Time 818, End Time 915, Sequencia: 67
+    Task 8: Machine 8, Duration 95, Job ID 7, Start Time 972, End Time 1067, Sequencia: 87
+    Task 8: Machine 8, Duration 93, Job ID 8, Start Time 1067, End Time 1160, Sequencia: 79
+    Task 9: Machine 8, Duration 67, Job ID 3, Start Time 1160, End Time 1227, Sequencia: 94
+Machine 9:
+  tempoAtual: 1421
+  Numero de Tarefas: 10
+    Task 0: Machine 9, Duration 83, Job ID 2, Start Time 1, End Time 84, Sequencia: 2
+    Task 2: Machine 9, Duration 82, Job ID 4, Start Time 275, End Time 357, Sequencia: 22
+    Task 5: Machine 9, Duration 96, Job ID 9, Start Time 575, End Time 671, Sequencia: 50
+    Task 6: Machine 9, Duration 77, Job ID 0, Start Time 787, End Time 864, Sequencia: 59
+    Task 7: Machine 9, Duration 62, Job ID 5, Start Time 864, End Time 926, Sequencia: 71
+    Task 8: Machine 9, Duration 63, Job ID 3, Start Time 1048, End Time 1111, Sequencia: 84
+    Task 9: Machine 9, Duration 79, Job ID 7, Start Time 1111, End Time 1190, Sequencia: 90
+    Task 9: Machine 9, Duration 63, Job ID 1, Start Time 1190, End Time 1253, Sequencia: 97
+    Task 9: Machine 9, Duration 71, Job ID 6, Start Time 1253, End Time 1324, Sequencia: 98
+    Task 9: Machine 9, Duration 97, Job ID 8, Start Time 1324, End Time 1421, Sequencia: 99
+
+==================== CAMINHO CRITICO ====================
+Total de tarefas no caminho critico: 17
+  [01] Job  0 | Op  0 | Maq  4 | Dur: 88 | Start:   1 | End:  89
+  [02] Job  7 | Op  0 | Maq  4 | Dur: 98 | Start:  89 | End: 187
+  [03] Job  4 | Op  1 | Maq  4 | Dur: 88 | Start: 187 | End: 275
+  [04] Job  5 | Op  1 | Maq  4 | Dur: 81 | Start: 275 | End: 356
+  [05] Job  1 | Op  3 | Maq  4 | Dur: 75 | Start: 356 | End: 431
+  [06] Job  3 | Op  3 | Maq  4 | Dur: 99 | Start: 431 | End: 530
+  [07] Job  6 | Op  2 | Maq  4 | Dur: 97 | Start: 530 | End: 627
+  [08] Job  6 | Op  3 | Maq  3 | Dur: 96 | Start: 627 | End: 723
+  [09] Job  6 | Op  4 | Maq  0 | Dur: 95 | Start: 723 | End: 818
+  [10] Job  1 | Op  6 | Maq  0 | Dur: 92 | Start: 818 | End: 910
+  [11] Job  7 | Op  7 | Maq  0 | Dur: 62 | Start: 910 | End: 972
+  [12] Job  3 | Op  7 | Maq  0 | Dur: 76 | Start: 972 | End: 1048
+  [13] Job  3 | Op  8 | Maq  9 | Dur: 63 | Start: 1048 | End: 1111
+  [14] Job  7 | Op  9 | Maq  9 | Dur: 79 | Start: 1111 | End: 1190
+  [15] Job  1 | Op  9 | Maq  9 | Dur: 63 | Start: 1190 | End: 1253
+  [16] Job  6 | Op  9 | Maq  9 | Dur: 71 | Start: 1253 | End: 1324
+  [17] Job  8 | Op  9 | Maq  9 | Dur: 97 | Start: 1324 | End: 1421
+Duracao acumulada das tarefas: 1421 | Makespan: 1421
+Status: Caminho critico sem folgas (Valido!)
+=========================================================
+
