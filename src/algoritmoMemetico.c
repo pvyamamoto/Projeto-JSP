@@ -59,14 +59,14 @@ typedef struct BlocoCritico{
 
 typedef struct Cromossomo{
     int* genes;
-    float fitness;
+    Solution* solucao;
 } Cromossomo;
 
 typedef struct Populacao{
     Cromossomo* individuos;
     int numIndividuos;
-    int melhorFitness;
-    int melhorIndividuoId;
+    Cromossomo *melhoresIndividuosGeracao;
+    Solution* melhorSolucao;
 } Populacao;
 
 void iniciarInstancias(const char *filePath, int *numJobs, int *numMachines, Job **jobs, Machine **machines){
@@ -1460,14 +1460,15 @@ Solution* decodificacaoGT(Job *jobs, int numJobs, Machine *machines, int numMach
     caminhoCritico(solution);
 
     // 5. Atualiza o fitness do cromossomo (Makespan minimizado)
-    cromossomo->fitness = (float)solution->maxMakespan;
     return solution;
 }
 
-Populacao* inicializarPopulacao(int numIndividuos, Job *jobs, int numJobs, Machine *machines, int numMachines){
+Populacao* inicializarPopulacao(int numIndividuos, int numCandidatos, Job *jobs, int numJobs, Machine *machines, int numMachines){
 
     Populacao* populacao = (Populacao*)malloc(sizeof(Populacao));
     populacao->individuos = (Cromossomo*)malloc(numIndividuos * sizeof(Cromossomo*));
+    populacao->melhoresIndividuosGeracao = (Cromossomo*)calloc(numCandidatos, sizeof(Cromossomo*)); 
+    populacao->melhorSolucao = NULL;
     populacao->numIndividuos = numIndividuos;
 
     int numRandom = numIndividuos * 0.7;
@@ -1489,10 +1490,45 @@ Populacao* inicializarPopulacao(int numIndividuos, Job *jobs, int numJobs, Machi
 
 Solution* algoritmoMemetico(Job *jobs, int numJobs, Machine *machines, int numMachines, int numIndividuos, int numIteracoes){
     
-    Populacao *populacao = inicializarPopulacao(numIndividuos, jobs, numJobs, machines, numMachines);
+    int numCandidatos = numIndividuos * 0.2;
 
-    
+    Populacao *populacao = inicializarPopulacao(numIndividuos, numCandidatos, jobs, numJobs, machines, numMachines);
 
+    for(int i = 0; i < numIndividuos; i++){
+
+        if(populacao->individuos[i].genes == NULL){
+            printf("Erro na inicializacao do individuo %d\n", i);
+            return NULL;
+        }
+
+        if(populacao->individuos[i].solucao == NULL){
+            populacao->individuos[i].solucao = decodificacaoGT(jobs, numJobs, machines, numMachines, &populacao->individuos[i]);
+            if(populacao->individuos[i].solucao == NULL){
+                printf("Erro na decodificacao do individuo %d\n", i);
+                return NULL;
+            }
+        }else continue;
+        
+        for(int j = 0; j < numCandidatos; j++){
+            if(populacao->melhoresIndividuosGeracao[j].solucao == NULL){
+                populacao->melhoresIndividuosGeracao[j] = populacao->individuos[i];
+                break;
+            }else if(populacao->individuos[i].solucao->maxMakespan < populacao->melhoresIndividuosGeracao[j].solucao->maxMakespan){
+                
+                populacao->melhoresIndividuosGeracao[j] = populacao->individuos[i];
+                for(int k = numCandidatos - 1; k > j; k--){
+                    populacao->melhoresIndividuosGeracao[k] = populacao->melhoresIndividuosGeracao[k - 1];
+                }
+                break;
+            }
+        }
+    }
+
+    if(populacao->melhoresIndividuosGeracao[0].solucao->maxMakespan < populacao->melhorSolucao->maxMakespan || populacao->melhorSolucao == NULL){
+        populacao->melhorSolucao = populacao->melhoresIndividuosGeracao[0].solucao;
+    }
+
+    return populacao->melhorSolucao;
 }
 
 int main (int argc, char *argv[]){
@@ -1522,14 +1558,13 @@ int main (int argc, char *argv[]){
 
     //printJobs(jobs, numJobs, numMachines);
 
-    Cromossomo *c1 = inicializarCromossomoSPTTWKR(jobs, numJobs, machines, numMachines);
-    solution = decodificacaoGT(jobs, numJobs, machines, numMachines, c1);
+    solution = algoritmoMemetico(jobs, numJobs, machines, numMachines, 100, 1000);
     //printMachines(result, numMachines);
 
-    printf("Makespan decodificado via G&T: %d\n", solution->maxMakespan);
+    printf("Makespan decodificado via Populacao Inicial Memético: %d\n", solution->maxMakespan);
     printCaminhoCritico(solution->caminhoCritico, solution->tamCaminhoCritico, solution->maxMakespan);
 
-    unsigned int seed = (unsigned int)time(NULL);
+    //unsigned int seed = (unsigned int)time(NULL);
 
     char *caminho_saida = argv[2];
 
