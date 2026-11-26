@@ -1,0 +1,1009 @@
+Dr. Memory version 2.6.20434 build 0 built on Dec 13 2025 03:23:51
+start time: 3733342:49:42.403 == 22:49:42.403 11/24/2026
+Recorded 124 suppression(s) from default C:\Users\Yamamoto\AppData\Local\Microsoft\WinGet\Packages\DynamoRIO.drmemory_Microsoft.Winget.Source_8wekyb3d8bbwe\DrMemory-Windows-2.6.20434\bin64\suppress-default.txt
+Syscall mismatch detected.  Running on unknown kernel version!
+WARNING: duplicate entry added to name2num_table: ZwWaitForWorkViaWorkerFactory
+WARNING: duplicate entry added to name2num_table: ZwWaitForWorkViaWorkerFactory
+System call information is missing for this operating system: WinVer=105;Rel=2009;Build=19045;Edition=Professional.
+new thread #0 id=21284
+
+module load event: "dynamorio.dll" 0x0000000071000000-0x00000000711dd000 modid: 1 C:\Users\Yamamoto\AppData\Local\Microsoft\WinGet\Packages\DynamoRIO.drmemory_Microsoft.Winget.Source_8wekyb3d8bbwe\DrMemory-Windows-2.6.20434\dynamorio\lib64\release\dynamorio.dll
+
+module load event: "drmemorylib.dll" 0x00007ff6311b0000-0x00007ff63146c000 modid: 2 C:\Users\Yamamoto\AppData\Local\Microsoft\WinGet\Packages\DynamoRIO.drmemory_Microsoft.Winget.Source_8wekyb3d8bbwe\DrMemory-Windows-2.6.20434\bin64\release\drmemorylib.dll
+
+module load event: "testeCrossoverMeme.exe" 0x00007ff6a1110000-0x00007ff6a11a9000 modid: 3 C:\ProjetoAlgoritmos\Projeto-JSP\bin\testeCrossoverMeme.exe
+
+module load event: "KERNELBASE.dll" 0x00007ffc98270000-0x00007ffc98566000 modid: 4 C:\Windows\System32\KERNELBASE.dll
+WARNING: unable to load symbols for C:\Windows\System32\KERNELBASE.dll
+
+module load event: "KERNEL32.dll" 0x00007ffc99b20000-0x00007ffc99be2000 modid: 5 C:\Windows\System32\KERNEL32.DLL
+WARNING: unable to load symbols for C:\Windows\System32\KERNEL32.DLL
+
+module load event: "msvcrt.dll" 0x00007ffc99bf0000-0x00007ffc99c8e000 modid: 6 C:\Windows\System32\msvcrt.dll
+WARNING: unable to load symbols for C:\Windows\System32\msvcrt.dll
+WARNING: new/delete has no local wrapper => disabling mismatch detection for msvcrt.dll
+WARNING: new/delete has no local wrapper => disabling mismatch detection for msvcrt.dll
+WARNING: new == new[] => disabling mismatch detection for msvcrt.dll
+WARNING: new == new[] => disabling mismatch detection for msvcrt.dll
+WARNING: new/delete has no local wrapper => disabling mismatch detection for msvcrt.dll
+
+module load event: "ntdll.dll" 0x00007ffc9a6b0000-0x00007ffc9a8a8000 modid: 7 C:\Windows\SYSTEM32\ntdll.dll
+WARNING: unable to load symbols for C:\Windows\SYSTEM32\ntdll.dll
+WARNING: fail to find call to RtlFreeStringRoutine
+WARNING: fail to find call to RtlFreeStringRoutine
+WARNING: fail to find call to RtlFreeStringRoutine
+
+NEW THREAD: main thread 21284
+
+
+Error #1: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff850-0x0000003605bff858 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 _pei386_runtime_relocator [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/crt/pseudo-reloc.c:477] (0x00007ff6a1119d06 <testeCrossoverMeme.exe+0x9d06>) modid:3
+# 2 __tmainCRTStartup      [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/crt/crtexe.c:279] (0x00007ff6a1111261 <testeCrossoverMeme.exe+0x1261>) modid:3
+# 3 .l_start               [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/crt/crtexe.c:212] (0x00007ff6a11114f6 <testeCrossoverMeme.exe+0x14f6>) modid:3
+# 4 KERNEL32.dll!BaseThreadInitThunk (0x00007ffc99b37374 <KERNEL32.dll+0x17374>) modid:5
+Note: @0:00:12.523 in thread 21284
+Note: 0x0000003605bff850 refers to 744 byte(s) beyond the top of the stack 0x0000003605bffb38
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #2: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bfea90-0x0000003605bfea98 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:126] (0x00007ff6a111a7b6 <testeCrossoverMeme.exe+0xa7b6>) modid:3
+# 1 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 2 fscanf                 [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:302] (0x00007ff6a1111577 <testeCrossoverMeme.exe+0x1577>) modid:3
+# 3 iniciarInstancias      [src/algoritmoMemetico.c:84] (0x00007ff6a11116b4 <testeCrossoverMeme.exe+0x16b4>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1935] (0x00007ff6a1119690 <testeCrossoverMeme.exe+0x9690>) modid:3
+Note: @0:00:12.601 in thread 21284
+Note: 0x0000003605bfea90 refers to 4072 byte(s) beyond the top of the stack 0x0000003605bffa78
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #3: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bfea50-0x0000003605bfea58 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 2 fscanf                 [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:302] (0x00007ff6a1111577 <testeCrossoverMeme.exe+0x1577>) modid:3
+# 3 iniciarInstancias      [src/algoritmoMemetico.c:84] (0x00007ff6a11116b4 <testeCrossoverMeme.exe+0x16b4>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1935] (0x00007ff6a1119690 <testeCrossoverMeme.exe+0x9690>) modid:3
+Note: @0:00:12.601 in thread 21284
+Note: 0x0000003605bfea50 refers to 4136 byte(s) beyond the top of the stack 0x0000003605bffa78
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #4: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bfea90-0x0000003605bfea98 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:126] (0x00007ff6a111a7b6 <testeCrossoverMeme.exe+0xa7b6>) modid:3
+# 1 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 2 fscanf                 [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:302] (0x00007ff6a1111577 <testeCrossoverMeme.exe+0x1577>) modid:3
+# 3 iniciarInstancias      [src/algoritmoMemetico.c:116] (0x00007ff6a1111ab8 <testeCrossoverMeme.exe+0x1ab8>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1935] (0x00007ff6a1119690 <testeCrossoverMeme.exe+0x9690>) modid:3
+Note: @0:00:12.636 in thread 21284
+Note: 0x0000003605bfea90 refers to 4072 byte(s) beyond the top of the stack 0x0000003605bffa78
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #5: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bfea50-0x0000003605bfea58 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 2 fscanf                 [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:302] (0x00007ff6a1111577 <testeCrossoverMeme.exe+0x1577>) modid:3
+# 3 iniciarInstancias      [src/algoritmoMemetico.c:116] (0x00007ff6a1111ab8 <testeCrossoverMeme.exe+0x1ab8>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1935] (0x00007ff6a1119690 <testeCrossoverMeme.exe+0x9690>) modid:3
+Note: @0:00:12.636 in thread 21284
+Note: 0x0000003605bfea50 refers to 4136 byte(s) beyond the top of the stack 0x0000003605bffa78
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #6: UNADDRESSABLE ACCESS beyond heap bounds: reading 0x0000022a95658f1c-0x0000022a95658f20 4 byte(s)
+# 0 inicializarCromossomoSPTTWKR [src/algoritmoMemetico.c:1294] (0x00007ff6a1116936 <testeCrossoverMeme.exe+0x6936>) modid:3
+# 1 inicializarPopulacao   [src/algoritmoMemetico.c:1546] (0x00007ff6a1117f35 <testeCrossoverMeme.exe+0x7f35>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1734] (0x00007ff6a11188f5 <testeCrossoverMeme.exe+0x88f5>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:12.904 in thread 21284
+Note: next higher malloc: 0x0000022a95658f40-0x0000022a95658fe8
+Note: refers to 4 byte(s) beyond last valid byte in prior malloc
+Note: prev lower malloc:  0x0000022a95658e70-0x0000022a95658f18
+Note: instruction: mov    0x04(%rax) -> %eax
+	error end
+
+Error #7: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff790-0x0000003605bff798 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 decodificacaoGT        [src/algoritmoMemetico.c:1418] (0x00007ff6a111734b <testeCrossoverMeme.exe+0x734b>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1747] (0x00007ff6a11189e0 <testeCrossoverMeme.exe+0x89e0>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:13.027 in thread 21284
+Note: 0x0000003605bff790 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff798
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #8: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff770-0x0000003605bff778 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 decodificacaoGT        [src/algoritmoMemetico.c:1419] (0x00007ff6a11173ad <testeCrossoverMeme.exe+0x73ad>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1747] (0x00007ff6a11189e0 <testeCrossoverMeme.exe+0x89e0>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:13.028 in thread 21284
+Note: 0x0000003605bff770 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff778
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #9: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff750-0x0000003605bff758 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 decodificacaoGT        [src/algoritmoMemetico.c:1425] (0x00007ff6a1117465 <testeCrossoverMeme.exe+0x7465>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1747] (0x00007ff6a11189e0 <testeCrossoverMeme.exe+0x89e0>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:13.031 in thread 21284
+Note: 0x0000003605bff750 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff758
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #10: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff6c0-0x0000003605bff6c8 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 decodificacaoGT        [src/algoritmoMemetico.c:1429] (0x00007ff6a1117507 <testeCrossoverMeme.exe+0x7507>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1747] (0x00007ff6a11189e0 <testeCrossoverMeme.exe+0x89e0>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:13.035 in thread 21284
+Note: 0x0000003605bff6c0 refers to 120 byte(s) beyond the top of the stack 0x0000003605bff738
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #11: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff6a0-0x0000003605bff6a8 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 decodificacaoGT        [src/algoritmoMemetico.c:1438] (0x00007ff6a11175c2 <testeCrossoverMeme.exe+0x75c2>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1747] (0x00007ff6a11189e0 <testeCrossoverMeme.exe+0x89e0>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:13.037 in thread 21284
+Note: 0x0000003605bff6a0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff6a8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #12: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff680-0x0000003605bff688 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 decodificacaoGT        [src/algoritmoMemetico.c:1439] (0x00007ff6a1117627 <testeCrossoverMeme.exe+0x7627>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1747] (0x00007ff6a11189e0 <testeCrossoverMeme.exe+0x89e0>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:13.039 in thread 21284
+Note: 0x0000003605bff680 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff688
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #13: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff660-0x0000003605bff668 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 decodificacaoGT        [src/algoritmoMemetico.c:1464] (0x00007ff6a1117888 <testeCrossoverMeme.exe+0x7888>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1747] (0x00007ff6a11189e0 <testeCrossoverMeme.exe+0x89e0>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:13.047 in thread 21284
+Note: 0x0000003605bff660 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff668
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #14: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff790-0x0000003605bff798 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 decodificacaoGT        [src/algoritmoMemetico.c:1418] (0x00007ff6a111734b <testeCrossoverMeme.exe+0x734b>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1793] (0x00007ff6a1118d1f <testeCrossoverMeme.exe+0x8d1f>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:13.799 in thread 21284
+Note: 0x0000003605bff790 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff798
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #15: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff770-0x0000003605bff778 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 decodificacaoGT        [src/algoritmoMemetico.c:1419] (0x00007ff6a11173ad <testeCrossoverMeme.exe+0x73ad>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1793] (0x00007ff6a1118d1f <testeCrossoverMeme.exe+0x8d1f>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:13.802 in thread 21284
+Note: 0x0000003605bff770 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff778
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #16: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff750-0x0000003605bff758 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 decodificacaoGT        [src/algoritmoMemetico.c:1425] (0x00007ff6a1117465 <testeCrossoverMeme.exe+0x7465>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1793] (0x00007ff6a1118d1f <testeCrossoverMeme.exe+0x8d1f>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:13.803 in thread 21284
+Note: 0x0000003605bff750 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff758
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #17: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff6c0-0x0000003605bff6c8 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 decodificacaoGT        [src/algoritmoMemetico.c:1429] (0x00007ff6a1117507 <testeCrossoverMeme.exe+0x7507>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1793] (0x00007ff6a1118d1f <testeCrossoverMeme.exe+0x8d1f>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:13.804 in thread 21284
+Note: 0x0000003605bff6c0 refers to 120 byte(s) beyond the top of the stack 0x0000003605bff738
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #18: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff6a0-0x0000003605bff6a8 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 decodificacaoGT        [src/algoritmoMemetico.c:1438] (0x00007ff6a11175c2 <testeCrossoverMeme.exe+0x75c2>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1793] (0x00007ff6a1118d1f <testeCrossoverMeme.exe+0x8d1f>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:13.805 in thread 21284
+Note: 0x0000003605bff6a0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff6a8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #19: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff680-0x0000003605bff688 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 decodificacaoGT        [src/algoritmoMemetico.c:1439] (0x00007ff6a1117627 <testeCrossoverMeme.exe+0x7627>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1793] (0x00007ff6a1118d1f <testeCrossoverMeme.exe+0x8d1f>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:13.806 in thread 21284
+Note: 0x0000003605bff680 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff688
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #20: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff660-0x0000003605bff668 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 decodificacaoGT        [src/algoritmoMemetico.c:1464] (0x00007ff6a1117888 <testeCrossoverMeme.exe+0x7888>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1793] (0x00007ff6a1118d1f <testeCrossoverMeme.exe+0x8d1f>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:13.807 in thread 21284
+Note: 0x0000003605bff660 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff668
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #21: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff790-0x0000003605bff798 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 decodificacaoGT        [src/algoritmoMemetico.c:1418] (0x00007ff6a111734b <testeCrossoverMeme.exe+0x734b>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1794] (0x00007ff6a1118d58 <testeCrossoverMeme.exe+0x8d58>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:13.815 in thread 21284
+Note: 0x0000003605bff790 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff798
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #22: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff770-0x0000003605bff778 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 decodificacaoGT        [src/algoritmoMemetico.c:1419] (0x00007ff6a11173ad <testeCrossoverMeme.exe+0x73ad>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1794] (0x00007ff6a1118d58 <testeCrossoverMeme.exe+0x8d58>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:13.817 in thread 21284
+Note: 0x0000003605bff770 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff778
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #23: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff750-0x0000003605bff758 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 decodificacaoGT        [src/algoritmoMemetico.c:1425] (0x00007ff6a1117465 <testeCrossoverMeme.exe+0x7465>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1794] (0x00007ff6a1118d58 <testeCrossoverMeme.exe+0x8d58>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:13.818 in thread 21284
+Note: 0x0000003605bff750 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff758
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #24: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff6c0-0x0000003605bff6c8 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 decodificacaoGT        [src/algoritmoMemetico.c:1429] (0x00007ff6a1117507 <testeCrossoverMeme.exe+0x7507>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1794] (0x00007ff6a1118d58 <testeCrossoverMeme.exe+0x8d58>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:13.819 in thread 21284
+Note: 0x0000003605bff6c0 refers to 120 byte(s) beyond the top of the stack 0x0000003605bff738
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #25: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff6a0-0x0000003605bff6a8 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 decodificacaoGT        [src/algoritmoMemetico.c:1438] (0x00007ff6a11175c2 <testeCrossoverMeme.exe+0x75c2>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1794] (0x00007ff6a1118d58 <testeCrossoverMeme.exe+0x8d58>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:13.820 in thread 21284
+Note: 0x0000003605bff6a0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff6a8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #26: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff680-0x0000003605bff688 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 decodificacaoGT        [src/algoritmoMemetico.c:1439] (0x00007ff6a1117627 <testeCrossoverMeme.exe+0x7627>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1794] (0x00007ff6a1118d58 <testeCrossoverMeme.exe+0x8d58>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:13.821 in thread 21284
+Note: 0x0000003605bff680 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff688
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #27: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff660-0x0000003605bff668 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 decodificacaoGT        [src/algoritmoMemetico.c:1464] (0x00007ff6a1117888 <testeCrossoverMeme.exe+0x7888>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1794] (0x00007ff6a1118d58 <testeCrossoverMeme.exe+0x8d58>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:13.821 in thread 21284
+Note: 0x0000003605bff660 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff668
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #28: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff790-0x0000003605bff798 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 decodificacaoGT        [src/algoritmoMemetico.c:1418] (0x00007ff6a111734b <testeCrossoverMeme.exe+0x734b>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1803] (0x00007ff6a1118e9a <testeCrossoverMeme.exe+0x8e9a>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:13.884 in thread 21284
+Note: 0x0000003605bff790 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff798
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #29: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff770-0x0000003605bff778 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 decodificacaoGT        [src/algoritmoMemetico.c:1419] (0x00007ff6a11173ad <testeCrossoverMeme.exe+0x73ad>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1803] (0x00007ff6a1118e9a <testeCrossoverMeme.exe+0x8e9a>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:13.884 in thread 21284
+Note: 0x0000003605bff770 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff778
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #30: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff750-0x0000003605bff758 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 decodificacaoGT        [src/algoritmoMemetico.c:1425] (0x00007ff6a1117465 <testeCrossoverMeme.exe+0x7465>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1803] (0x00007ff6a1118e9a <testeCrossoverMeme.exe+0x8e9a>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:13.885 in thread 21284
+Note: 0x0000003605bff750 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff758
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #31: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff6c0-0x0000003605bff6c8 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 decodificacaoGT        [src/algoritmoMemetico.c:1429] (0x00007ff6a1117507 <testeCrossoverMeme.exe+0x7507>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1803] (0x00007ff6a1118e9a <testeCrossoverMeme.exe+0x8e9a>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:13.886 in thread 21284
+Note: 0x0000003605bff6c0 refers to 120 byte(s) beyond the top of the stack 0x0000003605bff738
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #32: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff6a0-0x0000003605bff6a8 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 decodificacaoGT        [src/algoritmoMemetico.c:1438] (0x00007ff6a11175c2 <testeCrossoverMeme.exe+0x75c2>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1803] (0x00007ff6a1118e9a <testeCrossoverMeme.exe+0x8e9a>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:13.887 in thread 21284
+Note: 0x0000003605bff6a0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff6a8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #33: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff680-0x0000003605bff688 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 decodificacaoGT        [src/algoritmoMemetico.c:1439] (0x00007ff6a1117627 <testeCrossoverMeme.exe+0x7627>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1803] (0x00007ff6a1118e9a <testeCrossoverMeme.exe+0x8e9a>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:13.888 in thread 21284
+Note: 0x0000003605bff680 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff688
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #34: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff660-0x0000003605bff668 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 decodificacaoGT        [src/algoritmoMemetico.c:1464] (0x00007ff6a1117888 <testeCrossoverMeme.exe+0x7888>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1803] (0x00007ff6a1118e9a <testeCrossoverMeme.exe+0x8e9a>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:13.889 in thread 21284
+Note: 0x0000003605bff660 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff668
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #35: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff790-0x0000003605bff798 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 decodificacaoGT        [src/algoritmoMemetico.c:1418] (0x00007ff6a111734b <testeCrossoverMeme.exe+0x734b>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1804] (0x00007ff6a1118ed3 <testeCrossoverMeme.exe+0x8ed3>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:13.897 in thread 21284
+Note: 0x0000003605bff790 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff798
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #36: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff770-0x0000003605bff778 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 decodificacaoGT        [src/algoritmoMemetico.c:1419] (0x00007ff6a11173ad <testeCrossoverMeme.exe+0x73ad>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1804] (0x00007ff6a1118ed3 <testeCrossoverMeme.exe+0x8ed3>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:13.898 in thread 21284
+Note: 0x0000003605bff770 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff778
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #37: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff750-0x0000003605bff758 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 decodificacaoGT        [src/algoritmoMemetico.c:1425] (0x00007ff6a1117465 <testeCrossoverMeme.exe+0x7465>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1804] (0x00007ff6a1118ed3 <testeCrossoverMeme.exe+0x8ed3>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:13.899 in thread 21284
+Note: 0x0000003605bff750 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff758
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #38: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff6c0-0x0000003605bff6c8 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 decodificacaoGT        [src/algoritmoMemetico.c:1429] (0x00007ff6a1117507 <testeCrossoverMeme.exe+0x7507>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1804] (0x00007ff6a1118ed3 <testeCrossoverMeme.exe+0x8ed3>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:13.901 in thread 21284
+Note: 0x0000003605bff6c0 refers to 120 byte(s) beyond the top of the stack 0x0000003605bff738
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #39: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff6a0-0x0000003605bff6a8 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 decodificacaoGT        [src/algoritmoMemetico.c:1438] (0x00007ff6a11175c2 <testeCrossoverMeme.exe+0x75c2>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1804] (0x00007ff6a1118ed3 <testeCrossoverMeme.exe+0x8ed3>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:13.902 in thread 21284
+Note: 0x0000003605bff6a0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff6a8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #40: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff680-0x0000003605bff688 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 decodificacaoGT        [src/algoritmoMemetico.c:1439] (0x00007ff6a1117627 <testeCrossoverMeme.exe+0x7627>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1804] (0x00007ff6a1118ed3 <testeCrossoverMeme.exe+0x8ed3>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:13.902 in thread 21284
+Note: 0x0000003605bff680 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff688
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #41: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff660-0x0000003605bff668 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 decodificacaoGT        [src/algoritmoMemetico.c:1464] (0x00007ff6a1117888 <testeCrossoverMeme.exe+0x7888>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1804] (0x00007ff6a1118ed3 <testeCrossoverMeme.exe+0x8ed3>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:13.903 in thread 21284
+Note: 0x0000003605bff660 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff668
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+WARNING: unhandled system calls found
+
+Error #42: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff7e0-0x0000003605bff7e8 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 __pformat_int.isra.0   [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:707] (0x00007ff6a11291ba <testeCrossoverMeme.exe+0x191ba>) modid:3
+# 2 __mingw_pformat        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:2598] (0x00007ff6a112a5f6 <testeCrossoverMeme.exe+0x1a5f6>) modid:3
+# 3 __mingw_vfprintf       [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfprintf.c:54] (0x00007ff6a112456f <testeCrossoverMeme.exe+0x1456f>) modid:3
+# 4 printf                 [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:358] (0x00007ff6a111160a <testeCrossoverMeme.exe+0x160a>) modid:3
+# 5 algoritmoMemetico      [src/algoritmoMemetico.c:1852] (0x00007ff6a11192b9 <testeCrossoverMeme.exe+0x92b9>) modid:3
+# 6 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:14.007 in thread 21284
+Note: 0x0000003605bff7e0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff7e8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #43: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff7e0-0x0000003605bff7e8 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 __pformat_int.isra.0   [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:707] (0x00007ff6a11291ba <testeCrossoverMeme.exe+0x191ba>) modid:3
+# 2 __mingw_pformat        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:2598] (0x00007ff6a112a5f6 <testeCrossoverMeme.exe+0x1a5f6>) modid:3
+# 3 __mingw_vfprintf       [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfprintf.c:54] (0x00007ff6a112456f <testeCrossoverMeme.exe+0x1456f>) modid:3
+# 4 printf                 [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:358] (0x00007ff6a111160a <testeCrossoverMeme.exe+0x160a>) modid:3
+# 5 algoritmoMemetico      [src/algoritmoMemetico.c:1853] (0x00007ff6a11192cd <testeCrossoverMeme.exe+0x92cd>) modid:3
+# 6 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:14.019 in thread 21284
+Note: 0x0000003605bff7e0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff7e8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #44: INVALID HEAP ARGUMENT to free 0x0000022a95654f10
+# 0 replace_free    [D:\a\drmemory\drmemory\common\alloc_replace.c:2712] (0x00007ff6311d9190 <drmemorylib.dll+0x29190>) modid:2
+# 1 liberarCromossomo      [src/algoritmoMemetico.c:767] (0x00007ff6a1114654 <testeCrossoverMeme.exe+0x4654>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1879] (0x00007ff6a111945e <testeCrossoverMeme.exe+0x945e>) modid:3
+# 3 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:14.039 in thread 21284
+Note: next higher malloc: 0x0000022a956550b0-0x0000022a95655140
+	error end
+
+Error #45: INVALID HEAP ARGUMENT to free 0x0000022a956dd960
+# 0 replace_free    [D:\a\drmemory\drmemory\common\alloc_replace.c:2712] (0x00007ff6311d9190 <drmemorylib.dll+0x29190>) modid:2
+# 1 algoritmoMemetico      [src/algoritmoMemetico.c:1905] (0x00007ff6a1119587 <testeCrossoverMeme.exe+0x9587>) modid:3
+# 2 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:14.052 in thread 21284
+Note: prev lower malloc:  0x0000022a956dd820-0x0000022a956dd938
+Note: memory was previously freed here:
+Note: # 0 replace_free    [D:\a\drmemory\drmemory\common\alloc_replace.c:2712] (0x00007ff6311d9190 <drmemorylib.dll+0x29190>) modid:2
+Note: # 1 algoritmoMemetico      [src/algoritmoMemetico.c:1896] (0x00007ff6a1119526 <testeCrossoverMeme.exe+0x9526>) modid:3
+Note: # 2 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+	error end
+
+Error #46: INVALID HEAP ARGUMENT to free 0x0000022a956c8e90
+# 0 replace_free    [D:\a\drmemory\drmemory\common\alloc_replace.c:2712] (0x00007ff6311d9190 <drmemorylib.dll+0x29190>) modid:2
+# 1 algoritmoMemetico      [src/algoritmoMemetico.c:1906] (0x00007ff6a1119593 <testeCrossoverMeme.exe+0x9593>) modid:3
+# 2 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:14.065 in thread 21284
+Note: next higher malloc: 0x0000022a956c92e0-0x0000022a956c9370
+Note: prev lower malloc:  0x0000022a956c8d50-0x0000022a956c8e68
+Note: memory was previously freed here:
+Note: # 0 replace_free    [D:\a\drmemory\drmemory\common\alloc_replace.c:2712] (0x00007ff6311d9190 <drmemorylib.dll+0x29190>) modid:2
+Note: # 1 algoritmoMemetico      [src/algoritmoMemetico.c:1897] (0x00007ff6a1119532 <testeCrossoverMeme.exe+0x9532>) modid:3
+Note: # 2 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+	error end
+
+Error #47: UNADDRESSABLE ACCESS of freed memory: reading 0x0000022a95654a30-0x0000022a95654a38 8 byte(s)
+# 0 liberarCromossomo      [src/algoritmoMemetico.c:760] (0x00007ff6a1114619 <testeCrossoverMeme.exe+0x4619>) modid:3
+# 1 liberarPopulacao       [src/algoritmoMemetico.c:777] (0x00007ff6a11146a4 <testeCrossoverMeme.exe+0x46a4>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1911] (0x00007ff6a11195d0 <testeCrossoverMeme.exe+0x95d0>) modid:3
+# 3 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:14.069 in thread 21284
+Note: next higher malloc: 0x0000022a956550b0-0x0000022a95655140
+Note: prev lower malloc:  0x0000022a956549e0-0x0000022a956549f8
+Note: 0x0000022a95654a30-0x0000022a95654a38 overlaps memory 0x0000022a95654a20-0x0000022a95655060 that was freed here:
+Note: # 0 replace_free    [D:\a\drmemory\drmemory\common\alloc_replace.c:2712] (0x00007ff6311d9190 <drmemorylib.dll+0x29190>) modid:2
+Note: # 1 liberarCromossomo      [src/algoritmoMemetico.c:767] (0x00007ff6a1114654 <testeCrossoverMeme.exe+0x4654>) modid:3
+Note: # 2 liberarPopulacao       [src/algoritmoMemetico.c:777] (0x00007ff6a11146a4 <testeCrossoverMeme.exe+0x46a4>) modid:3
+Note: # 3 algoritmoMemetico      [src/algoritmoMemetico.c:1911] (0x00007ff6a11195d0 <testeCrossoverMeme.exe+0x95d0>) modid:3
+Note: # 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: instruction: mov    (%rax) -> %rax
+	error end
+
+Error #48: UNADDRESSABLE ACCESS of freed memory: reading 0x0000022a95654a30-0x0000022a95654a38 8 byte(s)
+# 0 liberarCromossomo      [src/algoritmoMemetico.c:761] (0x00007ff6a1114625 <testeCrossoverMeme.exe+0x4625>) modid:3
+# 1 liberarPopulacao       [src/algoritmoMemetico.c:777] (0x00007ff6a11146a4 <testeCrossoverMeme.exe+0x46a4>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1911] (0x00007ff6a11195d0 <testeCrossoverMeme.exe+0x95d0>) modid:3
+# 3 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:14.083 in thread 21284
+Note: next higher malloc: 0x0000022a956550b0-0x0000022a95655140
+Note: prev lower malloc:  0x0000022a956549e0-0x0000022a956549f8
+Note: 0x0000022a95654a30-0x0000022a95654a38 overlaps memory 0x0000022a95654a20-0x0000022a95655060 that was freed here:
+Note: # 0 replace_free    [D:\a\drmemory\drmemory\common\alloc_replace.c:2712] (0x00007ff6311d9190 <drmemorylib.dll+0x29190>) modid:2
+Note: # 1 liberarCromossomo      [src/algoritmoMemetico.c:767] (0x00007ff6a1114654 <testeCrossoverMeme.exe+0x4654>) modid:3
+Note: # 2 liberarPopulacao       [src/algoritmoMemetico.c:777] (0x00007ff6a11146a4 <testeCrossoverMeme.exe+0x46a4>) modid:3
+Note: # 3 algoritmoMemetico      [src/algoritmoMemetico.c:1911] (0x00007ff6a11195d0 <testeCrossoverMeme.exe+0x95d0>) modid:3
+Note: # 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: instruction: mov    (%rax) -> %rax
+	error end
+
+Error #49: UNADDRESSABLE ACCESS of freed memory: writing 0x0000022a95654a30-0x0000022a95654a38 8 byte(s)
+# 0 liberarCromossomo      [src/algoritmoMemetico.c:762] (0x00007ff6a1114634 <testeCrossoverMeme.exe+0x4634>) modid:3
+# 1 liberarPopulacao       [src/algoritmoMemetico.c:777] (0x00007ff6a11146a4 <testeCrossoverMeme.exe+0x46a4>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1911] (0x00007ff6a11195d0 <testeCrossoverMeme.exe+0x95d0>) modid:3
+# 3 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:14.085 in thread 21284
+Note: next higher malloc: 0x0000022a956550b0-0x0000022a95655140
+Note: prev lower malloc:  0x0000022a956549e0-0x0000022a956549f8
+Note: 0x0000022a95654a30-0x0000022a95654a38 overlaps memory 0x0000022a95654a20-0x0000022a95655060 that was freed here:
+Note: # 0 replace_free    [D:\a\drmemory\drmemory\common\alloc_replace.c:2712] (0x00007ff6311d9190 <drmemorylib.dll+0x29190>) modid:2
+Note: # 1 liberarCromossomo      [src/algoritmoMemetico.c:767] (0x00007ff6a1114654 <testeCrossoverMeme.exe+0x4654>) modid:3
+Note: # 2 liberarPopulacao       [src/algoritmoMemetico.c:777] (0x00007ff6a11146a4 <testeCrossoverMeme.exe+0x46a4>) modid:3
+Note: # 3 algoritmoMemetico      [src/algoritmoMemetico.c:1911] (0x00007ff6a11195d0 <testeCrossoverMeme.exe+0x95d0>) modid:3
+Note: # 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: instruction: mov    $0x0000000000000000 -> (%rax)
+	error end
+
+Error #50: UNADDRESSABLE ACCESS of freed memory: reading 0x0000022a95654a38-0x0000022a95654a40 8 byte(s)
+# 0 liberarCromossomo      [src/algoritmoMemetico.c:765] (0x00007ff6a111463f <testeCrossoverMeme.exe+0x463f>) modid:3
+# 1 liberarPopulacao       [src/algoritmoMemetico.c:777] (0x00007ff6a11146a4 <testeCrossoverMeme.exe+0x46a4>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1911] (0x00007ff6a11195d0 <testeCrossoverMeme.exe+0x95d0>) modid:3
+# 3 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:14.087 in thread 21284
+Note: next higher malloc: 0x0000022a956550b0-0x0000022a95655140
+Note: prev lower malloc:  0x0000022a956549e0-0x0000022a956549f8
+Note: 0x0000022a95654a38-0x0000022a95654a40 overlaps memory 0x0000022a95654a20-0x0000022a95655060 that was freed here:
+Note: # 0 replace_free    [D:\a\drmemory\drmemory\common\alloc_replace.c:2712] (0x00007ff6311d9190 <drmemorylib.dll+0x29190>) modid:2
+Note: # 1 liberarCromossomo      [src/algoritmoMemetico.c:767] (0x00007ff6a1114654 <testeCrossoverMeme.exe+0x4654>) modid:3
+Note: # 2 liberarPopulacao       [src/algoritmoMemetico.c:777] (0x00007ff6a11146a4 <testeCrossoverMeme.exe+0x46a4>) modid:3
+Note: # 3 algoritmoMemetico      [src/algoritmoMemetico.c:1911] (0x00007ff6a11195d0 <testeCrossoverMeme.exe+0x95d0>) modid:3
+Note: # 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: instruction: mov    0x08(%rax) -> %rax
+	error end
+
+Error #51: INVALID HEAP ARGUMENT to free 0x0000022a95654a30
+# 0 replace_free    [D:\a\drmemory\drmemory\common\alloc_replace.c:2712] (0x00007ff6311d9190 <drmemorylib.dll+0x29190>) modid:2
+# 1 liberarCromossomo      [src/algoritmoMemetico.c:767] (0x00007ff6a1114654 <testeCrossoverMeme.exe+0x4654>) modid:3
+# 2 liberarPopulacao       [src/algoritmoMemetico.c:777] (0x00007ff6a11146a4 <testeCrossoverMeme.exe+0x46a4>) modid:3
+# 3 algoritmoMemetico      [src/algoritmoMemetico.c:1911] (0x00007ff6a11195d0 <testeCrossoverMeme.exe+0x95d0>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:14.088 in thread 21284
+Note: next higher malloc: 0x0000022a956550b0-0x0000022a95655140
+Note: prev lower malloc:  0x0000022a956549e0-0x0000022a956549f8
+Note: 0x0000022a95654a30-0x0000022a95654a30 overlaps memory 0x0000022a95654a20-0x0000022a95655060 that was freed here:
+Note: # 0 replace_free    [D:\a\drmemory\drmemory\common\alloc_replace.c:2712] (0x00007ff6311d9190 <drmemorylib.dll+0x29190>) modid:2
+Note: # 1 liberarCromossomo      [src/algoritmoMemetico.c:767] (0x00007ff6a1114654 <testeCrossoverMeme.exe+0x4654>) modid:3
+Note: # 2 liberarPopulacao       [src/algoritmoMemetico.c:777] (0x00007ff6a11146a4 <testeCrossoverMeme.exe+0x46a4>) modid:3
+Note: # 3 algoritmoMemetico      [src/algoritmoMemetico.c:1911] (0x00007ff6a11195d0 <testeCrossoverMeme.exe+0x95d0>) modid:3
+Note: # 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+	error end
+
+Error #52: INVALID HEAP ARGUMENT to free 0x0000022a95654a20
+# 0 replace_free    [D:\a\drmemory\drmemory\common\alloc_replace.c:2712] (0x00007ff6311d9190 <drmemorylib.dll+0x29190>) modid:2
+# 1 liberarPopulacao       [src/algoritmoMemetico.c:779] (0x00007ff6a11146c3 <testeCrossoverMeme.exe+0x46c3>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1911] (0x00007ff6a11195d0 <testeCrossoverMeme.exe+0x95d0>) modid:3
+# 3 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+Note: @0:00:14.103 in thread 21284
+Note: prev lower malloc:  0x0000022a956549e0-0x0000022a956549f8
+Note: memory was previously freed here:
+Note: # 0 replace_free    [D:\a\drmemory\drmemory\common\alloc_replace.c:2712] (0x00007ff6311d9190 <drmemorylib.dll+0x29190>) modid:2
+Note: # 1 liberarCromossomo      [src/algoritmoMemetico.c:767] (0x00007ff6a1114654 <testeCrossoverMeme.exe+0x4654>) modid:3
+Note: # 2 liberarPopulacao       [src/algoritmoMemetico.c:777] (0x00007ff6a11146a4 <testeCrossoverMeme.exe+0x46a4>) modid:3
+Note: # 3 algoritmoMemetico      [src/algoritmoMemetico.c:1911] (0x00007ff6a11195d0 <testeCrossoverMeme.exe+0x95d0>) modid:3
+Note: # 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+	error end
+
+Error #53: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff920-0x0000003605bff928 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 __pformat_int.isra.0   [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:707] (0x00007ff6a11291ba <testeCrossoverMeme.exe+0x191ba>) modid:3
+# 2 __mingw_pformat        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:2598] (0x00007ff6a112a5f6 <testeCrossoverMeme.exe+0x1a5f6>) modid:3
+# 3 __mingw_vfprintf       [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfprintf.c:54] (0x00007ff6a112456f <testeCrossoverMeme.exe+0x1456f>) modid:3
+# 4 printf                 [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:358] (0x00007ff6a111160a <testeCrossoverMeme.exe+0x160a>) modid:3
+# 5 main                   [src/algoritmoMemetico.c:1946] (0x00007ff6a11196e9 <testeCrossoverMeme.exe+0x96e9>) modid:3
+Note: @0:00:14.138 in thread 21284
+Note: 0x0000003605bff920 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff928
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #54: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff8c0-0x0000003605bff8c8 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 __pformat_int.isra.0   [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:707] (0x00007ff6a11291ba <testeCrossoverMeme.exe+0x191ba>) modid:3
+# 2 __mingw_pformat        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:2598] (0x00007ff6a112a5f6 <testeCrossoverMeme.exe+0x1a5f6>) modid:3
+# 3 __mingw_vfprintf       [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfprintf.c:54] (0x00007ff6a112456f <testeCrossoverMeme.exe+0x1456f>) modid:3
+# 4 printf                 [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:358] (0x00007ff6a111160a <testeCrossoverMeme.exe+0x160a>) modid:3
+# 5 printCaminhoCritico    [src/algoritmoMemetico.c:473] (0x00007ff6a11136fd <testeCrossoverMeme.exe+0x36fd>) modid:3
+# 6 main                   [src/algoritmoMemetico.c:1947] (0x00007ff6a111970a <testeCrossoverMeme.exe+0x970a>) modid:3
+Note: @0:00:14.194 in thread 21284
+Note: 0x0000003605bff8c0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff8c8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #55: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff8c0-0x0000003605bff8c8 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 __pformat_int.isra.0   [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:707] (0x00007ff6a11291ba <testeCrossoverMeme.exe+0x191ba>) modid:3
+# 2 __mingw_pformat        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:2598] (0x00007ff6a112a5f6 <testeCrossoverMeme.exe+0x1a5f6>) modid:3
+# 3 __mingw_vfprintf       [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfprintf.c:54] (0x00007ff6a112456f <testeCrossoverMeme.exe+0x1456f>) modid:3
+# 4 printf                 [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:358] (0x00007ff6a111160a <testeCrossoverMeme.exe+0x160a>) modid:3
+# 5 printCaminhoCritico    [src/algoritmoMemetico.c:477] (0x00007ff6a1113805 <testeCrossoverMeme.exe+0x3805>) modid:3
+# 6 main                   [src/algoritmoMemetico.c:1947] (0x00007ff6a111970a <testeCrossoverMeme.exe+0x970a>) modid:3
+Note: @0:00:14.203 in thread 21284
+Note: 0x0000003605bff8c0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff8c8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #56: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff8c0-0x0000003605bff8c8 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 __pformat_int.isra.0   [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:707] (0x00007ff6a11291ba <testeCrossoverMeme.exe+0x191ba>) modid:3
+# 2 __mingw_pformat        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:2598] (0x00007ff6a112a5f6 <testeCrossoverMeme.exe+0x1a5f6>) modid:3
+# 3 __mingw_vfprintf       [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfprintf.c:54] (0x00007ff6a112456f <testeCrossoverMeme.exe+0x1456f>) modid:3
+# 4 printf                 [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:358] (0x00007ff6a111160a <testeCrossoverMeme.exe+0x160a>) modid:3
+# 5 printCaminhoCritico    [src/algoritmoMemetico.c:488] (0x00007ff6a1113861 <testeCrossoverMeme.exe+0x3861>) modid:3
+# 6 main                   [src/algoritmoMemetico.c:1947] (0x00007ff6a111970a <testeCrossoverMeme.exe+0x970a>) modid:3
+Note: @0:00:14.600 in thread 21284
+Note: 0x0000003605bff8c0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff8c8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #57: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff8b0-0x0000003605bff8b8 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 __pformat_int.isra.0   [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:707] (0x00007ff6a11291ba <testeCrossoverMeme.exe+0x191ba>) modid:3
+# 2 __mingw_pformat        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:2598] (0x00007ff6a112a5f6 <testeCrossoverMeme.exe+0x1a5f6>) modid:3
+# 3 __mingw_vfprintf       [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfprintf.c:54] (0x00007ff6a112456f <testeCrossoverMeme.exe+0x1456f>) modid:3
+# 4 fprintf                [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:347] (0x00007ff6a11115ba <testeCrossoverMeme.exe+0x15ba>) modid:3
+# 5 printSolutionToFile    [src/algoritmoMemetico.c:181] (0x00007ff6a111215a <testeCrossoverMeme.exe+0x215a>) modid:3
+# 6 main                   [src/algoritmoMemetico.c:1956] (0x00007ff6a1119744 <testeCrossoverMeme.exe+0x9744>) modid:3
+Note: @0:00:14.673 in thread 21284
+Note: 0x0000003605bff8b0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff8b8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #58: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff8b0-0x0000003605bff8b8 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 __pformat_int.isra.0   [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:707] (0x00007ff6a11291ba <testeCrossoverMeme.exe+0x191ba>) modid:3
+# 2 __mingw_pformat        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:2598] (0x00007ff6a112a5f6 <testeCrossoverMeme.exe+0x1a5f6>) modid:3
+# 3 __mingw_vfprintf       [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfprintf.c:54] (0x00007ff6a112456f <testeCrossoverMeme.exe+0x1456f>) modid:3
+# 4 fprintf                [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:347] (0x00007ff6a11115ba <testeCrossoverMeme.exe+0x15ba>) modid:3
+# 5 printSolutionToFile    [src/algoritmoMemetico.c:182] (0x00007ff6a1112174 <testeCrossoverMeme.exe+0x2174>) modid:3
+# 6 main                   [src/algoritmoMemetico.c:1956] (0x00007ff6a1119744 <testeCrossoverMeme.exe+0x9744>) modid:3
+Note: @0:00:14.676 in thread 21284
+Note: 0x0000003605bff8b0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff8b8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #59: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff8b0-0x0000003605bff8b8 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 __pformat_int.isra.0   [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:707] (0x00007ff6a11291ba <testeCrossoverMeme.exe+0x191ba>) modid:3
+# 2 __mingw_pformat        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:2598] (0x00007ff6a112a5f6 <testeCrossoverMeme.exe+0x1a5f6>) modid:3
+# 3 __mingw_vfprintf       [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfprintf.c:54] (0x00007ff6a112456f <testeCrossoverMeme.exe+0x1456f>) modid:3
+# 4 fprintf                [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:347] (0x00007ff6a11115ba <testeCrossoverMeme.exe+0x15ba>) modid:3
+# 5 printSolutionToFile    [src/algoritmoMemetico.c:183] (0x00007ff6a111218e <testeCrossoverMeme.exe+0x218e>) modid:3
+# 6 main                   [src/algoritmoMemetico.c:1956] (0x00007ff6a1119744 <testeCrossoverMeme.exe+0x9744>) modid:3
+Note: @0:00:14.679 in thread 21284
+Note: 0x0000003605bff8b0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff8b8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #60: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff8b0-0x0000003605bff8b8 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 __pformat_int.isra.0   [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:707] (0x00007ff6a11291ba <testeCrossoverMeme.exe+0x191ba>) modid:3
+# 2 __mingw_pformat        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:2598] (0x00007ff6a112a5f6 <testeCrossoverMeme.exe+0x1a5f6>) modid:3
+# 3 __mingw_vfprintf       [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfprintf.c:54] (0x00007ff6a112456f <testeCrossoverMeme.exe+0x1456f>) modid:3
+# 4 fprintf                [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:347] (0x00007ff6a11115ba <testeCrossoverMeme.exe+0x15ba>) modid:3
+# 5 printSolutionToFile    [src/algoritmoMemetico.c:187] (0x00007ff6a11121f4 <testeCrossoverMeme.exe+0x21f4>) modid:3
+# 6 main                   [src/algoritmoMemetico.c:1956] (0x00007ff6a1119744 <testeCrossoverMeme.exe+0x9744>) modid:3
+Note: @0:00:14.711 in thread 21284
+Note: 0x0000003605bff8b0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff8b8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #61: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff8b0-0x0000003605bff8b8 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 __pformat_int.isra.0   [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:707] (0x00007ff6a11291ba <testeCrossoverMeme.exe+0x191ba>) modid:3
+# 2 __mingw_pformat        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:2598] (0x00007ff6a112a5f6 <testeCrossoverMeme.exe+0x1a5f6>) modid:3
+# 3 __mingw_vfprintf       [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfprintf.c:54] (0x00007ff6a112456f <testeCrossoverMeme.exe+0x1456f>) modid:3
+# 4 fprintf                [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:347] (0x00007ff6a11115ba <testeCrossoverMeme.exe+0x15ba>) modid:3
+# 5 printSolutionToFile    [src/algoritmoMemetico.c:188] (0x00007ff6a111221e <testeCrossoverMeme.exe+0x221e>) modid:3
+# 6 main                   [src/algoritmoMemetico.c:1956] (0x00007ff6a1119744 <testeCrossoverMeme.exe+0x9744>) modid:3
+Note: @0:00:14.714 in thread 21284
+Note: 0x0000003605bff8b0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff8b8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #62: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff8b0-0x0000003605bff8b8 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 __pformat_int.isra.0   [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:707] (0x00007ff6a11291ba <testeCrossoverMeme.exe+0x191ba>) modid:3
+# 2 __mingw_pformat        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:2598] (0x00007ff6a112a5f6 <testeCrossoverMeme.exe+0x1a5f6>) modid:3
+# 3 __mingw_vfprintf       [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfprintf.c:54] (0x00007ff6a112456f <testeCrossoverMeme.exe+0x1456f>) modid:3
+# 4 fprintf                [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:347] (0x00007ff6a11115ba <testeCrossoverMeme.exe+0x15ba>) modid:3
+# 5 printSolutionToFile    [src/algoritmoMemetico.c:189] (0x00007ff6a1112248 <testeCrossoverMeme.exe+0x2248>) modid:3
+# 6 main                   [src/algoritmoMemetico.c:1956] (0x00007ff6a1119744 <testeCrossoverMeme.exe+0x9744>) modid:3
+Note: @0:00:14.717 in thread 21284
+Note: 0x0000003605bff8b0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff8b8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #63: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff8b0-0x0000003605bff8b8 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 __pformat_int.isra.0   [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:707] (0x00007ff6a11291ba <testeCrossoverMeme.exe+0x191ba>) modid:3
+# 2 __mingw_pformat        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:2598] (0x00007ff6a112a5f6 <testeCrossoverMeme.exe+0x1a5f6>) modid:3
+# 3 __mingw_vfprintf       [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfprintf.c:54] (0x00007ff6a112456f <testeCrossoverMeme.exe+0x1456f>) modid:3
+# 4 fprintf                [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:347] (0x00007ff6a11115ba <testeCrossoverMeme.exe+0x15ba>) modid:3
+# 5 printSolutionToFile    [src/algoritmoMemetico.c:192] (0x00007ff6a11123e1 <testeCrossoverMeme.exe+0x23e1>) modid:3
+# 6 main                   [src/algoritmoMemetico.c:1956] (0x00007ff6a1119744 <testeCrossoverMeme.exe+0x9744>) modid:3
+Note: @0:00:14.726 in thread 21284
+Note: 0x0000003605bff8b0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff8b8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #64: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff8c0-0x0000003605bff8c8 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 __pformat_int.isra.0   [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:707] (0x00007ff6a11291ba <testeCrossoverMeme.exe+0x191ba>) modid:3
+# 2 __mingw_pformat        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:2598] (0x00007ff6a112a5f6 <testeCrossoverMeme.exe+0x1a5f6>) modid:3
+# 3 __mingw_vfprintf       [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfprintf.c:54] (0x00007ff6a112456f <testeCrossoverMeme.exe+0x1456f>) modid:3
+# 4 fprintf                [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:347] (0x00007ff6a11115ba <testeCrossoverMeme.exe+0x15ba>) modid:3
+# 5 printCaminhoCriticoToFile [src/algoritmoMemetico.c:504] (0x00007ff6a11138f9 <testeCrossoverMeme.exe+0x38f9>) modid:3
+# 6 main                   [src/algoritmoMemetico.c:1957] (0x00007ff6a111976d <testeCrossoverMeme.exe+0x976d>) modid:3
+Note: @0:00:14.902 in thread 21284
+Note: 0x0000003605bff8c0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff8c8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #65: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff8c0-0x0000003605bff8c8 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 __pformat_int.isra.0   [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:707] (0x00007ff6a11291ba <testeCrossoverMeme.exe+0x191ba>) modid:3
+# 2 __mingw_pformat        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:2598] (0x00007ff6a112a5f6 <testeCrossoverMeme.exe+0x1a5f6>) modid:3
+# 3 __mingw_vfprintf       [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfprintf.c:54] (0x00007ff6a112456f <testeCrossoverMeme.exe+0x1456f>) modid:3
+# 4 fprintf                [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:347] (0x00007ff6a11115ba <testeCrossoverMeme.exe+0x15ba>) modid:3
+# 5 printCaminhoCriticoToFile [src/algoritmoMemetico.c:508] (0x00007ff6a1113a08 <testeCrossoverMeme.exe+0x3a08>) modid:3
+# 6 main                   [src/algoritmoMemetico.c:1957] (0x00007ff6a111976d <testeCrossoverMeme.exe+0x976d>) modid:3
+Note: @0:00:14.907 in thread 21284
+Note: 0x0000003605bff8c0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff8c8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #66: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff8c0-0x0000003605bff8c8 8 byte(s)
+# 0 .text                  [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132] (0x00007ff6a111a7cb <testeCrossoverMeme.exe+0xa7cb>) modid:3
+# 1 __pformat_int.isra.0   [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:707] (0x00007ff6a11291ba <testeCrossoverMeme.exe+0x191ba>) modid:3
+# 2 __mingw_pformat        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:2598] (0x00007ff6a112a5f6 <testeCrossoverMeme.exe+0x1a5f6>) modid:3
+# 3 __mingw_vfprintf       [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfprintf.c:54] (0x00007ff6a112456f <testeCrossoverMeme.exe+0x1456f>) modid:3
+# 4 fprintf                [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:347] (0x00007ff6a11115ba <testeCrossoverMeme.exe+0x15ba>) modid:3
+# 5 printCaminhoCriticoToFile [src/algoritmoMemetico.c:519] (0x00007ff6a1113a69 <testeCrossoverMeme.exe+0x3a69>) modid:3
+# 6 main                   [src/algoritmoMemetico.c:1957] (0x00007ff6a111976d <testeCrossoverMeme.exe+0x976d>) modid:3
+Note: @0:00:14.944 in thread 21284
+Note: 0x0000003605bff8c0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff8c8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+	error end
+
+Error #67: POSSIBLE LEAK 119 direct bytes 0x0000022a956501c0-0x0000022a95650237 + 0 indirect bytes
+# 0 replace_malloc  [D:\a\drmemory\drmemory\common\alloc_replace.c:2582] (0x00007ff6311d9a60 <drmemorylib.dll+0x29a60>) modid:2
+# 1 msvcrt.dll!realloc    (0x00007ffc99c09f44 <msvcrt.dll+0x19f44>) modid:6
+# 2 msvcrt.dll!unlock     (0x00007ffc99c2b68d <msvcrt.dll+0x3b68d>) modid:6
+# 3 msvcrt.dll!_getmainargs (0x00007ffc99bf7a01 <msvcrt.dll+0x7a01>) modid:6
+# 4 pre_cpp_init           [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/crt/crtexe.c:171] (0x00007ff6a1111183 <testeCrossoverMeme.exe+0x1183>) modid:3
+# 5 msvcrt.dll!initterm   (0x00007ffc99c2a553 <msvcrt.dll+0x3a553>) modid:6
+# 6 __tmainCRTStartup      [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/crt/crtexe.c:269] (0x00007ff6a1111447 <testeCrossoverMeme.exe+0x1447>) modid:3
+# 7 .l_start               [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/crt/crtexe.c:212] (0x00007ff6a11114f6 <testeCrossoverMeme.exe+0x14f6>) modid:3
+# 8 KERNEL32.dll!BaseThreadInitThunk (0x00007ffc99b37374 <KERNEL32.dll+0x17374>) modid:5
+	error end
+
+Error #68: LEAK 144 direct bytes 0x0000022a95651610-0x0000022a956516a0 + 1008 indirect bytes
+# 0 replace_malloc  [D:\a\drmemory\drmemory\common\alloc_replace.c:2582] (0x00007ff6311d9a60 <drmemorylib.dll+0x29a60>) modid:2
+# 1 iniciarInstancias      [src/algoritmoMemetico.c:92] (0x00007ff6a111171b <testeCrossoverMeme.exe+0x171b>) modid:3
+# 2 main                   [src/algoritmoMemetico.c:1935] (0x00007ff6a1119690 <testeCrossoverMeme.exe+0x9690>) modid:3
+	error end
+
+Error #69: LEAK 192 direct bytes 0x0000022a956516c0-0x0000022a95651780 + 1008 indirect bytes
+# 0 replace_malloc  [D:\a\drmemory\drmemory\common\alloc_replace.c:2582] (0x00007ff6311d9a60 <drmemorylib.dll+0x29a60>) modid:2
+# 1 iniciarInstancias      [src/algoritmoMemetico.c:93] (0x00007ff6a1111739 <testeCrossoverMeme.exe+0x1739>) modid:3
+# 2 main                   [src/algoritmoMemetico.c:1935] (0x00007ff6a1119690 <testeCrossoverMeme.exe+0x9690>) modid:3
+	error end
+
+Error #70: LEAK 24 direct bytes 0x0000022a956c9440-0x0000022a956c9458 + 0 indirect bytes
+# 0 replace_malloc  [D:\a\drmemory\drmemory\common\alloc_replace.c:2582] (0x00007ff6311d9a60 <drmemorylib.dll+0x29a60>) modid:2
+# 1 crossoverPOX           [src/algoritmoMemetico.c:1610] (0x00007ff6a11181e4 <testeCrossoverMeme.exe+0x81e4>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1791] (0x00007ff6a1118caf <testeCrossoverMeme.exe+0x8caf>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+	error end
+
+Error #71: LEAK 12 direct bytes 0x0000022a956c9480-0x0000022a956c948c + 0 indirect bytes
+# 0 replace_malloc  [D:\a\drmemory\drmemory\common\alloc_replace.c:2582] (0x00007ff6311d9a60 <drmemorylib.dll+0x29a60>) modid:2
+# 1 crossoverPOX           [src/algoritmoMemetico.c:1616] (0x00007ff6a1118236 <testeCrossoverMeme.exe+0x8236>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1791] (0x00007ff6a1118caf <testeCrossoverMeme.exe+0x8caf>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+	error end
+
+Error #72: LEAK 12 direct bytes 0x0000022a956c94b0-0x0000022a956c94bc + 0 indirect bytes
+# 0 replace_malloc  [D:\a\drmemory\drmemory\common\alloc_replace.c:2582] (0x00007ff6311d9a60 <drmemorylib.dll+0x29a60>) modid:2
+# 1 crossoverPOX           [src/algoritmoMemetico.c:1619] (0x00007ff6a1118254 <testeCrossoverMeme.exe+0x8254>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1791] (0x00007ff6a1118caf <testeCrossoverMeme.exe+0x8caf>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+	error end
+
+Error #73: LEAK 24 direct bytes 0x0000022a956c9670-0x0000022a956c9688 + 0 indirect bytes
+# 0 replace_malloc  [D:\a\drmemory\drmemory\common\alloc_replace.c:2582] (0x00007ff6311d9a60 <drmemorylib.dll+0x29a60>) modid:2
+# 1 crossoverPOX           [src/algoritmoMemetico.c:1610] (0x00007ff6a11181e4 <testeCrossoverMeme.exe+0x81e4>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1792] (0x00007ff6a1118cea <testeCrossoverMeme.exe+0x8cea>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+	error end
+
+Error #74: LEAK 12 direct bytes 0x0000022a956c96b0-0x0000022a956c96bc + 0 indirect bytes
+# 0 replace_malloc  [D:\a\drmemory\drmemory\common\alloc_replace.c:2582] (0x00007ff6311d9a60 <drmemorylib.dll+0x29a60>) modid:2
+# 1 crossoverPOX           [src/algoritmoMemetico.c:1616] (0x00007ff6a1118236 <testeCrossoverMeme.exe+0x8236>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1792] (0x00007ff6a1118cea <testeCrossoverMeme.exe+0x8cea>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+	error end
+
+Error #75: LEAK 12 direct bytes 0x0000022a956c96e0-0x0000022a956c96ec + 0 indirect bytes
+# 0 replace_malloc  [D:\a\drmemory\drmemory\common\alloc_replace.c:2582] (0x00007ff6311d9a60 <drmemorylib.dll+0x29a60>) modid:2
+# 1 crossoverPOX           [src/algoritmoMemetico.c:1619] (0x00007ff6a1118254 <testeCrossoverMeme.exe+0x8254>) modid:3
+# 2 algoritmoMemetico      [src/algoritmoMemetico.c:1792] (0x00007ff6a1118cea <testeCrossoverMeme.exe+0x8cea>) modid:3
+# 3 __mingw_vfscanf        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616] (0x00007ff6a112808b <testeCrossoverMeme.exe+0x1808b>) modid:3
+# 4 main                   [src/algoritmoMemetico.c:1943] (0x00007ff6a11196d0 <testeCrossoverMeme.exe+0x96d0>) modid:3
+	error end
+
+DUPLICATE ERROR COUNTS:
+	Error #   1:      2
+	Error #   2:      2
+	Error #   3:      2
+	Error #   4:     72
+	Error #   5:     72
+	Error #   6:    570
+	Error #   7:    200
+	Error #   8:    200
+	Error #   9:    200
+	Error #  10:    200
+	Error #  11:   7200
+	Error #  12:   7200
+	Error #  13:   7200
+	Error #  14:     18
+	Error #  15:     18
+	Error #  16:     18
+	Error #  17:     18
+	Error #  18:    648
+	Error #  19:    648
+	Error #  20:    648
+	Error #  21:     18
+	Error #  22:     18
+	Error #  23:     18
+	Error #  24:     18
+	Error #  25:    648
+	Error #  26:    648
+	Error #  27:    648
+	Error #  28:      2
+	Error #  29:      2
+	Error #  30:      2
+	Error #  31:      2
+	Error #  32:     72
+	Error #  33:     72
+	Error #  34:     72
+	Error #  35:      2
+	Error #  36:      2
+	Error #  37:      2
+	Error #  38:      2
+	Error #  39:     72
+	Error #  40:     72
+	Error #  41:     72
+	Error #  42:      2
+	Error #  43:      2
+	Error #  44:     20
+	Error #  47:     99
+	Error #  48:     99
+	Error #  49:     99
+	Error #  50:     99
+	Error #  51:     99
+	Error #  53:      2
+	Error #  54:      2
+	Error #  55:    126
+	Error #  56:      4
+	Error #  57:      2
+	Error #  58:      2
+	Error #  59:      2
+	Error #  60:     12
+	Error #  61:     12
+	Error #  62:     12
+	Error #  63:    504
+	Error #  64:      2
+	Error #  65:    126
+	Error #  66:      4
+	Error #  70:      9
+	Error #  71:      9
+	Error #  72:      9
+	Error #  73:      9
+	Error #  74:      9
+	Error #  75:      9
+
+SUPPRESSIONS USED:
+
+ERRORS FOUND:
+     61 unique, 28812 total unaddressable access(es)
+      0 unique,     0 total uninitialized access(es)
+      5 unique,   122 total invalid heap argument(s)
+      0 unique,     0 total GDI usage error(s)
+      0 unique,     0 total handle leak(s)
+      0 unique,     0 total warning(s)
+      8 unique,    56 total,   3216 byte(s) of leak(s)
+      1 unique,     1 total,    119 byte(s) of possible leak(s)
+ERRORS IGNORED:
+     91 ignored assumed-innocuous system leak(s)
+      5 unique,     7 total,    228 byte(s) of still-reachable allocation(s)
+         (re-run with "-show_reachable" for details)
+Fuzz details: C:\ProjetoAlgoritmos\Projeto-JSP\DrMemory-testeCrossoverMeme.exe.14624.000\fuzz_results.txt
+Details: C:\ProjetoAlgoritmos\Projeto-JSP\DrMemory-testeCrossoverMeme.exe.14624.000\results.txt
+
+DUPLICATE POTENTIAL ERROR COUNTS:
+
+POTENTIAL ERRORS FOUND:
+      0 unique,     0 total potential unaddressable access(es)
+      0 unique,     0 total potential uninitialized access(es)
+      0 unique,     0 total potential invalid heap argument(s)
+      0 unique,     0 total potential GDI usage error(s)
+      0 unique,     0 total potential handle leak(s)
+      0 unique,     0 total potential warning(s)
+      0 unique,     0 total,      0 byte(s) of potential leak(s)
+      0 unique,     0 total,      0 byte(s) of potential possible leak(s)
+Fuzz details: C:\ProjetoAlgoritmos\Projeto-JSP\DrMemory-testeCrossoverMeme.exe.14624.000\fuzz_results.txt
+Details: C:\ProjetoAlgoritmos\Projeto-JSP\DrMemory-testeCrossoverMeme.exe.14624.000\potential_errors.txt
+Exiting @0:00:15.513 in thread 21284
+LOG END

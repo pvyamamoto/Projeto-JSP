@@ -65,7 +65,6 @@ typedef struct Cromossomo{
 typedef struct Populacao{
     Cromossomo* individuos;
     int numIndividuos;
-    Cromossomo *melhoresIndividuosGeracao;
     Solution* melhorSolucao;
 } Populacao;
 
@@ -695,6 +694,36 @@ BlocoCritico* clonarBlocoCritico(BlocoCritico *blocos, int numBlocos){
     return clone;
 }
 
+Cromossomo* clonarCromossomo(const Cromossomo *origem, int tamGenes, int copiarSolucao){
+    
+    if(origem == NULL || origem->genes == NULL || tamGenes <= 0){
+        return NULL;
+    }
+    
+    Cromossomo *clone = (Cromossomo*)malloc(sizeof(Cromossomo));
+    
+    if(clone == NULL) return NULL;
+    
+    clone->genes = (int*)malloc(tamGenes * sizeof(int));
+    
+    if(clone->genes == NULL){
+        free(clone);
+        return NULL;
+    }
+    
+    for(int i = 0; i < tamGenes; i++){
+        clone->genes[i] = origem->genes[i];
+    }
+    
+    clone->solucao = NULL;
+    
+    if(copiarSolucao && origem->solucao != NULL){
+        clone->solucao = origem->solucao; 
+    }
+    
+    return clone;
+}
+
 void liberarSolucao(Solution *sol){
     
     if(sol == NULL) return;
@@ -724,39 +753,45 @@ void liberarSolucao(Solution *sol){
     free(sol);
 }
 
-void liberarCromossomo(Cromossomo *cromossomo, Solution *solucaoPreservada){
+void liberarConteudoCromossomo(Cromossomo *cromossomo){
     if(cromossomo == NULL) return;
+    
+    if(cromossomo->genes != NULL){
+        free(cromossomo->genes);
+        cromossomo->genes = NULL;
+    }
+    
+    liberarSolucao(cromossomo->solucao);
+    cromossomo->solucao = NULL;
+}
+
+void liberarCromossomo(Cromossomo *cromossomo){
+    if(cromossomo == NULL) return;
+    
     // Libera os genes
     if(cromossomo->genes != NULL){
         free(cromossomo->genes);
         cromossomo->genes = NULL;
     }
-    // Libera a solucao apenas se nao for a que deve ser preservada
-    if(cromossomo->solucao != NULL){
-        if(cromossomo->solucao != solucaoPreservada){
-            liberarSolucao(cromossomo->solucao);
-        }
-        cromossomo->solucao = NULL;
-    }
+    
+    liberarSolucao(cromossomo->solucao);
+
+    free(cromossomo);
 }
 
 void liberarPopulacao(Populacao *populacao, Solution *solucaoPreservada){
+    
     if(populacao == NULL) return;
+    
     // 1. Libera cada individuo da populacao
     if(populacao->individuos != NULL){
         for(int i = 0; i < populacao->numIndividuos; i++){
-            liberarCromossomo(&populacao->individuos[i], solucaoPreservada);
+            liberarConteudoCromossomo(&populacao->individuos[i]);
         }
         free(populacao->individuos);
         populacao->individuos = NULL;
     }
-    // 2. Libera o vetor de melhores individuos da geracao
-    // NOTA: Apenas liberamos o ponteiro do array, pois os cromossomos contidos nele
-    // apontam para os mesmos 'genes' e 'solucao' ja liberados no loop acima.
-    if(populacao->melhoresIndividuosGeracao != NULL){
-        free(populacao->melhoresIndividuosGeracao);
-        populacao->melhoresIndividuosGeracao = NULL;
-    }
+
     // 3. Libera a struct Populacao em si
     free(populacao);
 }
@@ -1409,6 +1444,8 @@ Solution* decodificacaoGT(Job *jobs, int numJobs, Machine *machines, int numMach
     }
 
     int ponteiroGene = 0;
+    int genesReord[numTasks];
+    int idxReord = 0;
 
     for(int scheduled = 0; scheduled < numTasks; scheduled++){
         // Passo A: Identificar o conjunto S e calcular ES e EC de cada operação pronta
@@ -1465,11 +1502,20 @@ Solution* decodificacaoGT(Job *jobs, int numJobs, Machine *machines, int numMach
             }
         }
 
+        if(idxGeneEscolhido == -1){
+            // Cromossomo inválido; retorna NULL para sinalizar falha
+            liberarSolucao(solution);
+            return NULL;
+        }
+
         // Marca o gene selecionado como consumido
         geneConsumido[idxGeneEscolhido] = 1;
         while(ponteiroGene < numTasks && geneConsumido[ponteiroGene]){
             ponteiroGene++;
         }
+
+        // Acumula o job escolhido na ordem em que GT o agendou
+        genesReord[idxReord++] = jobEscolhido;
 
         // Passo D: Agendar a operação escolhida
         int op = opAtual[jobEscolhido];
@@ -1496,6 +1542,11 @@ Solution* decodificacaoGT(Job *jobs, int numJobs, Machine *machines, int numMach
         solution->jobs[jobEscolhido].operationAtual++;
     }
 
+    // Reordena os genes do cromossomo pela sequência real de decodificação GT
+    for(int g = 0; g < numTasks; g++){
+        cromossomo->genes[g] = genesReord[g];
+    }
+
     // 4. Calcula scores (Makespan, Flowtime, Idletime) e constrói o Caminho Crítico
     calcularScore(solution);
     caminhoCritico(solution);
@@ -1508,7 +1559,6 @@ Populacao* inicializarPopulacao(int numIndividuos, int numCandidatos, Job *jobs,
 
     Populacao* populacao = (Populacao*)malloc(sizeof(Populacao));
     populacao->individuos = (Cromossomo*)malloc(numIndividuos * sizeof(Cromossomo));
-    populacao->melhoresIndividuosGeracao = (Cromossomo*)calloc(numCandidatos, sizeof(Cromossomo)); 
     populacao->melhorSolucao = NULL;
     populacao->numIndividuos = numIndividuos;
 
@@ -1546,6 +1596,15 @@ int compararCromossomos(const void *a, const void *b){
     if(ms1 > ms2) return 1;
     return 0;
 }
+
+void ordernarCromossomos(Cromossomo *cromossomo, int numCromossomo){
+    if(cromossomo == NULL){
+        return;
+    }
+
+    qsort(cromossomo, numCromossomo, sizeof(Cromossomo), compararCromossomos);
+}
+
 // Função para ordenar o vetor de indivíduos da população
 void ordenarPopulacao(Populacao *populacao){
     if(populacao == NULL || populacao->individuos == NULL || populacao->numIndividuos <= 1){
@@ -1563,15 +1622,18 @@ Cromossomo* crossoverPOX(Cromossomo *pai1, Cromossomo *pai2, Job *jobs, int numJ
 
     int tamGenes = numJobs * numMachines;
 
+
     Cromossomo *filho = (Cromossomo*)malloc(sizeof(Cromossomo));
     filho->genes = (int*)malloc(tamGenes * sizeof(int));
+    filho->solucao = NULL;
     for(int f = 0; f < tamGenes; f++){
         filho->genes[f] = -1;
     }
 
-    int *genesP1 = pai1->genes;
-    int *genesP2 = pai2->genes;
-    
+    int *genesP2 = (int*)malloc(tamGenes * sizeof(int));
+    for(int f = 0; f < tamGenes; f++){
+        genesP2[f] = pai2->genes[f];
+    }
 
     int *jobset = malloc(numJobs * sizeof(int));
     for(int i = 0; i < numJobs; i++){
@@ -1586,6 +1648,7 @@ Cromossomo* crossoverPOX(Cromossomo *pai1, Cromossomo *pai2, Job *jobs, int numJ
 
     int i = 0;
     int j = 0;
+    int k = 0;
     int randJ;
     while(i < jobsetSize1){
         randJ = rand() % numJobs;
@@ -1605,8 +1668,8 @@ Cromossomo* crossoverPOX(Cromossomo *pai1, Cromossomo *pai2, Job *jobs, int numJ
 
     for(i = 0; i < tamGenes; i++){
         for(j = 0; j < jobsetSize1; j++){
-            if(genesP1[i] == jobset1[j]){
-                filho->genes[i] = genesP1[i];
+            if(pai1->genes[i] == jobset1[j]){
+                filho->genes[i] = pai1->genes[i];
                 break;
             }
         }
@@ -1614,16 +1677,26 @@ Cromossomo* crossoverPOX(Cromossomo *pai1, Cromossomo *pai2, Job *jobs, int numJ
 
     for(i = 0; i < tamGenes; i++){
         if(filho->genes[i] == -1){
-            for(j = 0; j < jobsetSize2; j++){
-                if(genesP2[i] == jobset2[j]){
-                    filho->genes[i] = genesP2[i];
-                    genesP2[i] = -1;
-                    break;
+            int preenchido = 0;
+            for(j = 0; j < tamGenes && !preenchido; j++){
+                if(genesP2[j] == -1) continue;
+                for(k = 0; k < jobsetSize2; k++){
+                    if(genesP2[j] == jobset2[k]){
+                        filho->genes[i] = genesP2[j];
+                        genesP2[j] = -1;
+                        preenchido = 1;
+                        break;
+                    }
                 }
             }
         }
     }
-    
+
+    free(genesP2);
+    free(jobset);
+    free(jobset1);
+    free(jobset2);
+
     return filho;
 }
 
@@ -1637,22 +1710,27 @@ Cromossomo* crossoverLOX(Cromossomo *pai1, Cromossomo *pai2, Job *jobs, int numJ
 
     Cromossomo *filho = (Cromossomo*)malloc(sizeof(Cromossomo));
     filho->genes = (int*)malloc(tamGenes * sizeof(int));
+    filho->solucao = NULL;
     for(int f = 0; f < tamGenes; f++){
         filho->genes[f] = -1;
     }
 
-    int *genesP1 = pai1->genes;
-    int *genesP2 = pai2->genes;
+    int *genesP2 = (int*)malloc(tamGenes * sizeof(int));
+    for(int f = 0; f < tamGenes; f++){
+        genesP2[f] = pai2->genes[f];
+    }
 
-    int pc1 = rand() % ((tamGenes/2) - 1);
+    int maxPc1 = (tamGenes / 2) - 1;
+    int pc1 = (maxPc1 > 0) ? (rand() % maxPc1) : 0;
 
     double perc2 = (40 + rand() % 21) / 100.0;
-    int pc2 = (tamGenes*perc2 + pc1 > tamGenes) ? tamGenes - 1 : (tamGenes*perc2 + pc1);
+    int offset = (int)(tamGenes * perc2);
+    int pc2 = (pc1 + offset >= tamGenes) ? (tamGenes - 1) : (pc1 + offset);
 
     for(int i = pc1; i <= pc2; i++){
-        filho->genes[i] = genesP1[i];
+        filho->genes[i] = pai1->genes[i];
         for(int j = 0; j < tamGenes; j++){
-            if(genesP2[j] == genesP1[i]){
+            if(genesP2[j] == pai1->genes[i]){
                 genesP2[j] = -1;
                 break;
             }
@@ -1670,134 +1748,195 @@ Cromossomo* crossoverLOX(Cromossomo *pai1, Cromossomo *pai2, Job *jobs, int numJ
             }
         }
     }
+
+    free(genesP2);
     
     return filho;
 }
 
-Solution* algoritmoMemetico(Job *jobs, int numJobs, Machine *machines, int numMachines, int numIndividuos, int numIteracoes){
+Solution* algoritmoMemetico(Job *jobs, int numJobs, Machine *machines, int numMachines, int numIndividuos, int numGeracoes){
     
-    int numCandidatos = numIndividuos * 0.2;
+    int numCandidatos = (int)(numIndividuos * 0.2);
+    if(numCandidatos % 2 != 0) numCandidatos--;
+    if(numCandidatos < 2) numCandidatos = 2;
+
     float limCross = 0.50f; // Limite de probabilidade de crossover entre POX e LOX (POX se probCross < limCross / LOX se probCross > limCross / POX e LOX se probCross = limCross)
 
     Populacao *populacao = inicializarPopulacao(numIndividuos, numCandidatos, jobs, numJobs, machines, numMachines);
 
-    for(int i = 0; i < numIndividuos; i++){
+    int tamGenes = numJobs * numMachines; 
 
-        if(populacao->individuos[i].genes == NULL){
-            printf("Erro na inicializacao do individuo %d\n", i);
+    for(int geracao = 0; geracao < numGeracoes; geracao++){
+        for(int i = 0; i < numIndividuos; i++){
+
+            if(populacao->individuos[i].genes == NULL){
+                printf("Erro na inicializacao do individuo %d\n", i);
+                return NULL;
+            }
+
+            if(populacao->individuos[i].solucao == NULL){
+                populacao->individuos[i].solucao = decodificacaoGT(jobs, numJobs, machines, numMachines, &populacao->individuos[i]);
+                if(populacao->individuos[i].solucao == NULL){
+                    printf("Erro na decodificacao do individuo %d\n", i);
+                    return NULL;
+                }
+            }
+        }
+
+        ordenarPopulacao(populacao);
+
+        Cromossomo *pais = (Cromossomo*)malloc(numCandidatos * sizeof(Cromossomo));
+        Cromossomo *auxPOX = (Cromossomo*)malloc(numCandidatos * sizeof(Cromossomo));
+        Cromossomo *auxLOX = (Cromossomo*)malloc(numCandidatos * sizeof(Cromossomo));
+        int tamPOX = 0;
+        int tamLOX = 0;
+
+        for(int c = 0; c < numCandidatos; c++){
+            pais[c] = populacao->individuos[c];
+        }
+        for(int px = 0; px < numCandidatos; px++){
+            auxPOX[px].solucao = NULL;
+        }
+        for(int lx = 0; lx < numCandidatos; lx++){
+            auxLOX[lx].solucao = NULL;
+        }
+
+        int p = 0;
+    
+        while(p < numCandidatos){
+            for(int i = 0; i < numCandidatos; i++){
+                if(pais[i].solucao != NULL){
+                    Cromossomo *pai1 = &pais[i];
+                    pais[i].solucao = NULL;
+
+                    int randP2 = rand() % numCandidatos;
+                    while(pais[randP2].solucao == NULL){
+                        randP2 = rand() % numCandidatos;
+                    }
+                    Cromossomo *pai2 = &pais[randP2];
+                    pais[randP2].solucao = NULL;
+
+                    float probCross = (float)(rand()) / (float)RAND_MAX;
+
+                    if(probCross < limCross){
+                        Cromossomo *filho1 = crossoverPOX(pai1, pai2, jobs, numJobs, machines, numMachines);
+                        Cromossomo *filho2 = crossoverPOX(pai2, pai1, jobs, numJobs, machines, numMachines);
+                        filho1->solucao = decodificacaoGT(jobs, numJobs, machines, numMachines, filho1);
+                        filho2->solucao = decodificacaoGT(jobs, numJobs, machines, numMachines, filho2);
+                        
+                        auxPOX[tamPOX++] = *filho1;
+                        free(filho1);
+                        auxPOX[tamPOX++] = *filho2;
+                        free(filho2);
+                    }else if(probCross > limCross){
+                        Cromossomo *filho1 = crossoverLOX(pai1, pai2, jobs, numJobs, machines, numMachines);
+                        Cromossomo *filho2 = crossoverLOX(pai2, pai1, jobs, numJobs, machines, numMachines);
+                        filho1->solucao = decodificacaoGT(jobs, numJobs, machines, numMachines, filho1);
+                        filho2->solucao = decodificacaoGT(jobs, numJobs, machines, numMachines, filho2);
+                        
+                        auxLOX[tamLOX++] = *filho1;
+                        free(filho1);
+                        auxLOX[tamLOX++] = *filho2;
+                        free(filho2);
+                    }else{// probCross == limCross
+                        Cromossomo *filho1 = crossoverPOX(pai1, pai2, jobs, numJobs, machines, numMachines);
+                        Cromossomo *filho2 = crossoverLOX(pai2, pai1, jobs, numJobs, machines, numMachines);
+                        filho1->solucao = decodificacaoGT(jobs, numJobs, machines, numMachines, filho1);
+                        filho2->solucao = decodificacaoGT(jobs, numJobs, machines, numMachines, filho2);
+                        auxPOX[tamPOX++] = *filho1;
+                        free(filho1);
+                        auxLOX[tamLOX++] = *filho2;
+                        free(filho2);
+                    }
+
+                    p += 2;
+                }
+            }
+        }
+
+        if((tamPOX + tamLOX) != numCandidatos){
+            printf("Erro no Crossover dos candidatos \n");
             return NULL;
         }
 
-        if(populacao->individuos[i].solucao == NULL){
-            populacao->individuos[i].solucao = decodificacaoGT(jobs, numJobs, machines, numMachines, &populacao->individuos[i]);
-            if(populacao->individuos[i].solucao == NULL){
-                printf("Erro na decodificacao do individuo %d\n", i);
-                return NULL;
-            }
-        }else continue;
-    }
+        if(tamPOX > 0) ordernarCromossomos(auxPOX, tamPOX);
 
-    ordenarPopulacao(populacao);
-
-    Cromossomo *pais = (Cromossomo*)malloc(numCandidatos * sizeof(Cromossomo));
-    Cromossomo *filhosPOX = (Cromossomo*)malloc(numCandidatos * 2 * sizeof(Cromossomo));
-    Cromossomo *filhosLOX = (Cromossomo*)malloc(numCandidatos * 2 * sizeof(Cromossomo));
-
-    for(int c = 0; c < numCandidatos; c++){
-        pais[c] = populacao->individuos[c];
-    }
-    for(int px = 0; px < numCandidatos * 2; px++){
-        filhosPOX[px].solucao = NULL;
-    }
-    for(int lx = 0; lx < numCandidatos * 2; lx++){
-        filhosLOX[lx].solucao = NULL;
-    }
-
-    int numPais = numCandidatos / 2;
-    int p = 0;
+        if(tamLOX > 0) ordernarCromossomos(auxLOX, tamLOX);
     
-    while(p < numPais){
-        for(int i = 0; i < numCandidatos; i++){
-            if(pais[i].solucao != NULL){
-                Cromossomo *pai1 = &pais[i];
-                pais[i].solucao = NULL;
-
-                int randP2 = rand() % numCandidatos;
-                while(pais[randP2].solucao == NULL){
-                    randP2 = rand() % numCandidatos;
-                }
-                Cromossomo *pai2 = &pais[randP2];
-                pais[randP2].solucao = NULL;
-
-                float probCross = (float)(rand()) / (float)RAND_MAX;
-
-                if(probCross < limCross){
-                    Cromossomo *filho1 = crossoverPOX(pai1, pai2, jobs, numJobs, machines, numMachines);
-                    Cromossomo *filho2 = crossoverPOX(pai2, pai1, jobs, numJobs, machines, numMachines);
-                    decodificacaoGT(jobs, numJobs, machines, numMachines, filho1);
-                    decodificacaoGT(jobs, numJobs, machines, numMachines, filho2);
-                    for(int k = 0; k < numCandidatos * 2; k++){
-                        if(filhosPOX[k].solucao == NULL){
-                            filhosPOX[k] = *filho1;
-                            free(filho1);
-
-                            filhosPOX[k + 1] = *filho2;
-                            free(filho2);
-                            
-                            break;
-                        }
-                    }
-                }else if(probCross > limCross){
-                    Cromossomo *filho1 = crossoverLOX(pai1, pai2, jobs, numJobs, machines, numMachines);
-                    Cromossomo *filho2 = crossoverLOX(pai2, pai1, jobs, numJobs, machines, numMachines);
-                    decodificacaoGT(jobs, numJobs, machines, numMachines, filho1);
-                    decodificacaoGT(jobs, numJobs, machines, numMachines, filho2);
-                    for(int k = 0; k < numCandidatos * 2; k++){
-                        if(filhosLOX[k].solucao == NULL){
-                            filhosLOX[k] = *filho1;
-                            free(filho1);
-
-                            filhosLOX[k + 1] = *filho2;
-                            free(filho2);
-                            
-                            break;
-                        }
-                    }
-                }else{// probCross == limCross
-                    Cromossomo *filho1 = crossoverPOX(pai1, pai2, jobs, numJobs, machines, numMachines);
-                    Cromossomo *filho2 = crossoverLOX(pai2, pai1, jobs, numJobs, machines, numMachines);
-                    decodificacaoGT(jobs, numJobs, machines, numMachines, filho1);
-                    decodificacaoGT(jobs, numJobs, machines, numMachines, filho2);
-                    for(int k = 0; k < numCandidatos * 2; k++){
-                        if(filhosPOX[k].solucao == NULL){
-                            filhosPOX[k] = *filho1;
-                            free(filho1);
-                            
-                            break;
-                        }
-                    }
-                    for(int k = 0; k < numCandidatos * 2; k++){
-                        if(filhosLOX[k].solucao == NULL){
-                            filhosLOX[k] = *filho2;
-                            free(filho2);
-                            
-                            break;
-                        }
-                    }
-                }
+        int countPOX = 0;
+        int countLOX = 0;
+        if(tamPOX > 0 && tamLOX > 0){
+            int minTam = (tamPOX < tamLOX) ? tamPOX : tamLOX;
+            for(int i = 0; i < minTam; i++){
+                if(auxPOX[i].solucao->maxMakespan > auxLOX[i].solucao->maxMakespan) countLOX++;
+                else if(auxPOX[i].solucao->maxMakespan < auxLOX[i].solucao->maxMakespan) countPOX++;
             }
-
         }
 
+        if(countLOX != 0 && countPOX > countLOX) limCross += 0.05;
+        else if(countPOX != 0 && countPOX < countLOX) limCross -= 0.05;
 
+        printf("[Geracao %d]Limiar Crossover: %.2f\n", geracao, limCross);
+
+        int tamFilhos = tamPOX + tamLOX;
+
+        Cromossomo *filhos = (Cromossomo*)malloc(tamFilhos * sizeof(Cromossomo));
+
+        int f = 0;
+        for(int i = 0; i < tamPOX; i++){
+            filhos[f] = auxPOX[i];
+            f++;
+        }
+        for(int j = 0; j < tamLOX; j++){
+            filhos[f] = auxLOX[j];
+            f++;
+        }
+
+        ordernarCromossomos(filhos, tamFilhos);
+
+        free(auxPOX);
+        free(auxLOX);
+
+        
+
+        int pontUltSub = numIndividuos - numCandidatos - 1;
+
+        if(filhos[0].solucao->maxMakespan < populacao->individuos[pontUltSub].solucao->maxMakespan){
+            for(int i = 0; i < tamFilhos; i++){
+                int inserido = 0;
+                for(int j = pontUltSub; j < numIndividuos; j++){
+                    if(filhos[i].solucao->maxMakespan < populacao->individuos[j].solucao->maxMakespan){
+                        liberarConteudoCromossomo(&populacao->individuos[j]);
+                        populacao->individuos[j] = filhos[i];
+                        pontUltSub = j + 1;
+                        inserido = 1;
+                        break;
+                    }
+                }
+                if(!inserido){
+                    liberarConteudoCromossomo(&filhos[i]);
+                }
+            }
+        }else{
+            for(int i = 0; i < tamFilhos; i++){
+                liberarConteudoCromossomo(&filhos[i]);
+            }
+        }
+
+        free(filhos);
+        free(pais);
+
+        ordenarPopulacao(populacao);
+
+        if(populacao->melhorSolucao == NULL || populacao->individuos[0].solucao->maxMakespan < populacao->melhorSolucao->maxMakespan){
+            if(populacao->melhorSolucao != NULL &&populacao->melhorSolucao != populacao->individuos[0].solucao){
+                liberarSolucao(populacao->melhorSolucao);
+            }
+            populacao->melhorSolucao = clonarSolution(populacao->individuos[0].solucao);
+        }
     }
 
-    if(populacao->melhorSolucao == NULL || populacao->melhoresIndividuosGeracao[0].solucao->maxMakespan < populacao->melhorSolucao->maxMakespan){
-        populacao->melhorSolucao = populacao->melhoresIndividuosGeracao[0].solucao;
-    }
-
-
-    Solution *melhorSolucao = populacao->melhorSolucao;
+    Solution *melhorSolucao = clonarSolution(populacao->melhorSolucao);
     
     liberarPopulacao(populacao, melhorSolucao);
     
@@ -1831,7 +1970,7 @@ int main (int argc, char *argv[]){
 
     //printJobs(jobs, numJobs, numMachines);
 
-    solution = algoritmoMemetico(jobs, numJobs, machines, numMachines, 1000, 1000);
+    solution = algoritmoMemetico(jobs, numJobs, machines, numMachines, 100, 100);
     //printMachines(result, numMachines);
 
     printf("Makespan decodificado via Populacao Inicial Memetico: %d\n", solution->maxMakespan);

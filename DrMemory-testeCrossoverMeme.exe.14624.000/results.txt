@@ -1,0 +1,888 @@
+Dr. Memory version 2.6.20434 build 0 built on Dec 13 2025 03:23:51
+Windows version: WinVer=105;Rel=2009;Build=19045;Edition=Professional
+Dr. Memory results for pid 14624: "testeCrossoverMeme.exe"
+Application cmdline: ".\bin\testeCrossoverMeme.exe .\instances\ft\ft06.txt .\out\teste\testeCrossover.txt"
+Recorded 124 suppression(s) from default C:\Users\Yamamoto\AppData\Local\Microsoft\WinGet\Packages\DynamoRIO.drmemory_Microsoft.Winget.Source_8wekyb3d8bbwe\DrMemory-Windows-2.6.20434\bin64\suppress-default.txt
+System call information is missing for this operating system: WinVer=105;Rel=2009;Build=19045;Edition=Professional.
+
+Error #1: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff850-0x0000003605bff858 8 byte(s)
+# 0 .text                                   [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 _pei386_runtime_relocator               [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/crt/pseudo-reloc.c:477]
+# 2 __tmainCRTStartup                       [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/crt/crtexe.c:279]
+# 3 .l_start                                [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/crt/crtexe.c:212]
+# 4 KERNEL32.dll!BaseThreadInitThunk       +0x13     (0x00007ffc99b37374 <KERNEL32.dll+0x17374>)
+Note: @0:00:12.522 in thread 21284
+Note: 0x0000003605bff850 refers to 744 byte(s) beyond the top of the stack 0x0000003605bffb38
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #2: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bfea90-0x0000003605bfea98 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:126]
+# 1 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 2 fscanf                          [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:302]
+# 3 iniciarInstancias               [src/algoritmoMemetico.c:84]
+# 4 main                            [src/algoritmoMemetico.c:1935]
+Note: @0:00:12.600 in thread 21284
+Note: 0x0000003605bfea90 refers to 4072 byte(s) beyond the top of the stack 0x0000003605bffa78
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #3: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bfea50-0x0000003605bfea58 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 2 fscanf                          [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:302]
+# 3 iniciarInstancias               [src/algoritmoMemetico.c:84]
+# 4 main                            [src/algoritmoMemetico.c:1935]
+Note: @0:00:12.601 in thread 21284
+Note: 0x0000003605bfea50 refers to 4136 byte(s) beyond the top of the stack 0x0000003605bffa78
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #4: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bfea90-0x0000003605bfea98 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:126]
+# 1 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 2 fscanf                          [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:302]
+# 3 iniciarInstancias               [src/algoritmoMemetico.c:116]
+# 4 main                            [src/algoritmoMemetico.c:1935]
+Note: @0:00:12.636 in thread 21284
+Note: 0x0000003605bfea90 refers to 4072 byte(s) beyond the top of the stack 0x0000003605bffa78
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #5: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bfea50-0x0000003605bfea58 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 2 fscanf                          [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:302]
+# 3 iniciarInstancias               [src/algoritmoMemetico.c:116]
+# 4 main                            [src/algoritmoMemetico.c:1935]
+Note: @0:00:12.636 in thread 21284
+Note: 0x0000003605bfea50 refers to 4136 byte(s) beyond the top of the stack 0x0000003605bffa78
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #6: UNADDRESSABLE ACCESS beyond heap bounds: reading 0x0000022a95658f1c-0x0000022a95658f20 4 byte(s)
+# 0 inicializarCromossomoSPTTWKR               [src/algoritmoMemetico.c:1294]
+# 1 inicializarPopulacao                       [src/algoritmoMemetico.c:1546]
+# 2 algoritmoMemetico                          [src/algoritmoMemetico.c:1734]
+# 3 __mingw_vfscanf                            [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                                       [src/algoritmoMemetico.c:1943]
+Note: @0:00:12.904 in thread 21284
+Note: next higher malloc: 0x0000022a95658f40-0x0000022a95658fe8
+Note: refers to 4 byte(s) beyond last valid byte in prior malloc
+Note: prev lower malloc:  0x0000022a95658e70-0x0000022a95658f18
+Note: instruction: mov    0x04(%rax) -> %eax
+
+Error #7: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff790-0x0000003605bff798 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 decodificacaoGT                 [src/algoritmoMemetico.c:1418]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1747]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:13.027 in thread 21284
+Note: 0x0000003605bff790 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff798
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #8: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff770-0x0000003605bff778 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 decodificacaoGT                 [src/algoritmoMemetico.c:1419]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1747]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:13.028 in thread 21284
+Note: 0x0000003605bff770 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff778
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #9: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff750-0x0000003605bff758 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 decodificacaoGT                 [src/algoritmoMemetico.c:1425]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1747]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:13.031 in thread 21284
+Note: 0x0000003605bff750 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff758
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #10: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff6c0-0x0000003605bff6c8 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 decodificacaoGT                 [src/algoritmoMemetico.c:1429]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1747]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:13.034 in thread 21284
+Note: 0x0000003605bff6c0 refers to 120 byte(s) beyond the top of the stack 0x0000003605bff738
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #11: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff6a0-0x0000003605bff6a8 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 decodificacaoGT                 [src/algoritmoMemetico.c:1438]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1747]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:13.037 in thread 21284
+Note: 0x0000003605bff6a0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff6a8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #12: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff680-0x0000003605bff688 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 decodificacaoGT                 [src/algoritmoMemetico.c:1439]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1747]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:13.039 in thread 21284
+Note: 0x0000003605bff680 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff688
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #13: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff660-0x0000003605bff668 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 decodificacaoGT                 [src/algoritmoMemetico.c:1464]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1747]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:13.046 in thread 21284
+Note: 0x0000003605bff660 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff668
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #14: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff790-0x0000003605bff798 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 decodificacaoGT                 [src/algoritmoMemetico.c:1418]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1793]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:13.799 in thread 21284
+Note: 0x0000003605bff790 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff798
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #15: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff770-0x0000003605bff778 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 decodificacaoGT                 [src/algoritmoMemetico.c:1419]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1793]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:13.802 in thread 21284
+Note: 0x0000003605bff770 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff778
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #16: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff750-0x0000003605bff758 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 decodificacaoGT                 [src/algoritmoMemetico.c:1425]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1793]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:13.803 in thread 21284
+Note: 0x0000003605bff750 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff758
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #17: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff6c0-0x0000003605bff6c8 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 decodificacaoGT                 [src/algoritmoMemetico.c:1429]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1793]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:13.804 in thread 21284
+Note: 0x0000003605bff6c0 refers to 120 byte(s) beyond the top of the stack 0x0000003605bff738
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #18: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff6a0-0x0000003605bff6a8 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 decodificacaoGT                 [src/algoritmoMemetico.c:1438]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1793]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:13.805 in thread 21284
+Note: 0x0000003605bff6a0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff6a8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #19: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff680-0x0000003605bff688 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 decodificacaoGT                 [src/algoritmoMemetico.c:1439]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1793]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:13.806 in thread 21284
+Note: 0x0000003605bff680 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff688
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #20: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff660-0x0000003605bff668 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 decodificacaoGT                 [src/algoritmoMemetico.c:1464]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1793]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:13.807 in thread 21284
+Note: 0x0000003605bff660 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff668
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #21: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff790-0x0000003605bff798 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 decodificacaoGT                 [src/algoritmoMemetico.c:1418]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1794]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:13.815 in thread 21284
+Note: 0x0000003605bff790 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff798
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #22: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff770-0x0000003605bff778 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 decodificacaoGT                 [src/algoritmoMemetico.c:1419]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1794]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:13.817 in thread 21284
+Note: 0x0000003605bff770 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff778
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #23: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff750-0x0000003605bff758 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 decodificacaoGT                 [src/algoritmoMemetico.c:1425]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1794]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:13.818 in thread 21284
+Note: 0x0000003605bff750 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff758
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #24: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff6c0-0x0000003605bff6c8 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 decodificacaoGT                 [src/algoritmoMemetico.c:1429]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1794]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:13.819 in thread 21284
+Note: 0x0000003605bff6c0 refers to 120 byte(s) beyond the top of the stack 0x0000003605bff738
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #25: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff6a0-0x0000003605bff6a8 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 decodificacaoGT                 [src/algoritmoMemetico.c:1438]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1794]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:13.820 in thread 21284
+Note: 0x0000003605bff6a0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff6a8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #26: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff680-0x0000003605bff688 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 decodificacaoGT                 [src/algoritmoMemetico.c:1439]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1794]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:13.820 in thread 21284
+Note: 0x0000003605bff680 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff688
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #27: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff660-0x0000003605bff668 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 decodificacaoGT                 [src/algoritmoMemetico.c:1464]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1794]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:13.821 in thread 21284
+Note: 0x0000003605bff660 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff668
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #28: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff790-0x0000003605bff798 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 decodificacaoGT                 [src/algoritmoMemetico.c:1418]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1803]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:13.883 in thread 21284
+Note: 0x0000003605bff790 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff798
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #29: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff770-0x0000003605bff778 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 decodificacaoGT                 [src/algoritmoMemetico.c:1419]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1803]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:13.884 in thread 21284
+Note: 0x0000003605bff770 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff778
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #30: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff750-0x0000003605bff758 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 decodificacaoGT                 [src/algoritmoMemetico.c:1425]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1803]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:13.885 in thread 21284
+Note: 0x0000003605bff750 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff758
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #31: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff6c0-0x0000003605bff6c8 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 decodificacaoGT                 [src/algoritmoMemetico.c:1429]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1803]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:13.886 in thread 21284
+Note: 0x0000003605bff6c0 refers to 120 byte(s) beyond the top of the stack 0x0000003605bff738
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #32: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff6a0-0x0000003605bff6a8 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 decodificacaoGT                 [src/algoritmoMemetico.c:1438]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1803]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:13.887 in thread 21284
+Note: 0x0000003605bff6a0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff6a8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #33: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff680-0x0000003605bff688 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 decodificacaoGT                 [src/algoritmoMemetico.c:1439]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1803]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:13.888 in thread 21284
+Note: 0x0000003605bff680 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff688
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #34: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff660-0x0000003605bff668 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 decodificacaoGT                 [src/algoritmoMemetico.c:1464]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1803]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:13.889 in thread 21284
+Note: 0x0000003605bff660 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff668
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #35: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff790-0x0000003605bff798 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 decodificacaoGT                 [src/algoritmoMemetico.c:1418]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1804]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:13.897 in thread 21284
+Note: 0x0000003605bff790 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff798
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #36: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff770-0x0000003605bff778 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 decodificacaoGT                 [src/algoritmoMemetico.c:1419]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1804]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:13.898 in thread 21284
+Note: 0x0000003605bff770 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff778
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #37: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff750-0x0000003605bff758 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 decodificacaoGT                 [src/algoritmoMemetico.c:1425]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1804]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:13.899 in thread 21284
+Note: 0x0000003605bff750 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff758
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #38: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff6c0-0x0000003605bff6c8 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 decodificacaoGT                 [src/algoritmoMemetico.c:1429]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1804]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:13.900 in thread 21284
+Note: 0x0000003605bff6c0 refers to 120 byte(s) beyond the top of the stack 0x0000003605bff738
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #39: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff6a0-0x0000003605bff6a8 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 decodificacaoGT                 [src/algoritmoMemetico.c:1438]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1804]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:13.901 in thread 21284
+Note: 0x0000003605bff6a0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff6a8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #40: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff680-0x0000003605bff688 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 decodificacaoGT                 [src/algoritmoMemetico.c:1439]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1804]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:13.902 in thread 21284
+Note: 0x0000003605bff680 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff688
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #41: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff660-0x0000003605bff668 8 byte(s)
+# 0 .text                           [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 decodificacaoGT                 [src/algoritmoMemetico.c:1464]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1804]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:13.903 in thread 21284
+Note: 0x0000003605bff660 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff668
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #42: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff7e0-0x0000003605bff7e8 8 byte(s)
+# 0 .text                              [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 __pformat_int.isra.0               [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:707]
+# 2 __mingw_pformat                    [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:2598]
+# 3 __mingw_vfprintf                   [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfprintf.c:54]
+# 4 printf                             [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:358]
+# 5 algoritmoMemetico                  [src/algoritmoMemetico.c:1852]
+# 6 main                               [src/algoritmoMemetico.c:1943]
+Note: @0:00:14.007 in thread 21284
+Note: 0x0000003605bff7e0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff7e8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #43: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff7e0-0x0000003605bff7e8 8 byte(s)
+# 0 .text                              [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 __pformat_int.isra.0               [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:707]
+# 2 __mingw_pformat                    [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:2598]
+# 3 __mingw_vfprintf                   [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfprintf.c:54]
+# 4 printf                             [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:358]
+# 5 algoritmoMemetico                  [src/algoritmoMemetico.c:1853]
+# 6 main                               [src/algoritmoMemetico.c:1943]
+Note: @0:00:14.019 in thread 21284
+Note: 0x0000003605bff7e0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff7e8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #44: INVALID HEAP ARGUMENT to free 0x0000022a95654f10
+# 0 replace_free                    [D:\a\drmemory\drmemory\common\alloc_replace.c:2712]
+# 1 liberarCromossomo               [src/algoritmoMemetico.c:767]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1879]
+# 3 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:14.039 in thread 21284
+Note: next higher malloc: 0x0000022a956550b0-0x0000022a95655140
+
+Error #45: INVALID HEAP ARGUMENT to free 0x0000022a956dd960
+# 0 replace_free                    [D:\a\drmemory\drmemory\common\alloc_replace.c:2712]
+# 1 algoritmoMemetico               [src/algoritmoMemetico.c:1905]
+# 2 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:14.052 in thread 21284
+Note: prev lower malloc:  0x0000022a956dd820-0x0000022a956dd938
+Note: memory was previously freed here:
+Note: # 0 replace_free                    [D:\a\drmemory\drmemory\common\alloc_replace.c:2712]
+Note: # 1 algoritmoMemetico               [src/algoritmoMemetico.c:1896]
+Note: # 2 main                            [src/algoritmoMemetico.c:1943]
+
+Error #46: INVALID HEAP ARGUMENT to free 0x0000022a956c8e90
+# 0 replace_free                    [D:\a\drmemory\drmemory\common\alloc_replace.c:2712]
+# 1 algoritmoMemetico               [src/algoritmoMemetico.c:1906]
+# 2 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:14.065 in thread 21284
+Note: next higher malloc: 0x0000022a956c92e0-0x0000022a956c9370
+Note: prev lower malloc:  0x0000022a956c8d50-0x0000022a956c8e68
+Note: memory was previously freed here:
+Note: # 0 replace_free                    [D:\a\drmemory\drmemory\common\alloc_replace.c:2712]
+Note: # 1 algoritmoMemetico               [src/algoritmoMemetico.c:1897]
+Note: # 2 main                            [src/algoritmoMemetico.c:1943]
+
+Error #47: UNADDRESSABLE ACCESS of freed memory: reading 0x0000022a95654a30-0x0000022a95654a38 8 byte(s)
+# 0 liberarCromossomo               [src/algoritmoMemetico.c:760]
+# 1 liberarPopulacao                [src/algoritmoMemetico.c:777]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1911]
+# 3 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:14.069 in thread 21284
+Note: next higher malloc: 0x0000022a956550b0-0x0000022a95655140
+Note: prev lower malloc:  0x0000022a956549e0-0x0000022a956549f8
+Note: 0x0000022a95654a30-0x0000022a95654a38 overlaps memory 0x0000022a95654a20-0x0000022a95655060 that was freed here:
+Note: # 0 replace_free                    [D:\a\drmemory\drmemory\common\alloc_replace.c:2712]
+Note: # 1 liberarCromossomo               [src/algoritmoMemetico.c:767]
+Note: # 2 liberarPopulacao                [src/algoritmoMemetico.c:777]
+Note: # 3 algoritmoMemetico               [src/algoritmoMemetico.c:1911]
+Note: # 4 main                            [src/algoritmoMemetico.c:1943]
+Note: instruction: mov    (%rax) -> %rax
+
+Error #48: UNADDRESSABLE ACCESS of freed memory: reading 0x0000022a95654a30-0x0000022a95654a38 8 byte(s)
+# 0 liberarCromossomo               [src/algoritmoMemetico.c:761]
+# 1 liberarPopulacao                [src/algoritmoMemetico.c:777]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1911]
+# 3 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:14.069 in thread 21284
+Note: next higher malloc: 0x0000022a956550b0-0x0000022a95655140
+Note: prev lower malloc:  0x0000022a956549e0-0x0000022a956549f8
+Note: 0x0000022a95654a30-0x0000022a95654a38 overlaps memory 0x0000022a95654a20-0x0000022a95655060 that was freed here:
+Note: # 0 replace_free                    [D:\a\drmemory\drmemory\common\alloc_replace.c:2712]
+Note: # 1 liberarCromossomo               [src/algoritmoMemetico.c:767]
+Note: # 2 liberarPopulacao                [src/algoritmoMemetico.c:777]
+Note: # 3 algoritmoMemetico               [src/algoritmoMemetico.c:1911]
+Note: # 4 main                            [src/algoritmoMemetico.c:1943]
+Note: instruction: mov    (%rax) -> %rax
+
+Error #49: UNADDRESSABLE ACCESS of freed memory: writing 0x0000022a95654a30-0x0000022a95654a38 8 byte(s)
+# 0 liberarCromossomo               [src/algoritmoMemetico.c:762]
+# 1 liberarPopulacao                [src/algoritmoMemetico.c:777]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1911]
+# 3 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:14.084 in thread 21284
+Note: next higher malloc: 0x0000022a956550b0-0x0000022a95655140
+Note: prev lower malloc:  0x0000022a956549e0-0x0000022a956549f8
+Note: 0x0000022a95654a30-0x0000022a95654a38 overlaps memory 0x0000022a95654a20-0x0000022a95655060 that was freed here:
+Note: # 0 replace_free                    [D:\a\drmemory\drmemory\common\alloc_replace.c:2712]
+Note: # 1 liberarCromossomo               [src/algoritmoMemetico.c:767]
+Note: # 2 liberarPopulacao                [src/algoritmoMemetico.c:777]
+Note: # 3 algoritmoMemetico               [src/algoritmoMemetico.c:1911]
+Note: # 4 main                            [src/algoritmoMemetico.c:1943]
+Note: instruction: mov    $0x0000000000000000 -> (%rax)
+
+Error #50: UNADDRESSABLE ACCESS of freed memory: reading 0x0000022a95654a38-0x0000022a95654a40 8 byte(s)
+# 0 liberarCromossomo               [src/algoritmoMemetico.c:765]
+# 1 liberarPopulacao                [src/algoritmoMemetico.c:777]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1911]
+# 3 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:14.086 in thread 21284
+Note: next higher malloc: 0x0000022a956550b0-0x0000022a95655140
+Note: prev lower malloc:  0x0000022a956549e0-0x0000022a956549f8
+Note: 0x0000022a95654a38-0x0000022a95654a40 overlaps memory 0x0000022a95654a20-0x0000022a95655060 that was freed here:
+Note: # 0 replace_free                    [D:\a\drmemory\drmemory\common\alloc_replace.c:2712]
+Note: # 1 liberarCromossomo               [src/algoritmoMemetico.c:767]
+Note: # 2 liberarPopulacao                [src/algoritmoMemetico.c:777]
+Note: # 3 algoritmoMemetico               [src/algoritmoMemetico.c:1911]
+Note: # 4 main                            [src/algoritmoMemetico.c:1943]
+Note: instruction: mov    0x08(%rax) -> %rax
+
+Error #51: INVALID HEAP ARGUMENT to free 0x0000022a95654a30
+# 0 replace_free                    [D:\a\drmemory\drmemory\common\alloc_replace.c:2712]
+# 1 liberarCromossomo               [src/algoritmoMemetico.c:767]
+# 2 liberarPopulacao                [src/algoritmoMemetico.c:777]
+# 3 algoritmoMemetico               [src/algoritmoMemetico.c:1911]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:14.088 in thread 21284
+Note: next higher malloc: 0x0000022a956550b0-0x0000022a95655140
+Note: prev lower malloc:  0x0000022a956549e0-0x0000022a956549f8
+Note: 0x0000022a95654a30-0x0000022a95654a30 overlaps memory 0x0000022a95654a20-0x0000022a95655060 that was freed here:
+Note: # 0 replace_free                    [D:\a\drmemory\drmemory\common\alloc_replace.c:2712]
+Note: # 1 liberarCromossomo               [src/algoritmoMemetico.c:767]
+Note: # 2 liberarPopulacao                [src/algoritmoMemetico.c:777]
+Note: # 3 algoritmoMemetico               [src/algoritmoMemetico.c:1911]
+Note: # 4 main                            [src/algoritmoMemetico.c:1943]
+
+Error #52: INVALID HEAP ARGUMENT to free 0x0000022a95654a20
+# 0 replace_free                    [D:\a\drmemory\drmemory\common\alloc_replace.c:2712]
+# 1 liberarPopulacao                [src/algoritmoMemetico.c:779]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1911]
+# 3 main                            [src/algoritmoMemetico.c:1943]
+Note: @0:00:14.103 in thread 21284
+Note: prev lower malloc:  0x0000022a956549e0-0x0000022a956549f8
+Note: memory was previously freed here:
+Note: # 0 replace_free                    [D:\a\drmemory\drmemory\common\alloc_replace.c:2712]
+Note: # 1 liberarCromossomo               [src/algoritmoMemetico.c:767]
+Note: # 2 liberarPopulacao                [src/algoritmoMemetico.c:777]
+Note: # 3 algoritmoMemetico               [src/algoritmoMemetico.c:1911]
+Note: # 4 main                            [src/algoritmoMemetico.c:1943]
+
+Error #53: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff920-0x0000003605bff928 8 byte(s)
+# 0 .text                              [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 __pformat_int.isra.0               [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:707]
+# 2 __mingw_pformat                    [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:2598]
+# 3 __mingw_vfprintf                   [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfprintf.c:54]
+# 4 printf                             [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:358]
+# 5 main                               [src/algoritmoMemetico.c:1946]
+Note: @0:00:14.138 in thread 21284
+Note: 0x0000003605bff920 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff928
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #54: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff8c0-0x0000003605bff8c8 8 byte(s)
+# 0 .text                              [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 __pformat_int.isra.0               [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:707]
+# 2 __mingw_pformat                    [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:2598]
+# 3 __mingw_vfprintf                   [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfprintf.c:54]
+# 4 printf                             [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:358]
+# 5 printCaminhoCritico                [src/algoritmoMemetico.c:473]
+# 6 main                               [src/algoritmoMemetico.c:1947]
+Note: @0:00:14.194 in thread 21284
+Note: 0x0000003605bff8c0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff8c8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #55: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff8c0-0x0000003605bff8c8 8 byte(s)
+# 0 .text                              [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 __pformat_int.isra.0               [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:707]
+# 2 __mingw_pformat                    [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:2598]
+# 3 __mingw_vfprintf                   [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfprintf.c:54]
+# 4 printf                             [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:358]
+# 5 printCaminhoCritico                [src/algoritmoMemetico.c:477]
+# 6 main                               [src/algoritmoMemetico.c:1947]
+Note: @0:00:14.203 in thread 21284
+Note: 0x0000003605bff8c0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff8c8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #56: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff8c0-0x0000003605bff8c8 8 byte(s)
+# 0 .text                              [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 __pformat_int.isra.0               [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:707]
+# 2 __mingw_pformat                    [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:2598]
+# 3 __mingw_vfprintf                   [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfprintf.c:54]
+# 4 printf                             [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:358]
+# 5 printCaminhoCritico                [src/algoritmoMemetico.c:488]
+# 6 main                               [src/algoritmoMemetico.c:1947]
+Note: @0:00:14.600 in thread 21284
+Note: 0x0000003605bff8c0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff8c8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #57: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff8b0-0x0000003605bff8b8 8 byte(s)
+# 0 .text                              [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 __pformat_int.isra.0               [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:707]
+# 2 __mingw_pformat                    [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:2598]
+# 3 __mingw_vfprintf                   [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfprintf.c:54]
+# 4 fprintf                            [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:347]
+# 5 printSolutionToFile                [src/algoritmoMemetico.c:181]
+# 6 main                               [src/algoritmoMemetico.c:1956]
+Note: @0:00:14.673 in thread 21284
+Note: 0x0000003605bff8b0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff8b8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #58: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff8b0-0x0000003605bff8b8 8 byte(s)
+# 0 .text                              [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 __pformat_int.isra.0               [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:707]
+# 2 __mingw_pformat                    [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:2598]
+# 3 __mingw_vfprintf                   [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfprintf.c:54]
+# 4 fprintf                            [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:347]
+# 5 printSolutionToFile                [src/algoritmoMemetico.c:182]
+# 6 main                               [src/algoritmoMemetico.c:1956]
+Note: @0:00:14.676 in thread 21284
+Note: 0x0000003605bff8b0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff8b8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #59: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff8b0-0x0000003605bff8b8 8 byte(s)
+# 0 .text                              [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 __pformat_int.isra.0               [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:707]
+# 2 __mingw_pformat                    [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:2598]
+# 3 __mingw_vfprintf                   [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfprintf.c:54]
+# 4 fprintf                            [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:347]
+# 5 printSolutionToFile                [src/algoritmoMemetico.c:183]
+# 6 main                               [src/algoritmoMemetico.c:1956]
+Note: @0:00:14.679 in thread 21284
+Note: 0x0000003605bff8b0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff8b8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #60: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff8b0-0x0000003605bff8b8 8 byte(s)
+# 0 .text                              [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 __pformat_int.isra.0               [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:707]
+# 2 __mingw_pformat                    [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:2598]
+# 3 __mingw_vfprintf                   [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfprintf.c:54]
+# 4 fprintf                            [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:347]
+# 5 printSolutionToFile                [src/algoritmoMemetico.c:187]
+# 6 main                               [src/algoritmoMemetico.c:1956]
+Note: @0:00:14.711 in thread 21284
+Note: 0x0000003605bff8b0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff8b8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #61: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff8b0-0x0000003605bff8b8 8 byte(s)
+# 0 .text                              [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 __pformat_int.isra.0               [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:707]
+# 2 __mingw_pformat                    [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:2598]
+# 3 __mingw_vfprintf                   [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfprintf.c:54]
+# 4 fprintf                            [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:347]
+# 5 printSolutionToFile                [src/algoritmoMemetico.c:188]
+# 6 main                               [src/algoritmoMemetico.c:1956]
+Note: @0:00:14.714 in thread 21284
+Note: 0x0000003605bff8b0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff8b8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #62: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff8b0-0x0000003605bff8b8 8 byte(s)
+# 0 .text                              [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 __pformat_int.isra.0               [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:707]
+# 2 __mingw_pformat                    [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:2598]
+# 3 __mingw_vfprintf                   [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfprintf.c:54]
+# 4 fprintf                            [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:347]
+# 5 printSolutionToFile                [src/algoritmoMemetico.c:189]
+# 6 main                               [src/algoritmoMemetico.c:1956]
+Note: @0:00:14.716 in thread 21284
+Note: 0x0000003605bff8b0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff8b8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #63: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff8b0-0x0000003605bff8b8 8 byte(s)
+# 0 .text                              [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 __pformat_int.isra.0               [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:707]
+# 2 __mingw_pformat                    [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:2598]
+# 3 __mingw_vfprintf                   [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfprintf.c:54]
+# 4 fprintf                            [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:347]
+# 5 printSolutionToFile                [src/algoritmoMemetico.c:192]
+# 6 main                               [src/algoritmoMemetico.c:1956]
+Note: @0:00:14.726 in thread 21284
+Note: 0x0000003605bff8b0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff8b8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #64: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff8c0-0x0000003605bff8c8 8 byte(s)
+# 0 .text                                   [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 __pformat_int.isra.0                    [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:707]
+# 2 __mingw_pformat                         [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:2598]
+# 3 __mingw_vfprintf                        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfprintf.c:54]
+# 4 fprintf                                 [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:347]
+# 5 printCaminhoCriticoToFile               [src/algoritmoMemetico.c:504]
+# 6 main                                    [src/algoritmoMemetico.c:1957]
+Note: @0:00:14.902 in thread 21284
+Note: 0x0000003605bff8c0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff8c8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #65: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff8c0-0x0000003605bff8c8 8 byte(s)
+# 0 .text                                   [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 __pformat_int.isra.0                    [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:707]
+# 2 __mingw_pformat                         [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:2598]
+# 3 __mingw_vfprintf                        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfprintf.c:54]
+# 4 fprintf                                 [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:347]
+# 5 printCaminhoCriticoToFile               [src/algoritmoMemetico.c:508]
+# 6 main                                    [src/algoritmoMemetico.c:1957]
+Note: @0:00:14.907 in thread 21284
+Note: 0x0000003605bff8c0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff8c8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #66: UNADDRESSABLE ACCESS beyond top of stack: reading 0x0000003605bff8c0-0x0000003605bff8c8 8 byte(s)
+# 0 .text                                   [../../../../../src/gcc-git-10.3.0/libgcc/config/i386/cygwin.S:132]
+# 1 __pformat_int.isra.0                    [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:707]
+# 2 __mingw_pformat                         [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_pformat.c:2598]
+# 3 __mingw_vfprintf                        [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfprintf.c:54]
+# 4 fprintf                                 [C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h:347]
+# 5 printCaminhoCriticoToFile               [src/algoritmoMemetico.c:519]
+# 6 main                                    [src/algoritmoMemetico.c:1957]
+Note: @0:00:14.944 in thread 21284
+Note: 0x0000003605bff8c0 refers to 8 byte(s) beyond the top of the stack 0x0000003605bff8c8
+Note: instruction: or     $0x0000000000000000 (%rcx) -> (%rcx)
+
+Error #67: POSSIBLE LEAK 119 direct bytes 0x0000022a956501c0-0x0000022a95650237 + 0 indirect bytes
+# 0 replace_malloc                    [D:\a\drmemory\drmemory\common\alloc_replace.c:2582]
+# 1 msvcrt.dll!realloc               +0x193    (0x00007ffc99c09f44 <msvcrt.dll+0x19f44>)
+# 2 msvcrt.dll!unlock                +0x40c    (0x00007ffc99c2b68d <msvcrt.dll+0x3b68d>)
+# 3 msvcrt.dll!_getmainargs          +0x30     (0x00007ffc99bf7a01 <msvcrt.dll+0x7a01>)
+# 4 pre_cpp_init                      [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/crt/crtexe.c:171]
+# 5 msvcrt.dll!initterm              +0x42     (0x00007ffc99c2a553 <msvcrt.dll+0x3a553>)
+# 6 __tmainCRTStartup                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/crt/crtexe.c:269]
+# 7 .l_start                          [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/crt/crtexe.c:212]
+# 8 KERNEL32.dll!BaseThreadInitThunk +0x13     (0x00007ffc99b37374 <KERNEL32.dll+0x17374>)
+
+Error #68: LEAK 144 direct bytes 0x0000022a95651610-0x0000022a956516a0 + 1008 indirect bytes
+# 0 replace_malloc                  [D:\a\drmemory\drmemory\common\alloc_replace.c:2582]
+# 1 iniciarInstancias               [src/algoritmoMemetico.c:92]
+# 2 main                            [src/algoritmoMemetico.c:1935]
+
+Error #69: LEAK 192 direct bytes 0x0000022a956516c0-0x0000022a95651780 + 1008 indirect bytes
+# 0 replace_malloc                  [D:\a\drmemory\drmemory\common\alloc_replace.c:2582]
+# 1 iniciarInstancias               [src/algoritmoMemetico.c:93]
+# 2 main                            [src/algoritmoMemetico.c:1935]
+
+Error #70: LEAK 24 direct bytes 0x0000022a956c9440-0x0000022a956c9458 + 0 indirect bytes
+# 0 replace_malloc                  [D:\a\drmemory\drmemory\common\alloc_replace.c:2582]
+# 1 crossoverPOX                    [src/algoritmoMemetico.c:1610]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1791]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+
+Error #71: LEAK 12 direct bytes 0x0000022a956c9480-0x0000022a956c948c + 0 indirect bytes
+# 0 replace_malloc                  [D:\a\drmemory\drmemory\common\alloc_replace.c:2582]
+# 1 crossoverPOX                    [src/algoritmoMemetico.c:1616]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1791]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+
+Error #72: LEAK 12 direct bytes 0x0000022a956c94b0-0x0000022a956c94bc + 0 indirect bytes
+# 0 replace_malloc                  [D:\a\drmemory\drmemory\common\alloc_replace.c:2582]
+# 1 crossoverPOX                    [src/algoritmoMemetico.c:1619]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1791]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+
+Error #73: LEAK 24 direct bytes 0x0000022a956c9670-0x0000022a956c9688 + 0 indirect bytes
+# 0 replace_malloc                  [D:\a\drmemory\drmemory\common\alloc_replace.c:2582]
+# 1 crossoverPOX                    [src/algoritmoMemetico.c:1610]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1792]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+
+Error #74: LEAK 12 direct bytes 0x0000022a956c96b0-0x0000022a956c96bc + 0 indirect bytes
+# 0 replace_malloc                  [D:\a\drmemory\drmemory\common\alloc_replace.c:2582]
+# 1 crossoverPOX                    [src/algoritmoMemetico.c:1616]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1792]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+
+Error #75: LEAK 12 direct bytes 0x0000022a956c96e0-0x0000022a956c96ec + 0 indirect bytes
+# 0 replace_malloc                  [D:\a\drmemory\drmemory\common\alloc_replace.c:2582]
+# 1 crossoverPOX                    [src/algoritmoMemetico.c:1619]
+# 2 algoritmoMemetico               [src/algoritmoMemetico.c:1792]
+# 3 __mingw_vfscanf                 [C:/crossdev/src/mingw-w64-v8-git/mingw-w64-crt/stdio/mingw_vfscanf.c:1616]
+# 4 main                            [src/algoritmoMemetico.c:1943]
+
+===========================================================================
+FINAL SUMMARY:
+
+DUPLICATE ERROR COUNTS:
+	Error #   1:      2
+	Error #   2:      2
+	Error #   3:      2
+	Error #   4:     72
+	Error #   5:     72
+	Error #   6:    570
+	Error #   7:    200
+	Error #   8:    200
+	Error #   9:    200
+	Error #  10:    200
+	Error #  11:   7200
+	Error #  12:   7200
+	Error #  13:   7200
+	Error #  14:     18
+	Error #  15:     18
+	Error #  16:     18
+	Error #  17:     18
+	Error #  18:    648
+	Error #  19:    648
+	Error #  20:    648
+	Error #  21:     18
+	Error #  22:     18
+	Error #  23:     18
+	Error #  24:     18
+	Error #  25:    648
+	Error #  26:    648
+	Error #  27:    648
+	Error #  28:      2
+	Error #  29:      2
+	Error #  30:      2
+	Error #  31:      2
+	Error #  32:     72
+	Error #  33:     72
+	Error #  34:     72
+	Error #  35:      2
+	Error #  36:      2
+	Error #  37:      2
+	Error #  38:      2
+	Error #  39:     72
+	Error #  40:     72
+	Error #  41:     72
+	Error #  42:      2
+	Error #  43:      2
+	Error #  44:     20
+	Error #  47:     99
+	Error #  48:     99
+	Error #  49:     99
+	Error #  50:     99
+	Error #  51:     99
+	Error #  53:      2
+	Error #  54:      2
+	Error #  55:    126
+	Error #  56:      4
+	Error #  57:      2
+	Error #  58:      2
+	Error #  59:      2
+	Error #  60:     12
+	Error #  61:     12
+	Error #  62:     12
+	Error #  63:    504
+	Error #  64:      2
+	Error #  65:    126
+	Error #  66:      4
+	Error #  70:      9
+	Error #  71:      9
+	Error #  72:      9
+	Error #  73:      9
+	Error #  74:      9
+	Error #  75:      9
+
+SUPPRESSIONS USED:
+
+ERRORS FOUND:
+     61 unique, 28812 total unaddressable access(es)
+      0 unique,     0 total uninitialized access(es)
+      5 unique,   122 total invalid heap argument(s)
+      0 unique,     0 total GDI usage error(s)
+      0 unique,     0 total handle leak(s)
+      0 unique,     0 total warning(s)
+      8 unique,    56 total,   3216 byte(s) of leak(s)
+      1 unique,     1 total,    119 byte(s) of possible leak(s)
+ERRORS IGNORED:
+      5 unique,     7 total,    228 byte(s) of still-reachable allocation(s)
+         (re-run with "-show_reachable" for details)
+Fuzz details: C:\ProjetoAlgoritmos\Projeto-JSP\DrMemory-testeCrossoverMeme.exe.14624.000\fuzz_results.txt
+Details: C:\ProjetoAlgoritmos\Projeto-JSP\DrMemory-testeCrossoverMeme.exe.14624.000\results.txt

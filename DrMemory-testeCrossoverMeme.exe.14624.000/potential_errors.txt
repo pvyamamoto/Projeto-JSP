@@ -1,0 +1,19 @@
+Dr. Memory version 2.6.20434 build 0 built on Dec 13 2025 03:23:51
+Dr. Memory errors that are likely to be false positives, for pid 14624: "testeCrossoverMeme.exe"
+These errors matched the blocklist ',C:\Windows*.d??' for 4 frames.
+Run with -lib_blocklist_frames 0 to treat these as regular errors.
+If these are all false positives and your focus is unaddressable errors, consider running with -light to skip all uninitialized reads and leaks for higher performance.
+
+DUPLICATE POTENTIAL ERROR COUNTS:
+
+POTENTIAL ERRORS FOUND:
+      0 unique,     0 total potential unaddressable access(es)
+      0 unique,     0 total potential uninitialized access(es)
+      0 unique,     0 total potential invalid heap argument(s)
+      0 unique,     0 total potential GDI usage error(s)
+      0 unique,     0 total potential handle leak(s)
+      0 unique,     0 total potential warning(s)
+      0 unique,     0 total,      0 byte(s) of potential leak(s)
+      0 unique,     0 total,      0 byte(s) of potential possible leak(s)
+Fuzz details: C:\ProjetoAlgoritmos\Projeto-JSP\DrMemory-testeCrossoverMeme.exe.14624.000\fuzz_results.txt
+Details: C:\ProjetoAlgoritmos\Projeto-JSP\DrMemory-testeCrossoverMeme.exe.14624.000\potential_errors.txt
