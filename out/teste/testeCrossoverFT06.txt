@@ -1,7 +1,7 @@
 Numero de Maquinas: 6
 Maximo Makespan:  56
-Tempo Ocioso Total das Maquinas:  93
-Media Tempo de Fluxo dos Jobs:  51.83
+Tempo Ocioso Total das Maquinas:  100
+Media Tempo de Fluxo dos Jobs:  51.17
 Machine 0:
   tempoAtual: 52
   Numero de Tarefas: 6
@@ -9,7 +9,7 @@ Machine 0:
     Task 1: Machine 0, Duration 5, Job ID 3, Start Time 14, End Time 19, Sequencia: 9
     Task 3: Machine 0, Duration 9, Job ID 2, Start Time 19, End Time 28, Sequencia: 15
     Task 3: Machine 0, Duration 10, Job ID 5, Start Time 29, End Time 39, Sequencia: 24
-    Task 4: Machine 0, Duration 10, Job ID 1, Start Time 39, End Time 49, Sequencia: 30
+    Task 4: Machine 0, Duration 10, Job ID 1, Start Time 39, End Time 49, Sequencia: 28
     Task 4: Machine 0, Duration 3, Job ID 4, Start Time 49, End Time 52, Sequencia: 31
 Machine 1:
   tempoAtual: 29
@@ -21,21 +21,21 @@ Machine 1:
     Task 1: Machine 1, Duration 3, Job ID 4, Start Time 23, End Time 26, Sequencia: 14
     Task 4: Machine 1, Duration 1, Job ID 2, Start Time 28, End Time 29, Sequencia: 17
 Machine 2:
-  tempoAtual: 44
+  tempoAtual: 51
   Numero de Tarefas: 6
     Task 0: Machine 2, Duration 5, Job ID 2, Start Time 1, End Time 6, Sequencia: 0
     Task 0: Machine 2, Duration 1, Job ID 0, Start Time 6, End Time 7, Sequencia: 2
     Task 1: Machine 2, Duration 5, Job ID 1, Start Time 9, End Time 14, Sequencia: 6
     Task 0: Machine 2, Duration 9, Job ID 4, Start Time 14, End Time 23, Sequencia: 12
     Task 2: Machine 2, Duration 5, Job ID 3, Start Time 23, End Time 28, Sequencia: 16
-    Task 5: Machine 2, Duration 1, Job ID 5, Start Time 43, End Time 44, Sequencia: 27
+    Task 5: Machine 2, Duration 1, Job ID 5, Start Time 50, End Time 51, Sequencia: 30
 Machine 3:
   tempoAtual: 54
   Numero de Tarefas: 6
     Task 1: Machine 3, Duration 4, Job ID 2, Start Time 6, End Time 10, Sequencia: 4
     Task 1: Machine 3, Duration 3, Job ID 5, Start Time 17, End Time 20, Sequencia: 10
-    Task 3: Machine 3, Duration 3, Job ID 3, Start Time 28, End Time 31, Sequencia: 19
-    Task 3: Machine 3, Duration 7, Job ID 0, Start Time 31, End Time 38, Sequencia: 22
+    Task 3: Machine 3, Duration 7, Job ID 0, Start Time 23, End Time 30, Sequencia: 19
+    Task 3: Machine 3, Duration 3, Job ID 3, Start Time 30, End Time 33, Sequencia: 22
     Task 5: Machine 3, Duration 4, Job ID 1, Start Time 49, End Time 53, Sequencia: 32
     Task 5: Machine 3, Duration 1, Job ID 4, Start Time 53, End Time 54, Sequencia: 33
 Machine 4:
@@ -43,10 +43,10 @@ Machine 4:
   Numero de Tarefas: 6
     Task 2: Machine 4, Duration 10, Job ID 1, Start Time 14, End Time 24, Sequencia: 13
     Task 2: Machine 4, Duration 5, Job ID 4, Start Time 26, End Time 31, Sequencia: 20
-    Task 4: Machine 4, Duration 8, Job ID 3, Start Time 31, End Time 39, Sequencia: 23
-    Task 4: Machine 4, Duration 4, Job ID 5, Start Time 39, End Time 43, Sequencia: 26
-    Task 5: Machine 4, Duration 6, Job ID 0, Start Time 43, End Time 49, Sequencia: 29
-    Task 5: Machine 4, Duration 7, Job ID 2, Start Time 49, End Time 56, Sequencia: 35
+    Task 5: Machine 4, Duration 7, Job ID 2, Start Time 31, End Time 38, Sequencia: 23
+    Task 4: Machine 4, Duration 8, Job ID 3, Start Time 38, End Time 46, Sequencia: 26
+    Task 4: Machine 4, Duration 4, Job ID 5, Start Time 46, End Time 50, Sequencia: 29
+    Task 5: Machine 4, Duration 6, Job ID 0, Start Time 50, End Time 56, Sequencia: 35
 Machine 5:
   tempoAtual: 55
   Numero de Tarefas: 6
@@ -54,7 +54,7 @@ Machine 5:
     Task 2: Machine 5, Duration 9, Job ID 5, Start Time 20, End Time 29, Sequencia: 18
     Task 3: Machine 5, Duration 10, Job ID 1, Start Time 29, End Time 39, Sequencia: 21
     Task 4: Machine 5, Duration 3, Job ID 0, Start Time 39, End Time 42, Sequencia: 25
-    Task 3: Machine 5, Duration 4, Job ID 4, Start Time 42, End Time 46, Sequencia: 28
+    Task 3: Machine 5, Duration 4, Job ID 4, Start Time 42, End Time 46, Sequencia: 27
     Task 5: Machine 5, Duration 9, Job ID 3, Start Time 46, End Time 55, Sequencia: 34
 
 ==================== CAMINHO CRITICO ====================
@@ -65,10 +65,10 @@ Total de tarefas no caminho critico: 10
   [04] Job  0 | Op  2 | Maq  1 | Dur:  6 | Start:  17 | End:  23
   [05] Job  4 | Op  1 | Maq  1 | Dur:  3 | Start:  23 | End:  26
   [06] Job  4 | Op  2 | Maq  4 | Dur:  5 | Start:  26 | End:  31
-  [07] Job  3 | Op  4 | Maq  4 | Dur:  8 | Start:  31 | End:  39
-  [08] Job  5 | Op  4 | Maq  4 | Dur:  4 | Start:  39 | End:  43
-  [09] Job  0 | Op  5 | Maq  4 | Dur:  6 | Start:  43 | End:  49
-  [10] Job  2 | Op  5 | Maq  4 | Dur:  7 | Start:  49 | End:  56
+  [07] Job  2 | Op  5 | Maq  4 | Dur:  7 | Start:  31 | End:  38
+  [08] Job  3 | Op  4 | Maq  4 | Dur:  8 | Start:  38 | End:  46
+  [09] Job  5 | Op  4 | Maq  4 | Dur:  4 | Start:  46 | End:  50
+  [10] Job  0 | Op  5 | Maq  4 | Dur:  6 | Start:  50 | End:  56
 Duracao acumulada das tarefas: 56 | Makespan: 56
 Status: Caminho critico sem folgas (Valido!)
 =========================================================

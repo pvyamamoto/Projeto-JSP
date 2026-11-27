@@ -65,7 +65,7 @@ typedef struct Cromossomo{
 typedef struct Populacao{
     Cromossomo* individuos;
     int numIndividuos;
-    Solution* melhorSolucao;
+    Cromossomo* melhorSolucao;
 } Populacao;
 
 void iniciarInstancias(const char *filePath, int *numJobs, int *numMachines, Job **jobs, Machine **machines){
@@ -525,6 +525,26 @@ void printCaminhoCriticoToFile(FILE *arquivo, Task *caminho, int tamCaminho, int
     fprintf(arquivo, "=========================================================\n\n");
 }
 
+void printCaminhoCriticoGenes(int *genes, int *mask, int tamGenes){
+    
+    if(genes == NULL || mask == NULL || tamGenes <= 0){
+        printf("(printCaminhoCriticoGenes) Erro no cromossomo ou no tamanho do genes");
+        return;
+    }
+
+    printf("\nGene: [ ");
+    for(int i = 0; i < tamGenes; i++){
+        printf("  %d  ", genes[i]);
+    }
+    printf("]");
+
+    printf("\nMask: [ ");
+    for(int j = 0; j < tamGenes; j++){
+        printf("  %d  ", mask[j]);
+    }
+    printf("]\n");
+}
+
 void calcularScore(Solution *solution){
 
     int auxMakespan = 0;
@@ -779,7 +799,7 @@ void liberarCromossomo(Cromossomo *cromossomo){
     free(cromossomo);
 }
 
-void liberarPopulacao(Populacao *populacao, Solution *solucaoPreservada){
+void liberarPopulacao(Populacao *populacao){
     
     if(populacao == NULL) return;
     
@@ -1754,6 +1774,25 @@ Cromossomo* crossoverLOX(Cromossomo *pai1, Cromossomo *pai2, Job *jobs, int numJ
     return filho;
 }
 
+int* caminhoCriticoGenes(Cromossomo *ind, int tamGenes){
+    if(ind == NULL || tamGenes <= 0){
+        printf("(caminhoCriticoGenes) Erro no cromossomo ou no tamanho do genes");
+        return NULL;
+    }
+
+    int *maskGenes = (int*)malloc(tamGenes * sizeof(int));
+    for(int i = 0; i < tamGenes; i++){
+        maskGenes[i] = -1;
+    }
+    for(int j = 0; j < ind->solucao->tamCaminhoCritico; j++){
+        maskGenes[ind->solucao->caminhoCritico[j].sequencia] = 0;
+    }
+
+    return maskGenes;
+}
+
+
+
 Cromossomo* buscaLocalCromossomo(Cromossomo *ind, int tamGenes){
     if(ind == NULL || tamGenes <= 0){
         printf("(buscalocalCromossomo) Erro no cromossomo ou no tamanho do genes");
@@ -1761,12 +1800,16 @@ Cromossomo* buscaLocalCromossomo(Cromossomo *ind, int tamGenes){
     }
 
     Cromossomo *auxCromossomo = clonarCromossomo(ind, tamGenes, 1);
-    int *maskGenes = (int*)malloc(tamGenes * sizeof(int));
+    int *maskGenes = caminhoCriticoGenes(auxCromossomo, tamGenes);
 
-    
+
+
+
+
+    return auxCromossomo;
 }
 
-Solution* algoritmoMemetico(Job *jobs, int numJobs, Machine *machines, int numMachines, int numIndividuos, int numGeracoes){
+Cromossomo* algoritmoMemetico(Job *jobs, int numJobs, Machine *machines, int numMachines, int numIndividuos, int numGeracoes){
     
     int numCandidatos = (int)(numIndividuos * 0.2);
     if(numCandidatos % 2 != 0) numCandidatos--;
@@ -1894,7 +1937,7 @@ Solution* algoritmoMemetico(Job *jobs, int numJobs, Machine *machines, int numMa
         int tamFilhos = tamPOX + tamLOX;
 
         printf("[Geracao %d] Total de filhos: %d     | Filhos: (POX: %d | LOX: %d)\n", geracao, tamFilhos, tamPOX, tamLOX);
-        printf("[Geracao %d] Limiar Crossover: %.2f  | Melhor: (POX: %d | LOX: %d) | Empate: %d \n\n", geracao, limCross, countPOX, countLOX, countEmp);
+        printf("[Geracao %d] Limiar Crossover: %.2f  | Melhor: (POX: %d | LOX: %d) | Empate: %d \n", geracao, limCross, countPOX, countLOX, countEmp);
 
         Cromossomo *filhos = (Cromossomo*)malloc(tamFilhos * sizeof(Cromossomo));
 
@@ -1944,19 +1987,24 @@ Solution* algoritmoMemetico(Job *jobs, int numJobs, Machine *machines, int numMa
 
         ordenarPopulacao(populacao);
 
-        if(populacao->melhorSolucao == NULL || populacao->individuos[0].solucao->maxMakespan < populacao->melhorSolucao->maxMakespan){
-            if(populacao->melhorSolucao != NULL &&populacao->melhorSolucao != populacao->individuos[0].solucao){
-                liberarSolucao(populacao->melhorSolucao);
+        if(populacao->melhorSolucao == NULL || populacao->individuos[0].solucao->maxMakespan < populacao->melhorSolucao->solucao->maxMakespan){
+            if(populacao->melhorSolucao != NULL && populacao->melhorSolucao->solucao != populacao->individuos[0].solucao){
+                liberarCromossomo(populacao->melhorSolucao);
             }
-            populacao->melhorSolucao = clonarSolution(populacao->individuos[0].solucao);
+            populacao->melhorSolucao = clonarCromossomo(&populacao->individuos[0], tamGenes, 1);
         }
+
+        int *maskGenes = caminhoCriticoGenes(&populacao->individuos[0], tamGenes);
+        printf("\n[Geracao %d] Caminho Critico Genes do melhor individuo:", geracao);
+        printCaminhoCriticoGenes(populacao->individuos[0].genes, maskGenes, tamGenes);
+        printf("\n");
     }
 
-    Solution *melhorSolucao = clonarSolution(populacao->melhorSolucao);
+    Cromossomo *melhorCromossomo = clonarCromossomo(populacao->melhorSolucao, tamGenes, 1);
     
-    liberarPopulacao(populacao, melhorSolucao);
+    liberarPopulacao(populacao);
     
-    return melhorSolucao;
+    return melhorCromossomo;
 }
 
 int main (int argc, char *argv[]){
@@ -1975,6 +2023,7 @@ int main (int argc, char *argv[]){
     Job *jobs = NULL;
     Machine *machines = NULL;
     Solution *solution = NULL;
+    Cromossomo *cromossomo = NULL;
 
     char *caminho_arquivo = argv[1];
 
@@ -1989,7 +2038,8 @@ int main (int argc, char *argv[]){
     long iterL = strtol(argv[3], &iterC, 10);
     int iter = (int)iterL;
 
-    solution = algoritmoMemetico(jobs, numJobs, machines, numMachines, 100, iter);
+    cromossomo = algoritmoMemetico(jobs, numJobs, machines, numMachines, 100, iter);
+    solution = clonarSolution(cromossomo->solucao);
     //printMachines(result, numMachines);
 
     printf("Makespan decodificado via Algoritmo Memetico (Crossover): %d\n", solution->maxMakespan);
